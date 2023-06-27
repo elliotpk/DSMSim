@@ -1,460 +1,251 @@
 from SimEngine import *
 import Sellers
-from Bidder import *
+from Bidders import *
 from ReferenceCalculator import *
 import random
-from DataManagement import *
+import math
+import yaml
 
-bidderslist = []
-sellerslist = []
 seed = None
 
-def readConfig():
-    # Reads the config file if it exists
-    try:
-        config = open("config.txt", "r")
-        config.close()
+# File names for configs hardcoded, could be set with a user input function
+configFile = "config.yaml"
+sellerFile = "sellers.yaml"
+bidderFile = "bidders.yaml"
 
-    # If there is no config file, one gets generated and saved with a mathcing checksum
+# Default limits how many blocks each seller can have randomized
+MAX_BLOCK = 3
+MIN_BLOCK = 2
+
+
+def readConfig(skipPrompts):
+    "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them"
+    generatedConfig = 0
+    try:
+        with open(configFile, "r") as f:
+            conf = yaml.load(f, Loader=yaml.FullLoader)
     except:
-        config = open('config.txt', "w")
-        seed = genSeed()
-        numsellers = random.randrange(10,30)
-        numrandombidders = random.randrange(5,15)
-        ranodomprocent = random.random()
-        resourceusage = ranodomprocent
-        endthreshold = 2
-        slotsize = 2
-        config.write("seed=" + str(seed) + "\n" + "bidder=" + "number=" + str(
-            numrandombidders) + "," + "copy=False" + ":" + "\n" + "seller=" + "number=" + str(
-            numsellers) + "," + "randomchainlength=true" + ":" + "\n" + "resourceusage%=" + str(
-            int(ranodomprocent * 100))+"\n"+"endthreshold = 2"+"\n"+"slotsize = 2")
-        check = (seed * numsellers * numrandombidders)
-        config.close()
-        return str(check)[0:4],slotsize,endthreshold
-
-        # Find if there is a seed in the config
-    config = open("config.txt", "r")
-    text = config.read()
-    config.close()
-    line = text.split("\n")
-    for rowoflist in line:
-        rowoflist = rowoflist.replace(" ", "")
-        if rowoflist.find("seed") != -1:
-            seed = int(rowoflist.split("seed=")[1])
-            random.seed(seed)
-
-        # if there is no seed one gets generated
+        print("Could not find a config file, generating")
+        conf = genConfig()
+        generatedConfig = 1
     try:
-        if seed == None:
-            raise
+        with open(sellerFile, "r") as f:
+            if not skipPrompts: raise
+            sellers = yaml.load(f, Loader=yaml.FullLoader)
+        conf["sellers"] = len(sellers)
     except:
-        seed = genSeed()
-        config = open("config.txt", "a")
-        config.write("seed=" + str(seed))
-        config.close()
+        sellers = None
 
-    # reads number of sellers and generates the supply of available material
-    for rowoflist in line:
-        rowoflist = rowoflist.replace(" ", "")
-
-        # read number of bidders
-        if rowoflist.find("bidder") != -1:
-            numbidder = rowoflist.split(":")[0].split(",")
-            for x in numbidder:
-                if x.find("number=") != -1:
-                    numbidder = int(x.split("number=")[1])
-
-        # read number of sellers, and if randomchainlenght is true
-        if rowoflist.find("seller") != -1:
-            block = rowoflist.split("seller=")[1]
-            numsellers = block.split(":")[0].split(",")
-            for x in numsellers:
-                if x.find("number=") != -1:
-                    numsellers = x.split("number=")[1]
-                if x.find("randomchainlength=") != -1:
-                    randomchainlength = x.split("randomchainlength=")[1]
-
-        # reads resourceusage%, slotsize, endthreshold
-        if rowoflist.find("resourceusage%") != -1:
-            resourceusage = int(rowoflist.split("resourceusage%=")[1]) / 100
-
-        if rowoflist.find("slotsize") != -1:
-            slotsize = int(rowoflist.split("slotsize=")[1])
-
-        if rowoflist.find("endthreshold") != -1:
-            endthreshold = int(rowoflist.split("endthreshold=")[1])
-            """    
-            have finished reading the prespecs and will now read real seller specs
-            """
-    # Generates the data for every seller
     try:
-        # Reads the specified amount of blocks
-        numsellers
-        block = block.split(":")[1]
-        blocklen = []
-        for x in block.split("->"):
-            if x.find("chainlength") != -1:
-                if x.find(",") != -1:
-                    blocklen.append(x.split("chainlength=")[1].split(",")[0])
-                else:
-                    blocklen.append(x.split("chainlength=")[1])
-            elif x.find("[") != -1 and x.find("]") != -1:
-                blocklen.append(x.count("["))
-            else:
-                try:
-                    if randomchainlength == "true":
-                        if len(block.split("->")) != 1:
-                            blocklen.append("replace")
-                    else:
-                        raise
-                except:
-                    blocklen.append("replace")
-
-        # Generates the missing blocks to match the number of buyers
-        sumofremainingblocks = 0
-        randomblocklengt = []
-        listofreplace = []
-        loop = 0
-        for x in range(len(blocklen)):
-            if blocklen[x]== "replace":
-                listofreplace.append(x)
-        for x in range(int(numsellers)+len(listofreplace)-len(blocklen)):
-            rng=random.randrange(10,100)
-            sumofremainingblocks = sumofremainingblocks + rng
-            randomblocklengt.append(rng)
-        for x in randomblocklengt:
-            try:
-                if randomchainlength == "true":
-                    factor = random.uniform(1,4)
-                else:
-                    raise
-            except:
-                factor = 1
-            blocksize = 1+int((x / sumofremainingblocks) * numbidder*factor)
-            try:
-                listofreplace[loop]
-                blocklen[listofreplace[loop]] = blocksize
-            except:
-                blocklen.append(blocksize)
-            loop += 1
-            block = block + "->"
-
-        #generates /reads the information in each block
-        for x in range(int(numsellers)):
-            blockatribute = block.split("->")[x]
-            seller = Sellers.Sellers(len(sellerslist))
-            sellerslist.append(seller)
-            headcreated = False
-            discount = None
-            for i in range(int(blocklen[x])):
-                price = None
-                supply = None
-                discountbool = True
-                try:
-                    blockinfo = blockatribute.split("[")[1].split("]")[0].split(",")
-                except:
-                    blockatribute = blockatribute.strip(",")
-                    blockinfo = blockatribute.split(",")
-                for place in range(len(blockinfo)):
-                    attribute = blockinfo[place]
-                    blockatribute = blockatribute.replace("[", "", 1)
-                    blockatribute = blockatribute.replace("]", "", 1)
-                    if attribute.find("price") != -1:
-                        price = int(attribute.split("price=")[1])
-                        blockatribute = blockatribute.replace(",price=" + str(price), "")
-                        blockatribute = blockatribute.replace("price=" + str(price), "")
-                    elif attribute.find("supply") != -1:
-                        supply = int(attribute.split("supply=")[1])
-                        blockatribute = blockatribute.replace(",supply=" + str(supply), "")
-                        blockatribute = blockatribute.replace("supply=" + str(supply), "")
-                    elif attribute.find("discount") != -1:
-                        discountbool = False
-                        discount = int(attribute.split("discount=")[1])
-                        blockatribute = blockatribute.replace(",discount=" + str(discount), "")
-                        blockatribute = blockatribute.replace("discount=" + str(discount), "")
-                if price == None:
-                    price = random.randrange(1000, 10000)
-                if supply == None:
-                    supply = random.randrange(100, 1000)
-                if discountbool:
-                    if i > 0:
-                        discount = int((discount + random.randrange(1,10))/(i+1))
-                    else:
-                        discount = random.randrange(0, 10)
-
-                if headcreated:
-                    seller.addBlock(price, supply, discount)
-                else:
-                    seller.genBlock(price, supply, discount)
-                    headcreated = True
-
-    #generates new sellers if none existed in the config
-    except Exception as e:
-        if len(sellerslist) == 0:
-            numsellers = genAmountSellers()
-            config = open("config.txt", "a")
-            config.write("\nseller=" + "number=" + str(numsellers) + "," + "randomchainlength=true" + ":")
-            config.close()
-
-    #check if resourceusage, slotsize, endthreshold exists
-    try:
-        resourceusage
+        with open(bidderFile, "r") as f:
+            if not skipPrompts: raise
+            bidders = yaml.load(f, Loader=yaml.FullLoader)
+        conf["bidders"] = len(bidders)
     except:
-        ranodomprocent = random.random()
-        resourceusage = ranodomprocent
-        config = open("config.txt", "a")
-        config.write("\n" + "resourceusage%=" + str(int(ranodomprocent * 100)))
-        config.close()
+        bidders = None
+    
+    if not generatedConfig:
+        verifyConfig(conf)
+    
+    if conf["min-block"] == None:
+        conf["min-block"] = MIN_BLOCK
 
-    try:
-        if slotsize == None:
-            raise
-    except:
-        slotsize = 2
-        config = open("config.txt", "a")
-        config.write("\n" + "slotsize=" + str(slotsize))
-        config.close()
+    if conf["max-block"] == None:
+        conf["max-block"] = MAX_BLOCK
 
-    try:
-        if endthreshold == None:
-            raise
-    except:
-        endthreshold = 2
-        config = open("config.txt", "a")
-        config.write("\n" + "endthreshold=" + str(endthreshold))
-        config.close()
+    supply, demand = getResourceUsage(sellers, bidders)
+    if bidders and sellers:
+        conf["resource-usage"] = demand / supply
+    elif not bidders and not sellers:
+        demand = random.randrange(500, 5000)
+        supply = round(demand / conf["resource-usage"])
+        bidders = genBidders(conf["bidders"], demand, conf["radius"], conf["distance-limit"], conf["distance-penalty"])
+        sellers = genSellers(conf["sellers"], supply, conf["radius"], conf)
+    elif bidders and not sellers:
+        supply = round(demand / conf["resource-usage"])
+        sellers = genSellers(conf["sellers"], supply, conf["radius"])
+    else:
+        demand = round(conf["resource-usage"] * supply)
+        bidders = genBidders(conf["bidders"], demand, conf["radius"], conf["distance-limit"], conf["distance-penalty"])
+    
+    if conf["distance-limit"] != None:
+        overrideLimit(bidders, conf["distance-limit"])
+    if conf["distance-penalty"] != None:
+        overridePenalty(bidders, conf["distance-penalty"])
 
-    # calculate the total sum of supply available
-    sum = 0
-    for sellers in sellerslist:
-        blocklist = sellers.LinkOfBlocks.display()
-        for block in blocklist:
-            sum = sum + int(block.Amount)
-    totalbudget = sum * resourceusage
-    if sum < totalbudget:       #checks if there is more demand then supply
-        raise Exception("Can't be more demand then supply")
-
-    for rowoflist in line:
-        rowoflist = rowoflist.replace(" ", "")
-
-        # reads demands for buyers
-        if rowoflist.find("bidder") != -1:
-            bidderprespec = rowoflist.split("bidder=")[1]
-            if bidderprespec.find("number") != -1:
-                numbidder = bidderprespec.split(":")[0].split(",")
-                for x in numbidder:
-                    if x.find("number=") != -1:
-                        numbidder = int(x.split("number=")[1])
-            else:
-                numbidder = random.randrange(1, 15)
-            copy = bidderprespec.split(":")[0].split(",")
-            for x in copy:
-                if x.find("copy=") != -1:
-                    copy = x.split("copy=")[1]
-            """    
-            have finished reading the prespecs and will now read real specs
-            """
-            bidderspec = rowoflist.split(":")[1]
-            if bidderspec.find("->") != -1:
-                listbidderatribute = bidderspec.split("->")
-            else:
-                listbidderatribute = []
-            while len(listbidderatribute) < int(numbidder):
-                listbidderatribute.append("")
-            names = []
-            needs = []
-            behaviours = []
-            marketprices = []
-            demand = None
-            behaviour = None
-            marketprice = None
-            sumofsetdemand = 0
-            listofzero = []
-            for bidderattribute in listbidderatribute:
-                if copy != "true":
-                    demand = None
-                    behaviour = None
-                    marketprice = None
-                name = None
-                attribute = bidderattribute.split(",")
-                for x in attribute:
-                    if x.find("demand=") != -1:
-                        demand = x.split("demand=")[1]
-                        needs.append(demand)
-                        name = 200
-                    elif x.find("behaviour=") != -1:
-                        behaviour = x.split("behaviour=")[1]
-                        behaviours.append(behaviour)
-                        name = 200
-                    elif x.find("marketprice=") != -1:
-                        marketprice = x.split("marketprice=")[1]
-                        marketprices.append(marketprice)
-                        name = 200
-                if name != None:
-                    name ="Buyer"+ str(name + len(names))
-                else:
-                    name ="Buyer"+ str(len(names))
-                names.append(name)
-
-                if demand == None:
-                    needs.append(0)
-                if behaviour == None:
-                    behaviours.append(Behaviour.randomBehaviour())
-                if marketprice == None:
-                    marketprices.append(random.randrange(1000, 10000))
-            for x in range(len(needs)):
-                if needs[x] == 0:
-                    listofzero.append(x)
-                sumofsetdemand = sumofsetdemand + int(needs[x])
-                # generate random procentual usage for each bidder to match the total budget
-            procentdemands = []
-            sumdemands = 0
-            for x in listofzero:
-                rng = random.randrange(10, 100)  # can specify range of upper and lower demands here in %
-                sumdemands = sumdemands + rng
-                procentdemands.append(rng)
-            i = 0
-            for x in listofzero:
-                rng = procentdemands[i]
-                procent = rng / (sumdemands)
-                budgetuse = procent * (totalbudget - sumofsetdemand)
-                needs[x] = budgetuse
-                i = i + 1
-            for x in range(numbidder):
-                maxround=0
-                for i in sellerslist:
-                    list = i.LinkOfBlocks.display()
-                    maxround = maxround+len(list)
-                name = names[x]
-                demand = needs[x]
-                behaviour = behaviours[x]
-                marketprice = marketprices[x]
-
-                # id,supply,needs,behaviour,marketprice,totalbudget,resourceusage
-                spentbudget = createBidder(namn=name, maxrounds=maxround/slotsize, needs=demand, behaviour=behaviour,
-                                           marketprice=marketprice, budget=totalbudget)
-                totalbudget = totalbudget - spentbudget
-
-    if len(bidderslist) == 0:
-        numrandombidders = genNumBuyers()
-        config = open("config.txt", "a")
-        config.write("\n" + "bidder=" + "number=" + str(numrandombidders) + "," + "copy=False" + ":")
-        config.close()
-
-    # returns a checksum for comparisons
-    numsellers = len(sellerslist)
-    numbuyers = len(bidderslist)
-    check = (seed * numsellers * numbuyers)
-    return str(check)[0:4],slotsize,endthreshold
+    noAuctions, sellerList = initSellers(sellers)
+    bidderList = initBidders(bidders, math.ceil(noAuctions / conf["slotsize"]))
+    return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
 
 
-def genSeed():
-    rng = random.randrange(0, 10000)
-    random.seed(rng)
-    return rng
+def genConfig():
+    """Generates a config.yaml file and saves it"""
+    conf = {}
+    conf["seed"] = random.randrange(0, 10000)
+    random.seed(conf["seed"])
+    conf["sellers"] = random.randrange(5, 15)
+    conf["bidders"] = random.randrange(2, 7)
+    conf["resource-usage"] = round(random.uniform(0.25, 0.9), 4)
+    conf["radius"] = random.randint(2, 10)
+    conf["distance-limit"] = round(random.uniform(conf["radius"]*1.5, conf["radius"]*3),2)
+    conf["distance-penalty"] = round(random.uniform(5,10),2)
+    conf["slotsize"] = 2
+    conf["end-threshold"] = 2
+    with open("config.yaml", "w") as f:
+        yaml.dump(conf, f, sort_keys=False)
 
 
-def genAmountSellers():
-    amountsellers = random.randrange(5, 15)
-    for x in range(amountsellers):
-        createRandomSeller()
-    return amountsellers
+def verifyConfig(conf):
+    if not conf["seed"]:
+        conf["seed"] = random.randrange(0, 10000)
+    random.seed(conf["seed"])
+    if not conf["sellers"]:
+        conf["sellers"] = random.randrange(5, 15)
+    if not conf["bidders"]:
+        conf["bidders"] = random.randrange(2, 7)
+    if not conf["resource-usage"]:
+        conf["resource-usage"] = round(random.uniform(0.25, 0.9), 4)
+    if not conf["radius"]:
+        conf["radius"] = random.randint(2,10)
+    if not conf["distance-limit"]:
+        conf["distance-limit"] = round(random.uniform(conf["radius"]*1.5, conf["radius"]*3),2)
+    if not conf["distance-penalty"]:    
+        conf["distance-penalty"] = round(random.uniform(5,10),2)
+    if not conf["slotsize"]:
+        conf["slotsize"] = 2
+    if not conf["end-threshold"]:
+        conf["end-threshold"] = 2
 
 
-def genNumBuyers():
-    numbuyers = random.randrange(10, 30)
-    for x in range(numbuyers):
-        createBidder()
-    return numbuyers
+def genSellers(number, supply, radius, conf):
+    sellers = {}
+    dividers = sorted(random.sample(range(1, supply), number-1))
+    supplies = [a - b for a, b in zip(dividers + [supply], [0] + dividers)]
+    for i in range(number):
+        toDistribute = supplies.pop()
+        chainLen = random.randint(conf['min-block'], conf['max-block'])
+        div = sorted(random.sample(range(1, toDistribute), chainLen))
+        values = [a - b for a, b in zip(div + [toDistribute], [0] + div)]
+        blocks = {}
+        for j in range(len(values)):
+            discount = 0
+            if j != 0:
+                discount = round(random.uniform(0.1, 0.50), 2)
+            blocks["block" + str(j)] = [
+                {"quantity": values.pop()},
+                {"price": random.randrange(500, 5000)},
+                {"discount": discount},
+            ]
+        sellers["Seller" + str(i)] = {
+            "location": genLocation(radius),
+            "blocks": blocks,
+        }
+    return sellers
 
 
-# creates bidders from config or random if no value was given
-def createBidder(**kwargs):
-    try:
-        kwargs["budget"]
-    except:
-        kwargs["budget"] = random.randrange(10, 100)
-    try:
-        if kwargs["maxrounds"] != None:
-            maxrounds = kwargs["maxrounds"]
-        else:
-            raise
-    except:
-        maxrounds = random.randrange(1,20)
-    try:
-        namn = kwargs["namn"]
-    except:
-        namn = "Buyer", len(bidderslist)
-    try:
-        need = Needs(int(kwargs["needs"]), "stenmalm")
-        if int(kwargs["budget"]) < 0:
-            raise Exception("cant be more demand then supply")
-    except:
-        if int(kwargs["budget"]) < 0:
-            raise Exception("cant be more demand then supply")
-        else:
-            need = Needs(random.randrange(int(kwargs["budget"] * 0.7), int(kwargs["budget"])), "Stenmalm")
-    try:
-        marketprice = kwargs["marketprice"]
-    except:
-        marketprice = random.randrange(1000, 10000)
-    try:
-        kwargs["behaviour"]
-        behaviour = Behaviour.getBehaviour(kwargs["behaviour"])
-    except Exception as e:
-        print(e)
-        behaviour = Behaviour.randomBehaviour()
-
-    # id, currentamount, needs, behaviour, marketPrice
-    bidderslist.append(Bidder(namn, need, math.ceil(maxrounds), behaviour))
-    return need.amount
-
-    # creates random sellers
-def createRandomSeller():
-    price = random.randrange(1000, 10000)
-    amount = random.randrange(100, 1000)
-    discount = random.randrange(0, 100)
-    seller = Sellers.Sellers(len(sellerslist))
-    seller.genBlock(price, amount, discount)
-    sellerslist.append(seller)
-
-def callOnReferenceCalculator():
-    fairness, marketprice = referenceCalculator(sellerslist, bidderslist)
-    if fairness == -1: print("No valid combinations were found")
-    return fairness, marketprice
-
-def uppdateBidder(marketprice):
-    for x in bidderslist:
-        x.setMarketprice(marketprice)
-
-def uppdateSeller():
-    sum = 0
-    for x in bidderslist:
-        sum = sum + x.needs.amount
-
-    sumblocks = 0
-    sumofsopply = 0
-    for x in sellerslist:
-        sumseller = 0
-        list = x.LinkOfBlocks.display()
-        for i in list:
-            sumofsopply = sumofsopply + i.Amount
-            sumseller = sumseller + i.Amount
-            x.quantity.append(i.Amount)
-            sumblocks = sumblocks + 1
-    resourceusage = (sum/sumseller)
-    return resourceusage,sumseller,sum
+def genBidders(number, demand, radius, limit, penalty):
+    bidders = {}
+    dividers = sorted(random.sample(range(1, demand), number))
+    demands = [a - b for a, b in zip(dividers + [demand], [0] + dividers)]
+    for i in range(number):
+        bidders["Bidder" + str(i)] = {
+            "location": genLocation(radius),
+            "need": demands.pop(),
+            "behavior": Behaviour.randomBehaviour(),
+            "distanceLimit": limit,
+            "distancePenalty":penalty
+        }
+    return bidders
 
 
-checksum,slotsize,endthreshold = readConfig()
-#starts the other prosseces
+def getResourceUsage(sellers, bidders):
+    supply = 0
+    if sellers:
+        for sellerKey in sellers:
+            for block in sellers[sellerKey]["blocks"].items():
+                supply += block[1][0]["quantity"]
+    demand = 0
+    if bidders:
+        for bidderKey in bidders:
+            demand += bidders[bidderKey]["need"]
+    return supply, demand
 
-fairness,marketprice=callOnReferenceCalculator()
-uppdateBidder(marketprice)
-resourceusage,sumseller,sum = uppdateSeller()
 
-aucitonengine = SimEngine(sellerslist,bidderslist,slotsize,endthreshold)
-aucitonengine.simStart()
+def initSellers(sellers):
+    sellerList = []
+    noAuctions = 0
+    for sellerKey in sellers:
+        entity = Sellers.Sellers(sellerKey, sellers[sellerKey]["location"])
+        firstBlock = sellers[sellerKey]["blocks"].pop("block1")
+        entity.quantity.append(firstBlock[0]['quantity'])
+        entity.genBlock(
+            firstBlock[1]["price"], firstBlock[0]["quantity"], firstBlock[2]["discount"]
+        )
+        noAuctions += 1
+        for block in sellers[sellerKey]["blocks"].items():
+            entity.quantity.append(block[1][0]['quantity'])
+            entity.addBlock(
+                block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]
+            )
+            noAuctions += 1
+        sellerList.append(entity)
+    return noAuctions, sellerList
 
-DataManagement().dataCollector(seed, sellerslist, bidderslist, resourceusage, sum, sumseller, checksum,fairness)
+
+def initBidders(bidders, maxRounds):
+    bidderList = []
+    for bidder in bidders.items():
+        data = bidder[1]
+        entity = Bidders(
+            bidder[0],
+            data["location"],
+            data["need"],
+            maxRounds,
+            Behaviour.genBehaviour(data["behavior"]),
+            data["distanceLimit"],
+            data["distancePenalty"]
+        )
+        bidderList.append(entity)
+    return bidderList
+
+# Source with explanation: https://stackoverflow.com/a/50746409
+def genLocation(radius):
+    "Generate x,y points within circle with set radius with center in 0,0"
+    r = radius * math.sqrt(random.random())
+    theta = random.random() * 2 * math.pi
+    x = round(r * math.cos(theta), 4)
+    y = round(r * math.sin(theta), 4)
+    return [x,y]
+
+def overrideLimit(bidders, limit):
+    for bidder in bidders.items():
+        bidder[1]['distanceLimit'] = limit
+
+def overridePenalty(bidders, penalty):
+    for bidder in bidders.items():
+        bidder[1]['distancePenalty'] = penalty
+
+def start(skipPrompts):
+    slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
+    fairness = 1
+    #TODO Serialize matchmaking results and store in appropriate way
+    matchmakingResults = matchMakingCalculation(sellerList, bidderList)
+    fairness = matchmakingResults[0].get('fairness', None)
+    distance = matchmakingResults[0].get('avgDistance', None)
+    print(f"Best fairness value: {fairness}")
+    print(f"Average distance {distance}")
+    if fairness == None:
+        print("No valid combinations were found")
+    if skipPrompts:
+        mp = matchmakingResults[0]['avgPrice']
+        for bidder in bidderList:               # Give bidders a marketprice (price per unit) in order to formulate bids
+            bidder.setMarketprice(mp)
+        engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
+        auctionResults = engine.simStart()
+    else:
+        auctionResults = []
+    
+    return matchmakingResults, auctionResults
+
+if __name__ == "__main__":
+    start(False)

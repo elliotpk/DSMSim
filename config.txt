@@ -1,6 +1,0 @@
-seed=765
-seller=number=5,randomchainlength=true:
-resourceusage%=75
-slotsize=2
-endthreshold=2
-bidder=number=3,copy=False:

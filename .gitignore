@@ -3,3 +3,4 @@ refcalcOutdata.csv
 test*.csv
 testE*.csv
 .venv
+.vscode

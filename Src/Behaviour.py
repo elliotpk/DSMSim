@@ -1,111 +1,48 @@
-#Library, module
-import random
 import math
+import random
 
-# Returns one random behaviour.
-# Note: new behaviours must be added in the list.
 def randomBehaviour():
-  behaviourList = [A, B, C]
-  return random.choice(behaviourList)
+    behaviourList = ["B"]
+    return random.choice(behaviourList)
 
-def getBehaviour(input):
-    if input == A["behaviour"]:
-        return A
-    elif input == B["behaviour"]:
-        return B
-    elif input == C["behaviour"]:
-        return C
-    else:
-        return randomBehaviour()
+def genBehaviour(input):
+    match input:
+        case "B":
+            return typeB()
+        case _:
+            print("Invalid behaviour type")
+            return None
 
-# Returns k random behaviours with weighted possibilities.
-# Example: weights = [1, 10, 1] means that the selection chance is 10 times bigger for the second behaviour.
-# Note: new behaviours must be added in the list.
-def randomBehaviourAdvanced(weights, k):
-  behaviourList = [A, B, C]
-  return random.choices(behaviourList, weights = weights, k = k)
+# Example behaviour class, any new types should follow the same variable-names and functions
+class typeB:
+    def __init__(self):
+        self.aggressiveness = random.uniform(0.4, 0.6)      # How "aggressive" bids are, effectively scales the bid size
+        self.marketPriceFactor = random.uniform(0.8, 1)     # How many % of marketprice (price per unit) to bid with
+        self.stopBid = random.uniform(1, 1.1)               # In which range of the expected price to stop bidding at
+        self.bidLikelyhood = random.uniform(0.8, 1)
 
-# This function updates and returns the aggressiveness value of a certain behaviour.
-# Note: this function should only be used in the Behaviour library.
-def changeAggressiveness(behaviour, value):
-  behaviour["aggressiveness"] = value
-  return value
+    # Higher level function to run the adaptive updates
+    def updateVariables(self, currentRound, maxRound):
+        self.adaptiveAggressiveness(currentRound, maxRound)
+        self.adaptiveMPFactor(currentRound, maxRound)
+        self.adaptiveStopBid(currentRound, maxRound)
 
-# This function returns a factor that is used for bidding based on the market price.
-# It uses a normal distribution since it's more common to bid in certain scenarios.
-# Note: if the factor is 0 or negavtive, the calculation repeats until it's positive,
-# therefore avoid standard deviation integers close to 1/2 of the mean value for accurate normal distribution results.
-def marketPriceFactor(behaviour, aggressiveness, mean, standardDeviation):
-  behaviour["marketPriceFactor"] = aggressiveness*random.normalvariate(mean, standardDeviation)
-  while behaviour["marketPriceFactor"] <= 0 :
-    behaviour["marketPriceFactor"] = aggressiveness*random.normalvariate(mean, standardDeviation)
-  return behaviour["marketPriceFactor"]
+    # Can create functions in order to scale the aggressivity depending on how many rounds of auctions are left
+    def adaptiveAggressiveness(self, currentRound, maxRound):
+        self.aggressiveness = self.aggressiveness * 1
 
-# Very aggressive behaviour, always bids max amount.
-# The aggressiveness stays the same for this behaviour currently.
-# Can bid over the market value.
-A = {
-  "behaviour": "A",
-  "aggressiveness": 0.9,
-  "adaptiveAggressiveness": lambda currentRound, maxRound:
-                            changeAggressiveness(A, 1.0) if(maxRound - currentRound == 0) else
-                            changeAggressiveness(A, A["aggressiveness"]) if(currentRound/maxRound >= 0.90) else
-                            changeAggressiveness(A, A["aggressiveness"]) if(currentRound/maxRound >= 0.75) else
-                            changeAggressiveness(A, A["aggressiveness"]) if(currentRound/maxRound >= 0.50) else
-                            changeAggressiveness(A, A["aggressiveness"]) if(currentRound/maxRound >= 0.25) else
-                            changeAggressiveness(A, A["aggressiveness"]),
-  "desperation": lambda currentRound, maxRound:
-                       A["aggressiveness"]*currentRound/maxRound,
-  "bidOverMarketPrice": True,
-  "marketPriceFactor": 1.0,
-  "marketPriceFactorUpdate": lambda mean, standardDeviation:
-                             marketPriceFactor(A, A["aggressiveness"], mean, standardDeviation),
-  "stopBid": lambda marketPrice:
-             marketPrice*(1 + A["aggressiveness"])
-}
+    # Can create functions to scale bid size depending on how many rounds of auctions are left
+    def adaptiveMPFactor(self, currentRound, maxRound):
+        self.marketPriceFactor = self.marketPriceFactor * 1
+    
+    # Insert functions to scale bid stop depending on how many rounds of auctions are left
+    def adaptiveStopBid(self, currentRound, maxRound):
+        self.stopBid = self.stopBid * 1
 
-# Medium aggressive behaviour.
-# Aggressiveness increases when the current round is nearing the last round.
-# Can bid over the market value.
-B = {
-  "behaviour": "B",
-  "aggressiveness": 0.5,
-  "adaptiveAggressiveness": lambda currentRound, maxRound:
-                            changeAggressiveness(B, 1.0) if(maxRound - currentRound == 0) else
-                            changeAggressiveness(B, 0.9) if(currentRound/maxRound >= 0.90) else                            
-                            changeAggressiveness(B, 0.8) if(currentRound/maxRound >= 0.75) else
-                            changeAggressiveness(B, 0.7) if(currentRound/maxRound >= 0.50) else
-                            changeAggressiveness(B, 0.6) if(currentRound/maxRound >= 0.25) else
-                            changeAggressiveness(B, B["aggressiveness"]),
-  "desperation": lambda currentRound, maxRound:
-                       B["aggressiveness"]*currentRound/maxRound,
-  "bidOverMarketPrice": True,
-  "marketPriceFactor": 1.0,
-  "marketPriceFactorUpdate": lambda mean, standardDeviation:
-                             marketPriceFactor(B, B["aggressiveness"], mean, standardDeviation),
-  "stopBid": lambda marketPrice:
-             marketPrice*(1 + B["aggressiveness"])
-} 
-
-# Minimal and passive bidding behaviour.
-# Aggressiveness increases when the current round is nearing the last round.
-# Can bid over the market value.
-C = {
-  "behaviour": "C",
-  "aggressiveness": 0.2,
-  "adaptiveAggressiveness": lambda currentRound, maxRound:
-                            changeAggressiveness(C, 1.0) if(maxRound - currentRound == 0) else
-                            changeAggressiveness(C, 0.8) if(currentRound/maxRound >= 0.90) else
-                            changeAggressiveness(C, 0.6) if(currentRound/maxRound >= 0.75) else
-                            changeAggressiveness(C, 0.4) if(currentRound/maxRound >= 0.50) else
-                            changeAggressiveness(C, 0.3) if(currentRound/maxRound >= 0.25) else
-                            changeAggressiveness(C, C["aggressiveness"]),
-  "desperation": lambda currentRound, maxRound:
-                       C["aggressiveness"]*currentRound/maxRound,
-  "bidOverMarketPrice": True,
-  "marketPriceFactor": 1.0,
-  "marketPriceFactorUpdate": lambda mean, standardDeviation:
-                             marketPriceFactor(C, C["aggressiveness"], mean, standardDeviation),
-  "stopBid": lambda marketPrice:
-             marketPrice*(1 + C["aggressiveness"])
-} 
+    # Return the likelyhood of bidding depending on various factors available
+    # Will be compared to a random value in range [0,1], returning 0.8 will be 80% likelyhood to bid etc
+    # bidIndex: number of bidding opportunities in the current set of auctions
+    # unfulfilledNeed: % of need which is unfulfilled
+    # distance: % of distance limit (to be able to favor auctions in close proximity etc)
+    def adaptiveBidLikelyhoood(self, currentRound, maxRound, bidIndex, unfulfilledNeed, distance):
+        return self.bidLikelyhood * 1
