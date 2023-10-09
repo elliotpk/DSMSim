@@ -6,17 +6,17 @@ import yaml
 TEST_NAME = "test"
 CONFIG = {
   "run-id": None,                                # Files saved with this prefix
-  "seed": 534,
-  "sellers": 8,
-  "bidders": 4,
-  "resource-usage": 0.5,                   
-  "min-block": 1,
+  "seed": 534,                                   # Seed which is used to ensure consistency between runs (random will return same results)
+  "sellers": 8,                                  # Number of sellers (used for generating sellers if no config is found)
+  "bidders": 4,                                  # Number of bidders (used for generating bidders if no config is found)
+  "resource-usage": 0.5,                         # Set the supply/demand ratio, used for generating supply/demand
+  "min-block": 1,                                # Min and max amount of blocks in a chain a seller will generate with
   "max-block": 1,
-  "distance-limit":None,
-  "distance-penalty":None,
-  "radius": 5,
-  "slotsize": 2,
-  "end-threshold": 2
+  "distance-limit":None,                         # The maximum distance for bidders (used as a rough analogue to emissions)
+  "distance-penalty":None,                       # Not used at the moment, intended to be a "tax" on exceeding emission (distance) thresholds
+  "radius": 5,                                   # Radius of the circle in which bidders and sellers can be generated in
+  "slotsize": 2,                                 # Number of auctions which are running in paralell
+  "end-threshold": 2                             # Number of rounds without bids before auction finishes
 }
 
 # Can iterate over these parameters, will use the one with length > 1, order right to left
@@ -37,8 +37,8 @@ def processMatchmaking(combos):
     for combo in combos:
         if combo['avgDistance'] < CONFIG['distance-limit']:
             temp.append(combo)
-    #output = sorted(temp, key=lambda i:i['fairness'], reverse=True)
-    output = sorted(temp, key=lambda i:i['avgDistance'], reverse=True)
+    output = sorted(temp, key=lambda i:i['fairness'], reverse=True)
+    #output = sorted(temp, key=lambda i:i['avgDistance'], reverse=True)
     if len(output) == 0: return 0
     
     return temp[0]['avgDistance']
@@ -48,7 +48,7 @@ def processAuction(auctions):
     ""
 
 def plotGraph(inputList):
-    ""
+    "Simple example function to plot the results of a run, inputList is list of (x,y) values"
     plt.xlabel('Distance Limit')
     plt.ylabel('Average Distance')
     plt.scatter(*zip(*inputList), s=40)
@@ -74,6 +74,7 @@ if __name__ == "__main__":
     else:
         singleRun = True
     
+    # Run either single run or multiple
     if singleRun:
         CONFIG['run-id'] = TEST_NAME
         CONFIG['resource-usage'] = RESOURCE_USAGE[0]

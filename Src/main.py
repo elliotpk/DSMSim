@@ -17,7 +17,7 @@ bidderFile = "bidders.yaml"
 MAX_BLOCK = 3
 MIN_BLOCK = 2
 
-
+# The generation of bidders and sellers is made simple by keeping the same format as the .yaml files for them throughout and at the end initalizing the objects from that config
 def readConfig(skipPrompts):
     "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them"
     generatedConfig = 0
@@ -47,6 +47,7 @@ def readConfig(skipPrompts):
     if not generatedConfig:
         verifyConfig(conf)
     
+    # Checks to ensure that there is a max and min block, constants defined at the top
     if conf["min-block"] == None:
         conf["min-block"] = MIN_BLOCK
 
@@ -54,6 +55,7 @@ def readConfig(skipPrompts):
         conf["max-block"] = MAX_BLOCK
 
     supply, demand = getResourceUsage(sellers, bidders)
+    # Determine which variables need to be generated
     if bidders and sellers:
         conf["resource-usage"] = demand / supply
     elif not bidders and not sellers:
@@ -68,16 +70,18 @@ def readConfig(skipPrompts):
         demand = round(conf["resource-usage"] * supply)
         bidders = genBidders(conf["bidders"], demand, conf["radius"], conf["distance-limit"], conf["distance-penalty"])
     
+    # Set distance limit and penalty if it exists
     if conf["distance-limit"] != None:
         overrideLimit(bidders, conf["distance-limit"])
     if conf["distance-penalty"] != None:
         overridePenalty(bidders, conf["distance-penalty"])
 
+    # Init both bidders and sellers
     noAuctions, sellerList = initSellers(sellers)
     bidderList = initBidders(bidders, math.ceil(noAuctions / conf["slotsize"]))
     return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
 
-
+# Arbitrary ranges for the random generation of a whole config (if the file is not found)
 def genConfig():
     """Generates a config.yaml file and saves it"""
     conf = {}
@@ -94,7 +98,7 @@ def genConfig():
     with open("config.yaml", "w") as f:
         yaml.dump(conf, f, sort_keys=False)
 
-
+# Verify that all necessary values are present in the config, arbitrary ranges on the random calls
 def verifyConfig(conf):
     if not conf["seed"]:
         conf["seed"] = random.randrange(0, 10000)
@@ -116,6 +120,8 @@ def verifyConfig(conf):
     if not conf["end-threshold"]:
         conf["end-threshold"] = 2
 
+# Generation of sellers, the total supply is divided up into parts (randomly distributed size)
+# Furthermore each seller can have chain their blocks together, randomly generated in range 'min-block' 'max-block' from config
 
 def genSellers(number, supply, radius, conf):
     sellers = {}
@@ -158,6 +164,7 @@ def genBidders(number, demand, radius, limit, penalty):
     return bidders
 
 
+# Compute the resource usage by iterating over sellers and bidders supply/demand
 def getResourceUsage(sellers, bidders):
     supply = 0
     if sellers:
