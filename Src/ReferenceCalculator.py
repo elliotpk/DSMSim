@@ -7,8 +7,7 @@ import json
 def matchMakingCalculation(sellerList, bidderList):
     'Returns list of valid combinations given the current auctioning data'
     
-    permNum = 0                              #init var
-    permComb = 0
+    permNum, permComb = (0,0)                            #init var
     validCombinations = []
     
     blocks = getBlocks(sellerList)          #Get list of blocks for sale
@@ -27,7 +26,7 @@ def matchMakingCalculation(sellerList, bidderList):
 
         print(f"Permutation number {permNum} / {int((len(blocks) / 2) + 1)}\nCombinations tested: {permComb}")
         
-        if(permNum > len(blocks)/2): break              #What allows this to happen?
+        if(permNum > len(blocks)/2): break              #oesn't this exclude valid combinations?
 
     if(len(validCombinations) == 0):
         return None
@@ -102,9 +101,9 @@ def formatCombination(combination, buyers):
     combinationData = []
     for i in range(len(buyers)):
         temp = {'buyer':buyers[i],'blocks':combination[i]}
-        quantity = 0
-        price = 0
-        distanceSum = 0                 # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
+        
+        quantity,price,distanceSum = (0,0,0)               # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
+        
         for block in combination[i]:
             distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount
