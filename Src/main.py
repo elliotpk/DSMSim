@@ -20,7 +20,10 @@ MIN_BLOCK = 2
 # The generation of bidders and sellers is made simple by keeping the same format as the .yaml files for them throughout and at the end initalizing the objects from that config
 def readConfig(skipPrompts):
     "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them"
+    
     generatedConfig = 0
+    
+    #Checks if a new config file needs to be generated
     try:
         with open(configFile, "r") as f:
             conf = yaml.load(f, Loader=yaml.FullLoader)
@@ -28,6 +31,8 @@ def readConfig(skipPrompts):
         print("Could not find a config file, generating")
         conf = genConfig()
         generatedConfig = 1
+        
+    #Loads Sellers from config file, and sets amount of sellers in the same file,  if such a  file exists  
     try:
         with open(sellerFile, "r") as f:
             if not skipPrompts: raise
@@ -36,6 +41,8 @@ def readConfig(skipPrompts):
     except:
         sellers = None
 
+
+    #Loads Bidders from config file, and sets amount of Bidders in the same file, if such a  file exists 
     try:
         with open(bidderFile, "r") as f:
             if not skipPrompts: raise
@@ -54,9 +61,12 @@ def readConfig(skipPrompts):
     if conf["max-block"] == None:
         conf["max-block"] = MAX_BLOCK
 
+    
+    # Determines supply and demand, based on Whether bidders and Sellers are present or not
+    
     supply, demand = getResourceUsage(sellers, bidders)
-    # Determine which variables need to be generated
-    if bidders and sellers:
+    
+    if bidders and sellers:                                       
         conf["resource-usage"] = demand / supply
     elif not bidders and not sellers:
         demand = random.randrange(500, 5000)
@@ -77,8 +87,8 @@ def readConfig(skipPrompts):
         overridePenalty(bidders, conf["distance-penalty"])
 
     # Init both bidders and sellers
-    noAuctions, sellerList = initSellers(sellers)
-    bidderList = initBidders(bidders, math.ceil(noAuctions / conf["slotsize"]))
+    amountOfAuctions, sellerList = initSellers(sellers)
+    bidderList = initBidders(bidders, math.ceil(amountOfAuctions / conf["slotsize"]))
     return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
 
 # Arbitrary ranges for the random generation of a whole config (if the file is not found)
@@ -124,6 +134,8 @@ def verifyConfig(conf):
 # Furthermore each seller can have chain their blocks together, randomly generated in range 'min-block' 'max-block' from config
 
 def genSellers(number, supply, radius, conf):
+    'generates Sellers in case Config file isnt present'
+    
     sellers = {}
     dividers = sorted(random.sample(range(1, supply), number-1))
     supplies = [a - b for a, b in zip(dividers + [supply], [0] + dividers)]
@@ -150,6 +162,8 @@ def genSellers(number, supply, radius, conf):
 
 
 def genBidders(number, demand, radius, limit, penalty):
+    'generates Bidders in case Config file isnt present '
+    
     bidders = {}
     dividers = sorted(random.sample(range(1, demand), number))
     demands = [a - b for a, b in zip(dividers + [demand], [0] + dividers)]
@@ -168,46 +182,55 @@ def genBidders(number, demand, radius, limit, penalty):
 def getResourceUsage(sellers, bidders):
     supply = 0
     if sellers:
-        for sellerKey in sellers:
-            for block in sellers[sellerKey]["blocks"].items():
+        for SellerId in sellers:
+            for block in sellers[SellerId]["blocks"].items():
                 supply += block[1][0]["quantity"]
     demand = 0
     if bidders:
-        for bidderKey in bidders:
-            demand += bidders[bidderKey]["need"]
+        for bidderId in bidders:
+            demand += bidders[bidderId]["need"]
     return supply, demand
 
 
 def initSellers(sellers):
+    'Takes sellers and puts their blocks for sale up for auction within the simulation'
+    
     sellerList = []
-    noAuctions = 0
-    for sellerKey in sellers:
-        entity = Sellers.Sellers(sellerKey, sellers[sellerKey]["location"])
-        firstBlock = sellers[sellerKey]["blocks"].pop("block1")
-        entity.quantity.append(firstBlock[0]['quantity'])
-        entity.genBlock(
+    amountOfAuctions = 0
+    
+    for SellerId in sellers:
+        
+        #Identifies a Seller and initializes their first block for auction within the simulation environment
+        currentSeller = Sellers.Sellers(SellerId, sellers[SellerId]["location"])  
+        firstBlock = sellers[SellerId]["blocks"].pop("block1")
+        currentSeller.quantity.append(firstBlock[0]['quantity'])
+        currentSeller.genBlock(
             firstBlock[1]["price"], firstBlock[0]["quantity"], firstBlock[2]["discount"]
         )
-        noAuctions += 1
-        for block in sellers[sellerKey]["blocks"].items():
-            entity.quantity.append(block[1][0]['quantity'])
-            entity.addBlock(
-                block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]
+        amountOfAuctions += 1
+        
+        #Gets all necessary variables to put blocks up for auction in simulation
+        
+        for block in sellers[SellerId]["blocks"].items():   
+            currentSeller.quantity.append(block[1][0]['quantity'])  #uses [1][0] since first index is location and not block
+            currentSeller.addBlock(
+                block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]  #add first block to currentseller
             )
-            noAuctions += 1
-        sellerList.append(entity)
-    return noAuctions, sellerList
+            amountOfAuctions += 1               #collect  amount of auctions and a list of what's for sale by whom
+        sellerList.append(currentSeller)        #
+    return amountOfAuctions, sellerList
 
 
 def initBidders(bidders, maxRounds):
+    'moves bidder[1] to bidder[0]'
     bidderList = []
     for bidder in bidders.items():
-        data = bidder[1]
+        data = bidder[1]            # bidder[1] is need
         entity = Bidders(
-            bidder[0],
+            bidder[0],              #bidder[0] is  location
             data["location"],
             data["need"],
-            maxRounds,
+            maxRounds,                                      
             Behaviour.genBehaviour(data["behavior"]),
             data["distanceLimit"],
             data["distancePenalty"]
@@ -218,6 +241,7 @@ def initBidders(bidders, maxRounds):
 # Source with explanation: https://stackoverflow.com/a/50746409
 def genLocation(radius):
     "Generate x,y points within circle with set radius with center in 0,0"
+    
     r = radius * math.sqrt(random.random())
     theta = random.random() * 2 * math.pi
     x = round(r * math.cos(theta), 4)
@@ -233,6 +257,7 @@ def overridePenalty(bidders, penalty):
         bidder[1]['distancePenalty'] = penalty
 
 def start(skipPrompts):
+    'Master function'
     slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
     fairness = 1
     #TODO Serialize matchmaking results and store in appropriate way
