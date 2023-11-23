@@ -227,12 +227,12 @@ def initSellers(sellers):
 
 
 def initBidders(bidders, maxRounds):
-    'moves bidder[1] to bidder[0]'
+    'moves Bidder data  to a local array for use in the auctioning system'
     bidderList = []
     for bidder in bidders.items():
-        data = bidder[1]            # bidder[1] is need
+        data = bidder[1]            
         entity = Bidders(
-            bidder[0],              #bidder[0] is  location
+            bidder[0],              
             data["location"],
             data["need"],
             maxRounds,                                      
@@ -240,7 +240,7 @@ def initBidders(bidders, maxRounds):
             data["distanceLimit"],
             data["distancePenalty"]
         )
-        bidderList.append(entity)
+        bidderList.append(entity)       # commits bidder to local variable for use in the auctioning system
     return bidderList
 
 # Source with explanation: https://stackoverflow.com/a/50746409
