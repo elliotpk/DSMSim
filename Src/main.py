@@ -110,6 +110,8 @@ def genConfig():
 
 # Verify that all necessary values are present in the config, arbitrary ranges on the random calls
 def verifyConfig(conf):
+    'adds possibly missing variables to existing config file'
+    
     if not conf["seed"]:
         conf["seed"] = random.randrange(0, 10000)
     random.seed(conf["seed"])
@@ -200,24 +202,27 @@ def initSellers(sellers):
     
     for SellerId in sellers:
         
-        #Identifies a Seller and initializes their first block for auction within the simulation environment
-        currentSeller = Sellers.Sellers(SellerId, sellers[SellerId]["location"])  
-        firstBlock = sellers[SellerId]["blocks"].pop("block1")
-        currentSeller.quantity.append(firstBlock[0]['quantity'])
-        currentSeller.genBlock(
-            firstBlock[1]["price"], firstBlock[0]["quantity"], firstBlock[2]["discount"]
+        #Identifies a Seller and initializes a local seller variable that can later be added on to
+        
+        activeSeller = Sellers.Sellers(SellerId, sellers[SellerId]["location"])          # latches active Sellers location to a local seller variable
+        firstBlock = sellers[SellerId]["blocks"].pop("block1")                           # Removes first block of active Seller as to not count it twice, and puts it in local variable
+        activeSeller.quantity.append(firstBlock[0]['quantity'])    #Why?                 # add quantity to local seller variable
+        activeSeller.genBlock(
+            firstBlock[1]["price"], firstBlock[0]["quantity"], firstBlock[2]["discount"] #generates a block in local Seller variable from scrubbed data
         )
-        amountOfAuctions += 1
+        amountOfAuctions += 1                                                            # counts removed first block possible auction
         
-        #Gets all necessary variables to put blocks up for auction in simulation
+        #Adds rest of Sellers blocks to  local Seller variable
         
-        for block in sellers[SellerId]["blocks"].items():   
-            currentSeller.quantity.append(block[1][0]['quantity'])  #uses [1][0] since first index is location and not block
-            currentSeller.addBlock(
-                block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]  #add first block to currentseller
+         for block in sellers[SellerId]["blocks"].items():   
+            activeSeller.quantity.append(block[1][0]['quantity'])                        #discretely identifies quantity for current block
+            activeSeller.addBlock(
+                block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]   #stores entire block locally
             )
-            amountOfAuctions += 1               #collect  amount of auctions and a list of what's for sale by whom
-        sellerList.append(currentSeller)        #
+            amountOfAuctions += 1              # counts current block as possible Auction
+            
+        #Sets up return result
+        sellerList.append(activeSeller)        
     return amountOfAuctions, sellerList
 
 
