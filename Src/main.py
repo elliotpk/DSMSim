@@ -9,6 +9,8 @@ import yaml
 seed = None
 
 # File names for configs hardcoded, could be set with a user input function
+# The generation of bidders and sellers is made simple by keeping the same format as the .yaml files for them throughout and at the end initalizing the objects from that config
+
 configFile = "config.yaml"
 sellerFile = "sellers.yaml"
 bidderFile = "bidders.yaml"
@@ -17,7 +19,7 @@ bidderFile = "bidders.yaml"
 MAX_BLOCK = 3
 MIN_BLOCK = 2
 
-# The generation of bidders and sellers is made simple by keeping the same format as the .yaml files for them throughout and at the end initalizing the objects from that config
+
 def readConfig(skipPrompts):
     "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them"
     
@@ -91,9 +93,10 @@ def readConfig(skipPrompts):
     bidderList = initBidders(bidders, math.ceil(amountOfAuctions / conf["slotsize"]))
     return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
 
-# Arbitrary ranges for the random generation of a whole config (if the file is not found)
+
+
 def genConfig():
-    """Generates a config.yaml file and saves it"""
+    """Generates a config.yaml file and saves it, called if config file is missing"""
     conf = {}
     conf["seed"] = random.randrange(0, 10000)
     random.seed(conf["seed"])
@@ -108,7 +111,6 @@ def genConfig():
     with open("config.yaml", "w") as f:
         yaml.dump(conf, f, sort_keys=False)
 
-# Verify that all necessary values are present in the config, arbitrary ranges on the random calls
 def verifyConfig(conf):
     'adds possibly missing variables to existing config file'
     
@@ -131,6 +133,19 @@ def verifyConfig(conf):
         conf["slotsize"] = 2
     if not conf["end-threshold"]:
         conf["end-threshold"] = 2
+        
+    #suggested "improvement" on basis of amount of lines    
+        
+    #conf.setdefault("seed", random.randrange(0, 10000))
+    #random.seed(conf["seed"])
+    #conf.setdefault("sellers", random.randrange(5, 15))
+    #conf.setdefault("bidders", random.randrange(2, 7))
+    #conf.setdefault("resource-usage", round(random.uniform(0.25, 0.9), 4))
+    #conf.setdefault("radius", random.randint(2, 10))
+    #conf.setdefault("distance-limit", round(random.uniform(conf.get("radius", 2) * 1.5, conf.get("radius", 2) * 3), 2))
+    #conf.setdefault("distance-penalty", round(random.uniform(5, 10), 2))
+    #conf.setdefault("slotsize", 2)
+    #conf.setdefault("end-threshold", 2)        
 
 # Generation of sellers, the total supply is divided up into parts (randomly distributed size)
 # Furthermore each seller can have chain their blocks together, randomly generated in range 'min-block' 'max-block' from config
@@ -214,7 +229,7 @@ def initSellers(sellers):
         
         #Adds rest of Sellers blocks to  local Seller variable
         
-         for block in sellers[SellerId]["blocks"].items():   
+        for block in sellers[SellerId]["blocks"].items():   
             activeSeller.quantity.append(block[1][0]['quantity'])                        #discretely identifies quantity for current block
             activeSeller.addBlock(
                 block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]   #stores entire block locally
