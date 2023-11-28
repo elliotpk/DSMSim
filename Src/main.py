@@ -6,6 +6,8 @@ import random
 import math
 import yaml
 
+#HEJ ARVID
+
 seed = None
 
 # File names for configs hardcoded, could be set with a user input function
