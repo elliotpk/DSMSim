@@ -295,7 +295,7 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
-        auctionResults = []
+        auctionResults = []                     # always empty
     
     return matchmakingResults, auctionResults
 
