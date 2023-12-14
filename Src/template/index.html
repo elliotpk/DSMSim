@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="test.css" /> -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
+	<!-- <script src="script.js"></script> -->
+	<script rel="text/javascript" src="{{ url_for('static', filename='script/script.js') }}" >
+	</script>
+</head>
+
+	<div style="width: 100%; height: 100%; padding-top: 29px; padding-bottom: 53.96px; padding-left: 59px; padding-right: 100px; background: white; justify-content: flex-start; align-items: flex-end; gap: 116px; display: inline-flex">
+		<div style="width: 314px; height: 915.04px; position: relative">
+			
+			<div class="options" id="nr0">
+				<button onclick="changeClass0()" class="options button" id="button0"><p>Company 1</p></button>
+			</div>
+			
+			<div class="selected" id="nr1">
+				<button onclick="changeClass1()" class="selected button" id="button1"><p>Company 2</p></button>
+			</div>
+
+			<div class="options" id="nr2">
+				<button onclick="changeClass2()" class="options button" id="button2"><p>Company 3</p></button>
+			</div>
+
+		</div>
+		<div style="width: 851px; height: 941px; position: relative">
+
+			<div class="info">
+				<h1>Info</h1>
+
+				<div class="text">
+					<p>Info Info Info</p>
+					<p>Info Info Info</p>
+					<p>Info Info Info</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</html>

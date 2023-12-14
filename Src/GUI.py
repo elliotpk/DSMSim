@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,url_for,render_template
 import webbrowser
 import os
 
@@ -9,9 +9,9 @@ app = Flask(__name__)
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
 
 def hello():
-    return "<p>Hello, World!</p>"
+    return render_template('index.html')
 
-htmlLocation = os.path.dirname(os.path.realpath(__file__)) + "\\" + 'test.html'
+htmlLocation = 'http://127.0.0.1:5000'
 
 webbrowser.open_new_tab(htmlLocation)
 
