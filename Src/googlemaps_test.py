@@ -1,6 +1,5 @@
 import googlemaps
 from datetime import datetime
-#bababooie
 def calculate_distance_duration(api_key, origin, destination):      #will return KeyError: Distance if no viable route is found.
     gmaps = googlemaps.Client(key=api_key)
 
