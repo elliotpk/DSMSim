@@ -238,6 +238,7 @@ def start(skipPrompts):
     #TODO Serialize matchmaking results and store in appropriate way
     matchmakingResults = matchMakingCalculation(sellerList, bidderList)
     fairness = matchmakingResults[0].get('fairness', None)
+    print(matchmakingResults[9])
     distance = matchmakingResults[0].get('avgDistance', None)
     print(f"Best fairness value: {fairness}")
     print(f"Average distance {distance}")
