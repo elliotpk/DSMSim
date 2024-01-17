@@ -6,6 +6,9 @@ import random
 import math
 import yaml
 
+#HEJ ARVID
+#Hejdå
+
 seed = None
 
 # File names for configs hardcoded, could be set with a user input function
@@ -302,7 +305,11 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
+<<<<<<< HEAD
         auctionResults = []                                 #TODO What does this do?
+=======
+        auctionResults = []                     # always empty
+>>>>>>> f5d91b593abb6af247d9a61c1697a8ef304e0e2c
     
     return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
 

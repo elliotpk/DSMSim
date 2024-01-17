@@ -26,12 +26,12 @@ def matchMakingCalculation(sellerList, bidderList):
 
         print(f"Permutation number {permNum} / {int((len(blocks) / 2) + 1)}\nCombinations tested: {permComb}")
         
-        if(permNum > len(blocks)/2): break              #oesn't this exclude valid combinations?
+        if(permNum > len(blocks)/2): break              #Doesn't this exclude valid combinations?
 
     if(len(validCombinations) == 0):
         return None
     
-    validCombinations = evaluateCombinations(validCombinations)
+    validCombinations = evaluateCombinations(validCombinations)         # sorts either by Fairness or average distance depending on preference.
     return validCombinations
 
 

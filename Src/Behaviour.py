@@ -15,6 +15,7 @@ def genBehaviour(input):
 
 # Example behaviour class, any new types should follow the same variable-names and functions
 class typeB:
+    #bababooie
     def __init__(self):
         self.aggressiveness = random.uniform(0.4, 0.6)      # How "aggressive" bids are, effectively scales the bid size
         self.marketPriceFactor = random.uniform(0.8, 1)     # How many % of marketprice (price per unit) to bid with
