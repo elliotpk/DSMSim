@@ -1,12 +1,38 @@
-import  ReferenceCalculator
-import googlemaps_test
 
+#ATT TÄNKA PÅ
 #6,458 Kilometres is distance between  rotterdam new york
 #
+
+import ReferenceCalculator
+import googlemaps_test
+import csv
+import locations1.csv
+import yaml
+
+
+
+
+
+#fälten för land och region i countries heter name och subregion
+#fälten för stad och land i cities heter name och country_id
+
+#random value up until 50802 
+
+
+
+try:
+        f = open("locations1.csv", "r")
+        try 
+
+
+
+
+#KOD
+
 #API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 #
-#origin = ( rand(mydatabase))
-#destination = mybidder([destination])
+#origin = (rand(mydatabase))
+#destination = mybidder([destination]) eller rand(mydatabase)
 #origin[continent] = "US"                               # continent can be either US or EU
 #destination[continent] =EU"
 
