@@ -12,19 +12,18 @@ import yaml
 
 
 
-
-#fälten för land och region i countries heter name och subregion
-#fälten för stad och land i cities heter name och country_id
-
-#random value up until 50802 
-
-
-
-try:
-        f = open("locations1.csv", "r")
-        try 
-
-
+Stad1= "Stockholm"
+Stad2= "Piteå"
+DistanceCalc(Stad1, Stad2)
+def DistanceCalc(Stad1, Stad2):
+        if(Continent(Stad1)==Continent(Stad2)): 
+                return "Samma region" 
+        elif(Continent(Stad1)=="Europe" and Continent(Stad2)== "America"): 
+                return "To Rotterdam from New York" 
+        elif(Continent(Stad2)=="Europe" and Continent(Stad1)== "America"): 
+                return "To New York From Rotterdam" 
+        else:
+                print("FEL")
 
 
 #KOD
@@ -53,3 +52,5 @@ try:
 #
 #calculate_distance_duration(API_KEY, origin, destination):  
 #    
+
+
