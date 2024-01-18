@@ -3,7 +3,7 @@
 #6,458 Kilometres is distance between  rotterdam new york
 #
 
-import ReferenceCalculator
+import DSMSimGrupp92023.Src.refCalc as refCalc
 import googlemaps_test
 import csv
 
@@ -51,7 +51,7 @@ def DistanceCalc(seller, buyer):
         elif(Continent(buyer)=="Europe" and Continent(seller)== "America"): 
                 print("To Rotterdam from New York") 
         else:
-                print("FEL")
+                print("FEL")                    # will never execute due to ordering of csv file
 
 DistanceCalc(seller, buyer)
 
