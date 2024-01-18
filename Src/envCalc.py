@@ -29,7 +29,7 @@ def list_find(some_list,some_item,find_all=False):
         
 def Continent(city):
 
-    with open('Database/locations1.csv', 'r', newline='') as csvfile:
+    with open('Database/places.csv', 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         cities = list(reader)
         for rows in cities:
