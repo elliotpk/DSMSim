@@ -24,7 +24,7 @@ MIN_BLOCK = 2
 
 
 def readConfig(skipPrompts):
-    "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them"
+    "Reads any configs which are present, and generates configs if they do not exist or if user wished to generate them" # Prepares all variables for Start():
     
     generatedConfig = 0
     
@@ -281,14 +281,21 @@ def overridePenalty(bidders, penalty):
 
 def start(skipPrompts):
     'Master function'
+    
     slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
     fairness = 1
     #TODO Serialize matchmaking results and store in appropriate way
-    matchmakingResults = matchMakingCalculation(sellerList, bidderList)
-    fairness = matchmakingResults[0].get('fairness', None)
-    distance = matchmakingResults[0].get('avgDistance', None)
-    print(f"Best fairness value: {fairness}")
+    matchmakingResults = matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
+    
+    fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
+    distance = matchmakingResults[0].get('avgDistance', None)                   
+    
+    print(f"Best fairness value: {fairness}")                                   #Use if sorted by fairness in referenceCalculator
     print(f"Average distance {distance}")
+    
+    #print(f"fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    #print(f"Best Average distance {distance}")
+    
     if fairness == None:
         print("No valid combinations were found")
     if skipPrompts:
@@ -298,9 +305,13 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
+<<<<<<< HEAD
+        auctionResults = []                                 #TODO What does this do?
+=======
         auctionResults = []                     # always empty
+>>>>>>> f5d91b593abb6af247d9a61c1697a8ef304e0e2c
     
-    return matchmakingResults, auctionResults
+    return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
 
 if __name__ == "__main__":
     start(False)
