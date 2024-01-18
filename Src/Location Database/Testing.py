@@ -4,16 +4,16 @@ import os
   
 # Gen Rand Location works 
 
-'''
+
 x= random.randint(0,50802)
 with open('locations1.csv', 'r') as csvfile:
     csv_reader = csv.reader(csvfile)
     rows = list(csv_reader)
-    print(rows[x])'''
+    print(rows[x])
     
 # gen Specific Location
 
-def find_row( search_term):
+'''def find_row( search_term):
     with open('locations1.csv', 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
@@ -21,7 +21,7 @@ def find_row( search_term):
                 return row
     return None
 
-print(find_row("London, United Kingdom"))
+print(find_row("London, United Kingdom"))'''
 
 
 # finds continent  can also potentially save as variable
@@ -55,3 +55,54 @@ if (it_is_at != None):
   print(" Is in Europe {}".format(it_is_at) ) 
 else:
   print("Is in America")'''
+'''
+def list_find(some_list,some_item,find_all=False): 
+    
+            if (some_item in some_list): 
+                if find_all: 
+                    index_list = [] 
+                    for an_index in range(len(some_list)): 
+                        if some_list[an_index] == some_item: 
+                            index_list.append(an_index) 
+                    return index_list 
+                else: 
+                    return some_list.index(some_item) 
+            else: 
+                return None 
+        
+def Continent(city):
+
+    with open('locations1.csv', 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        cities = list(reader)
+        for rows in cities:
+
+
+
+            csv_list = list(csv.reader([rows]))[0]
+
+            print(csv_list)
+            if (city) in rows:
+                 print(rows)
+
+
+
+
+
+
+
+
+         x = str(row)
+            print(x)
+            if city in row:
+                ny = ", ".join(row)
+                print(ny) 
+
+    it_is_at = list_find(ny,"Europe") 
+    if (it_is_at != None): 
+        print("Europe") 
+    else:
+        print("America")
+
+Continent("Stockholm")
+'''
