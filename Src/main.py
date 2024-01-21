@@ -6,8 +6,7 @@ import random
 import math
 import yaml
 
-#HEJ ARVID
-#Hejdå
+#HEJsan
 
 seed = None
 
