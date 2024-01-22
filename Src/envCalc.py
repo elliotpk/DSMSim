@@ -1,17 +1,15 @@
-
 #ATT TÄNKA PÅ
 #6,458 Kilometres is distance between  rotterdam new york
 #
-
-import DSMSimGrupp92023.Src.refCalc as refCalc
-import googlemaps_test
+import googlemaps
+import API_Handling
 import csv
 
 
 
 
-seller= "Stockholm"
-buyer= "New York"
+seller= "Malmö"
+buyer= "Boston"
 
 def list_find(some_list,some_item,find_all=False): 
     
@@ -43,15 +41,30 @@ def Continent(city):
         else:
             return("America")  
 
+def mix(fromcity, tocity):
+        return (fromcity + tocity + 6458)
+
 def DistanceCalc(seller, buyer):
+        
+        API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
+        
         if(Continent(seller)==Continent(buyer)): 
                 print( "Samma region") 
+                print(API_Handling.Route(API_KEY, seller, buyer))
         elif(Continent(seller)=="Europe" and Continent(buyer)== "America"): 
                 print("To New York from Rotterdam") 
+                x=API_Handling.Route(API_KEY, seller, 'Rotterdam')
+                y =API_Handling.Route(API_KEY, 'New York City', buyer)
+                print(mix(x,y))
         elif(Continent(buyer)=="Europe" and Continent(seller)== "America"): 
                 print("To Rotterdam from New York") 
         else:
                 print("FEL")                    # will never execute due to ordering of csv file
+                
+                
+                
+                
+                
 
 DistanceCalc(seller, buyer)
 
@@ -80,6 +93,3 @@ DistanceCalc(seller, buyer)
 # else return "origin or destination not in allowed locations" 
 #
 #calculate_distance_duration(API_KEY, origin, destination):  
-
-
-
