@@ -43,7 +43,7 @@ def Continent(city):
 
 def mix(fromcity, tocity):
         return (fromcity + tocity + 6458)
-
+#bbb
 def DistanceCalc(seller, buyer):
         
         API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
