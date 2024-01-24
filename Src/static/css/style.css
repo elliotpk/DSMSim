@@ -72,3 +72,11 @@
     left:0px;
     cursor: pointer;
   }
+#googleMap{
+    height: 450px;
+    width: 80%;
+    border-radius: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

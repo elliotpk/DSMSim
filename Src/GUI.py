@@ -21,14 +21,17 @@ b = y[1]
 def index():
     return render_template('index.html')
 
+
 companyNames = ['Company 1','Company 2','Company 3']
 @app.route('/result')
 def result():
     return render_template("result.html", names = companyNames, data = a, data2 = b)
 
+
 @app.route('/config')
 def config():
     return render_template("config.html")
+
 
 htmlLocation = 'http://127.0.0.1:5000'
 webbrowser.open_new_tab(htmlLocation)
