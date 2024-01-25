@@ -4,6 +4,7 @@ from Bidders import *
 import random
 import math
 import yaml
+
 import API_Handling
 import refCalc
 
@@ -34,7 +35,7 @@ def readConfig(skipPrompts):
         print("Could not find a config file, generating")
         conf = genConfig()
         generatedConfig = 1
-        
+        git config --global credential.helper cache
     #Loads Sellers from config file, and sets amount of sellers in the same file,  if such a  file exists  
     try:
         with open(sellerFile, "r") as f:
