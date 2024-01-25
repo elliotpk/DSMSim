@@ -169,13 +169,24 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
         return True
       
 # Gen Rand Location works 
+def randLocation():
+    x= random.randint(0,95144)
+    with open('places.csv', 'r', encoding='utf-8') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        print(csv_reader)
+        rows = list(csv_reader)
+        print(rows[x])
 
-'''
-x= random.randint(0,50802)
-with open('locations1.csv', 'r', encoding='utf-8') as csvfile:
-    csv_reader = csv.reader(csvfile)
-    rows = list(csv_reader)
-    print(rows[x])'''
+def specLocation(city, country):
+    with open('places.csv', 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            ny = ",".join(row)
+            if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
+                return ny
+
+print(specLocation("Paris", "France"))
+    
     
 
 
