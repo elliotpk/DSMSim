@@ -172,7 +172,7 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
 
 '''
 x= random.randint(0,50802)
-with open('locations1.csv', 'r') as csvfile:
+with open('locations1.csv', 'r', encoding='utf-8') as csvfile:
     csv_reader = csv.reader(csvfile)
     rows = list(csv_reader)
     print(rows[x])'''
@@ -200,7 +200,7 @@ def list_find(some_list,some_item,find_all=False):
         
 def Continent(city):
 
-    with open('locations1.csv', 'r', newline='') as csvfile:
+    with open('locations1.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             if city in row:

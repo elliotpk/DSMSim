@@ -8,15 +8,17 @@ def Route(api_key, origin, destination):      #will return KeyError: Distance if
     matrix = gmaps.distance_matrix(origin, destination)
 
     if matrix['status'] == 'OK':
-        distance = matrix['rows'][0]['elements'][0]['distance']['text']
-        mes = distance.replace('.', '')                    # FIX TODO remove values after punctuation
-        fes= mes.replace(',', '')                          # tar bort komma tecken, fuckar med apin annars
-        print(fes)
-        res = [int(i) for i in fes.split() if i.isdigit()]      # tar ut individuella siffror
+        distans = matrix['rows'][0]['elements'][0]['distance']['text']
+        print(distans)
+        fes= distans.replace(',', '')                          # tar bort komma tecken, fuckar med apin annars
+        ges =fes.split('.')[0]                                  #tar bort decimalvärden helt, dvs avrundar till golvet.
+        #print(ges)
+
+        res = [int(i) for i in ges.split() if i.isdigit()]      # tar ut individuella siffror
         ny = (str(res))[1:-1]                                   # DET HÄR ÄR DEN VIKTIGA BEHÅLL DEN HÄR, den behåller siffervärdet
         print(ny) 
 
-        return distance
+        return ny
     else:
         return None 
 
