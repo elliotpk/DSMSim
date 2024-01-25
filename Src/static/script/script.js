@@ -89,3 +89,9 @@ function calcRoute(){
     }
   })
 }
+
+function sort(){
+  selectElement = document.querySelector('#checkbox');
+  output = selectElement.value;
+  // console.log(output);
+}

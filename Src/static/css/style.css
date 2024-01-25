@@ -2,7 +2,7 @@
     width: 314px; 
     height: 249px; 
     left: 0px;  
-    position: absolute; 
+    /* position: absolute;  */
     background: #D9D9D9; 
     border-radius: 30px; 
     border: 1px black solid;
@@ -17,7 +17,7 @@
     width: 280px; 
     height: 222px; 
     left: 17px; 
-    position: absolute; 
+    position: relative; 
     background: #D9D9D9; 
     border-radius: 30px;
     font-size: 22px; 
@@ -25,6 +25,10 @@
     font-weight: 400; 
     word-wrap: break-word;
     display: block;
+}
+
+.m{
+    margin: 50px;
 }
 
 .info{
@@ -51,17 +55,6 @@
     margin-top: 100px;
 }
 
-#nr0{
-    top: 0px;
-}
-
-#nr1{
-    top: 353px;
-}
-#nr2{
-    top: 693px; 
-}
-
 .button {
     border: none;
     color: black;
@@ -79,4 +72,13 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+#checkbox
+{
+  display: block;
+  background: firebrick;
+  color: white;
+  cursor: pointer;
+  padding: 10px 5px 5px;
+  position: relative;
 }

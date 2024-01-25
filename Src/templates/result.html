@@ -10,23 +10,44 @@
 	</script>
 
 </head>
-<body>
+<body onload="changeInfo(0)">
+	<script>
+		function changeInfo(x){
+			if(x == 0){
+			document.getElementById("info").innerHTML = "<p>Score = {{data[1]}}</p><p>Fairness index = {{data[2]}}</p><p>Location = {{data[3]}}</p><p>Info Info Info</p>";
+			}
+			if(x == 1){
+			document.getElementById("info").innerHTML = "<p>Score = {{data2[1]}}</p><p>Fairness index = {{data2[2]}}</p><p>Location = {{data2[3]}}</p><p>Info Info Info</p>";
+			}
+		}
+
+	</script>
+
 	<script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsOrlA6kqfTXR31zHLLObCvp4fcYNaqMk&loading=async&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=[API_KEY_HERE]&loading=async&callback=initMap">
 </script>
+<div>
+	<label for="sort">
+		<select onchange="sort()" name="sort" id="checkbox">
+			<option value="Fairness">Fairness</option>
+			<option value="Environment">Environment Impact</option>
+		</select>
+	</label>
+</div>
 
 	<div style="width: 100%; height: 100%; padding-top: 29px; padding-bottom: 53.96px; padding-left: 59px; padding-right: 100px; background: white; justify-content: flex-start; align-items: flex-end; gap: 116px; display: inline-flex">
+
 		<div style="width: 314px; height: 915.04px; position: relative">
 			
-			<div class="selected" id="nr0">
-				<button onclick="changeClass0()" class="selected button" id="button0"><p>{{names [0]}}</p></button>
+			<div class="selected m" id="nr0">
+				<button onclick="changeClass0(), changeInfo(0)" class="selected button" id="button0"><p>{{names [0]}}</p></button>
 			</div>
 			
-			<div class="options" id="nr1">
-				<button onclick="changeClass1()" class="options button" id="button1"><p>{{names [1]}}</p></button>
+			<div class="options m" id="nr1">
+				<button onclick="changeClass1(), changeInfo(1)" class="options button" id="button1"><p>{{names [1]}}</p></button>
 			</div>
 
-			<div class="options" id="nr2">
+			<div class="options m" id="nr2">
 				<button onclick="changeClass2()" class="options button" id="button2"><p>{{names [2]}}</p></button>
 			</div>
 
@@ -38,16 +59,13 @@
 				<h1>Info</h1>
 
 				<div class="text" id="info">
-					<p>Score = {{data[1]}}</p>
+					<!-- <p>Score = {{data[1]}}</p>
 					<p>Fairness index = {{data[2]}}</p>
 					<p>Location = {{data[3]}}</p>
-					<p>Info Info Info</p>
+					<p>Info Info Info</p> -->
 				</div>
 
-				<div id="googleMap">
-					
-				</div>
-				<div id="output"></div>
+				<div id="googleMap"></div>
 			</div>
 
 		</div>
