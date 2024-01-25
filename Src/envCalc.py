@@ -9,7 +9,7 @@ import csv
 
 
 seller= "Malmö"
-buyer= "Boston"
+buyer= "Lund"
 
 def list_find(some_list,some_item,find_all=False): 
     
