@@ -7,9 +7,6 @@ import yaml
 import API_Handling
 import refCalc
 
-#HEJ ARVID
-#Hejdå
-
 seed = None
 
 # File names for configs hardcoded, could be set with a user input function
@@ -190,7 +187,7 @@ def genBidders(number, demand, radius, limit, penalty):
     demands = [a - b for a, b in zip(dividers + [demand], [0] + dividers)]
     for i in range(number):
         bidders["Bidder" + str(i)] = {
-            "location": genLocation(radius),
+            "location": genLocation(),
             "need": demands.pop(),
             "behavior": Behaviour.randomBehaviour(),
             "distanceLimit": limit,

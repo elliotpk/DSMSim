@@ -1,7 +1,7 @@
 Seller1:
   location:
-    - 1.00
-    - 1.00
+    - 'London', 'United Kingdom'
+    #- 1.00
   blocks:
     block1:
       - quantity: 200
@@ -17,8 +17,8 @@ Seller1:
       - discount: 0.2
 Seller2:
   location:
-    - 2.00
-    - 2.00
+    - 'Malmö', 'Sweden'
+    #- 2.00
   blocks:
     block1:
       - quantity: 600

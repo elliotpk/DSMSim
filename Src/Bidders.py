@@ -2,6 +2,9 @@ import random
 import Behaviour
 import math
 from itertools import combinations
+import API_Handling
+
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 
 class Bidders:
@@ -105,11 +108,14 @@ class Bidders:
                 bestDifference = quantityDifferences[i]
         
         return combos[bestIndex]
-    
+    '''
     def distanceCalc(self, location):
         distance = math.sqrt((location[0]-self.location[0])**2 + (location[1]-self.location[1])**2)
         return distance
-
+    '''
+    def distanceCalc(self, location):
+        return API_Handling.route(API_KEY, location[0], self.location[0])
+        
     def updateWonItems(self, wonItems):
         self.wonItems += wonItems
     
