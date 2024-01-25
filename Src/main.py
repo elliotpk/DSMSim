@@ -1,10 +1,11 @@
 from SimEngine import *
 import Sellers
 from Bidders import *
-from DSMSimGrupp92023.Src.refCalc import *
 import random
 import math
 import yaml
+import API_Handling
+import refCalc
 
 #HEJ ARVID
 #Hejdå
@@ -175,7 +176,7 @@ def genSellers(number, supply, radius, conf):
                 {"discount": discount},
             ]
         sellers["Seller" + str(i)] = {
-            "location": genLocation(radius),
+            "location": genLocation(),
             "blocks": blocks,
         }
     return sellers
@@ -262,6 +263,7 @@ def initBidders(bidders, maxRounds):
     return bidderList
 
 # Source with explanation: https://stackoverflow.com/a/50746409
+'''
 def genLocation(radius):
     "Generate x,y points within circle with set radius with center in 0,0"
     
@@ -270,6 +272,12 @@ def genLocation(radius):
     x = round(r * math.cos(theta), 4)
     y = round(r * math.sin(theta), 4)
     return [x,y]
+'''
+#TODO Make locations work!
+def genLocation():
+    return refCalc.randLocation()
+
+    
 
 def overrideLimit(bidders, limit):
     for bidder in bidders.items():
