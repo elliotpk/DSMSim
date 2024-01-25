@@ -1,7 +1,7 @@
 from SimEngine import *
 import Sellers
 from Bidders import *
-from ReferenceCalculator import *
+from DSMSimGrupp92023.Src.refCalc import *
 import random
 import math
 import yaml
@@ -303,11 +303,7 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
-<<<<<<< HEAD
-        auctionResults = []                                 #TODO What does this do?
-=======
         auctionResults = []                     # always empty
->>>>>>> f5d91b593abb6af247d9a61c1697a8ef304e0e2c
     
     return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
 

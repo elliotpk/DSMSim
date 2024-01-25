@@ -1,7 +1,9 @@
 import math
 from itertools import combinations, permutations
 from collections import deque
-
+import csv
+import os
+import random
 import json
 
 def matchMakingCalculation(sellerList, bidderList):
@@ -165,3 +167,48 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
         return checkIfPreviousBlockUnbought(unboughtBlock.next(), boughtBlocks)
     else:
         return True
+      
+# Gen Rand Location works 
+
+'''
+x= random.randint(0,50802)
+with open('locations1.csv', 'r') as csvfile:
+    csv_reader = csv.reader(csvfile)
+    rows = list(csv_reader)
+    print(rows[x])'''
+    
+
+
+# finds continent  can also potentially save as variable
+
+
+   
+
+def list_find(some_list,some_item,find_all=False): 
+    
+            if (some_item in some_list): 
+                if find_all: 
+                    index_list = [] 
+                    for an_index in range(len(some_list)): 
+                        if some_list[an_index] == some_item: 
+                            index_list.append(an_index) 
+                    return index_list 
+                else: 
+                    return some_list.index(some_item) 
+            else: 
+                return None 
+        
+def Continent(city):
+
+    with open('locations1.csv', 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if city in row:
+                ny = ", ".join(row)
+                print(ny) 
+
+    it_is_at = list_find(ny,"Europe") 
+    if (it_is_at != None): 
+        print("Europe") 
+    else:
+        print("America")

@@ -1,6 +1,7 @@
 import csv
+
 '''
-# Open the input CSV file and the output file
+# Open the input CSV file and the output file                                               from cities1 to cities2
 with open('cities.csv', 'r') as infile, open('cities2.csv', 'w', newline='') as outfile:
     reader = csv.DictReader(infile)
     
@@ -39,7 +40,7 @@ with open('countries.csv', 'r') as infile, open('countries2.csv', 'w', newline='
 '''
 input_filename = 'countries2.csv'
 output_filename = 'countries3.csv'
-values_to_keep = {'Southern Europe', 'Northern America', 'Northern Europe'}  # Set of values to keep
+values_to_keep = {'Southern Europe', 'Northern America', 'Northern Europe', 'Western Europe', 'Eastern Europe'}  # Set of values to keep
 
 with open(input_filename, 'r') as infile, open(output_filename, 'w', newline='') as outfile:
     reader = csv.DictReader(infile)
@@ -54,6 +55,7 @@ with open(input_filename, 'r') as infile, open(output_filename, 'w', newline='')
 '''
 
 '''
+
 file1 = 'cities2.csv'
 file2 = 'countries3.csv'
 
@@ -77,6 +79,7 @@ with open(file1, 'r') as f1, open('cities3.csv', 'w', newline='') as output:
             writer.writerow(row)
 '''
 '''
+
 file1 = 'cities3.csv'
 file2 = 'countries3.csv'
 
@@ -106,13 +109,49 @@ with open(file1, 'r') as f1, open('location_db.csv', 'w', newline='') as output:
             row['subregion'] = ''  # If no matching value found, you can assign a default value
 
         writer.writerow(row)
-        
+    '''
+    
 '''
-import csv
+file1 = 'cities3.csv'
+file2 = 'countries3.csv'
+common_column = 'country_name'
+output_file = 'locations2.csv'
 
-input_file = 'locations.csv'
-output_file = 'locations1.csv'
-word_to_remove = 'Northern'  # Word to be removed
+def combine_csv_files(file1, file2, common_column, output_file):
+    # Read data from the first CSV file and create a dictionary
+    data_dict = {}
+    with open(file1, 'r') as f1:
+        reader = csv.DictReader(f1)
+        for row in reader:
+            key = row[common_column]
+            data_dict[key] = row
+
+    # Read data from the second CSV file and update the dictionary
+    with open(file2, 'r') as f2:
+        reader = csv.DictReader(f2)
+        for row in reader:
+            key = row[common_column]
+            # If the key already exists, update the values, otherwise, add a new entry
+            if key in data_dict:
+                data_dict[key].update(row)
+            else:
+                data_dict[key] = row
+
+    # Write the combined data to a new CSV file
+    header = reader.fieldnames  # Use the header from the second file
+    with open(output_file, 'w', newline='') as output_csv:
+        writer = csv.DictWriter(output_csv, fieldnames=header)
+        writer.writeheader()
+        writer.writerows(data_dict.values())
+
+    print(f'Combined data saved to {output_file}')
+
+'''
+        
+
+input_file = 'locations5.csv'
+output_file = 'places.csv'
+word_to_remove = 'Western'  # Word to be removed
 field_to_edit = 'subregion'  # Field containing the word to be removed
 
 with open(input_file, 'r') as infile, open(output_file, 'w', newline='') as outfile:
