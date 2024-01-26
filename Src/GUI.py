@@ -16,6 +16,7 @@ for x in mycol.find():
 
 a = y[0]
 b = y[1]
+c = y[2]
 
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
 def index():
@@ -25,7 +26,7 @@ def index():
 companyNames = ['Company 1','Company 2','Company 3']
 @app.route('/result')
 def result():
-    return render_template("result.html", names = companyNames, data = a, data2 = b)
+    return render_template("result.html", names = companyNames, data = a, data2 = b, data3 = c)
 
 
 @app.route('/config')

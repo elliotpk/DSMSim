@@ -70,13 +70,10 @@ directionsService = new google.maps.DirectionsService()
 directionsRenderer = new google.maps.DirectionsRenderer()
 directionsRenderer.setMap(map)
 
-calcRoute();
 }
 
 //Make a route and then display it on the map
-function calcRoute(){
-  var source ="Linköping";
-  var destination = "Stockholm";
+function calcRoute(source, destination){
 
   let req = {
     origin: source,
@@ -88,10 +85,28 @@ function calcRoute(){
         directionsRenderer.setDirections(result)
     }
   })
-}
 
+  var overSea = false;
+  shippingCoords = [
+    { lat: 51.938406, lng: 4.140486},
+    { lat: 40.617694, lng: -74.066921}
+  ]
+  if(overSea == true){
+    shippingPath = new google.maps.Polyline({
+      path: shippingCoords,
+      geodesic: true,
+      strokeColor: "#000000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+    })
+    
+    shippingPath.setMap(map)
+  }
+
+}
 function sort(){
   selectElement = document.querySelector('#checkbox');
   output = selectElement.value;
-  // console.log(output);
+  if(output == Fairness){}
+  if(output == Environment){}
 }

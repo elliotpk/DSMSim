@@ -14,18 +14,23 @@
 	<script>
 		function changeInfo(x){
 			if(x == 0){
+			calcRoute("Linköping", '{{data[3]}}');
 			document.getElementById("info").innerHTML = "<p>Score = {{data[1]}}</p><p>Fairness index = {{data[2]}}</p><p>Location = {{data[3]}}</p><p>Info Info Info</p>";
 			}
 			if(x == 1){
+			calcRoute("Linköping", '{{data2[3]}}');
 			document.getElementById("info").innerHTML = "<p>Score = {{data2[1]}}</p><p>Fairness index = {{data2[2]}}</p><p>Location = {{data2[3]}}</p><p>Info Info Info</p>";
 			}
+			if(x == 2){
+			calcRoute("Linköping", '{{data3[3]}}');
+			document.getElementById("info").innerHTML = "<p>Score = {{data3[1]}}</p><p>Fairness index = {{data3[2]}}</p><p>Location = {{data3[3]}}</p><p>Info Info Info</p>";
+			}
 		}
-
 	</script>
 
 	<script async
     src="https://maps.googleapis.com/maps/api/js?key=[API_KEY_HERE]&loading=async&callback=initMap">
-</script>
+	</script>
 <div>
 	<label for="sort">
 		<select onchange="sort()" name="sort" id="checkbox">
@@ -48,7 +53,7 @@
 			</div>
 
 			<div class="options m" id="nr2">
-				<button onclick="changeClass2()" class="options button" id="button2"><p>{{names [2]}}</p></button>
+				<button onclick="changeClass2(), changeInfo(2)" class="options button" id="button2"><p>{{names [2]}}</p></button>
 			</div>
 
 		</div>
@@ -59,10 +64,6 @@
 				<h1>Info</h1>
 
 				<div class="text" id="info">
-					<!-- <p>Score = {{data[1]}}</p>
-					<p>Fairness index = {{data[2]}}</p>
-					<p>Location = {{data[3]}}</p>
-					<p>Info Info Info</p> -->
 				</div>
 
 				<div id="googleMap"></div>
