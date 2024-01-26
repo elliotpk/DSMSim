@@ -5,6 +5,10 @@ import csv
 import os
 import random
 import json
+import API_Handling
+
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
+
 
 def matchMakingCalculation(sellerList, bidderList):
     'Returns list of valid combinations given the current auctioning data'
@@ -106,8 +110,10 @@ def formatCombination(combination, buyers):
         
         quantity,price,distanceSum = (0,0,0)               # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
         
-        for block in combination[i]:
-            distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
+        for block in combination[i]: # TODO Change location in below row to route calc
+            distanceSum += API_Handling.Route(API_KEY, block[1].location, buyers[i].location) #TODO Convert X and Y to location names
+            
+            #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount
             price += block[0].Price
 
@@ -169,13 +175,24 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
         return True
       
 # Gen Rand Location works 
+def randLocation():
+    x= random.randint(0,95144)
+    with open('places.csv', 'r', encoding='utf-8') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        rows = list(csv_reader)
+        return(rows[x][0] + ', ' +rows[x][1])
+    
 
-'''
-x= random.randint(0,50802)
-with open('locations1.csv', 'r', encoding='utf-8') as csvfile:
-    csv_reader = csv.reader(csvfile)
-    rows = list(csv_reader)
-    print(rows[x])'''
+def specLocation(city, country):
+    with open('places.csv', 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            ny = ",".join(row)
+            if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
+                return ny
+
+print(specLocation("Paris", "France"))
+    
     
 
 

@@ -8,8 +8,6 @@ import csv
 
 
 
-seller= "Malmö"
-buyer= "Lund"
 
 def list_find(some_list,some_item,find_all=False): 
     
@@ -50,46 +48,24 @@ def DistanceCalc(seller, buyer):
         
         if(Continent(seller)==Continent(buyer)): 
                 print( "Samma region") 
-                print(API_Handling.Route(API_KEY, seller, buyer))
+                print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')
+                return API_Handling.Route(API_KEY, seller, buyer)
         elif(Continent(seller)=="Europe" and Continent(buyer)== "America"): 
                 print("To New York from Rotterdam") 
                 x=API_Handling.Route(API_KEY, seller, 'Rotterdam')
                 y =API_Handling.Route(API_KEY, 'New York City', buyer)
-                print(mix(x,y))
+                print(str(mix(x,y))+' km')
+                return mix(x,y)
         elif(Continent(buyer)=="Europe" and Continent(seller)== "America"): 
-                print("To Rotterdam from New York") 
-        else:
-                print("FEL")                    # will never execute due to ordering of csv file
-                
-                
-                
-                
-                
+                x=API_Handling.Route(API_KEY, seller, 'New York City')
+                y =API_Handling.Route(API_KEY, 'Rotterdam', buyer)
+                print(str(mix(x,y))+' km')
+                print("To Rotterdam from New York")
+                return mix(x,y)
+                   
+seller= "Malmö"
+buyer= "Lund"       
 
 DistanceCalc(seller, buyer)
 
-#KOD
-
-#API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
-#
-#origin = (rand(mydatabase))
-#destination = mybidder([destination]) eller rand(mydatabase)
-#origin[continent] = "US"                               # continent can be either US or EU
-#destination[continent] =EU"
-
-#if origin(continent) == destination(continent)
-#       #calculate_distance_duration(API_KEY, origin, destination):  
-
-#else if continent(origin) == US
-#       #x = calculate_distance_duration(API_KEY, origin, New york):  
-        #y = sea route fuel
-        #z = #calculate_distance_duration(API_KEY, Rotterdam, destination):
-        
-# elseif contient(origin) == EU  
-#       #x = calculate_distance_duration(API_KEY, origin, Rotterdam):  
-        #y = sea route fuel
-        #z = #calculate_distance_duration(API_KEY, New york, destination): 
-        
-# else return "origin or destination not in allowed locations" 
-#
-#calculate_distance_duration(API_KEY, origin, destination):  
+# Bränsleberäkning för sjörutt
