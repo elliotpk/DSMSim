@@ -59,12 +59,13 @@ def readConfig(skipPrompts):
         verifyConfig(conf)
     
     # Checks to ensure that there is a max and min block, constants defined at the top
+        
     if conf["min-block"] == None:
         conf["min-block"] = MIN_BLOCK
 
     if conf["max-block"] == None:
         conf["max-block"] = MAX_BLOCK
-
+    
     
     # Determines supply and demand, based on Whether bidders and Sellers are present or not
     
@@ -75,14 +76,14 @@ def readConfig(skipPrompts):
     elif not bidders and not sellers:
         demand = random.randrange(500, 5000)
         supply = round(demand / conf["resource-usage"])
-        bidders = genBidders(conf["bidders"], demand, conf["radius"], conf["distance-limit"], conf["distance-penalty"])
-        sellers = genSellers(conf["sellers"], supply, conf["radius"], conf)
+        bidders = genBidders(conf["bidders"], demand, conf["distance-limit"], conf["distance-penalty"], conf["radius"]) # Removed Radius
+        sellers = genSellers(conf["sellers"], supply, conf, conf["radius"]) # Removed Radius
     elif bidders and not sellers:
         supply = round(demand / conf["resource-usage"])
-        sellers = genSellers(conf["sellers"], supply, conf["radius"])
+        sellers = genSellers(conf["sellers"], supply, conf["radius"])  #Removed Radius conf["radius"])
     else:
         demand = round(conf["resource-usage"] * supply)
-        bidders = genBidders(conf["bidders"], demand, conf["radius"], conf["distance-limit"], conf["distance-penalty"])
+        bidders = genBidders(conf["bidders"], demand, conf["distance-limit"], conf["distance-penalty"], conf["radius"]) # Removed Radius
     
     # Set distance limit and penalty if it exists
     if conf["distance-limit"] != None:
@@ -110,6 +111,8 @@ def genConfig():
     conf["distance-penalty"] = round(random.uniform(5,10),2)
     conf["slotsize"] = 2
     conf["end-threshold"] = 2
+    conf["min-block"] = 1
+    conf["max-block"] = 1
     with open("config.yaml", "w") as f:
         yaml.dump(conf, f, sort_keys=False)
 
@@ -135,6 +138,10 @@ def verifyConfig(conf):
         conf["slotsize"] = 2
     if not conf["end-threshold"]:
         conf["end-threshold"] = 2
+    if not conf["min-block"]:
+        conf["min-block"] = 1
+    if not conf["max-block"]:
+        conf["max-block"] = 1
         
     #suggested "improvement" on basis of amount of lines    
         
@@ -152,7 +159,7 @@ def verifyConfig(conf):
 # Generation of sellers, the total supply is divided up into parts (randomly distributed size)
 # Furthermore each seller can have chain their blocks together, randomly generated in range 'min-block' 'max-block' from config
 
-def genSellers(number, supply, radius, conf):
+def genSellers(number, supply, conf, radius):
     'generates Sellers in case Config file isnt present'
     
     sellers = {}
@@ -174,13 +181,13 @@ def genSellers(number, supply, radius, conf):
                 {"discount": discount},
             ]
         sellers["Seller" + str(i)] = {
-            "location": genLocation(),
+            "location": genLocation(radius), 
             "blocks": blocks,
         }
     return sellers
 
 
-def genBidders(number, demand, radius, limit, penalty):
+def genBidders(number, demand, limit, penalty, radius): #City and country variables, if specLocation is needed
     'generates Bidders in case Config file isnt present '
     
     bidders = {}
@@ -188,7 +195,7 @@ def genBidders(number, demand, radius, limit, penalty):
     demands = [a - b for a, b in zip(dividers + [demand], [0] + dividers)]
     for i in range(number):
         bidders["Bidder" + str(i)] = {
-            "location": genLocation(),
+            "location": genLocation(radius),
             "need": demands.pop(),
             "behavior": Behaviour.randomBehaviour(),
             "distanceLimit": limit,
@@ -261,7 +268,7 @@ def initBidders(bidders, maxRounds):
     return bidderList
 
 # Source with explanation: https://stackoverflow.com/a/50746409
-'''
+
 def genLocation(radius):
     "Generate x,y points within circle with set radius with center in 0,0"
     
@@ -270,11 +277,13 @@ def genLocation(radius):
     x = round(r * math.cos(theta), 4)
     y = round(r * math.sin(theta), 4)
     return [x,y]
-'''
-#TODO Make locations work!
-def genLocation():
-    return refCalc.randLocation()
 
+#TODO Make locations work!
+'''
+def genLocation(city,country):
+    print(refCalc.specLocation(city, country))
+    return refCalc.specLocation(city, country)
+'''
     
 
 def overrideLimit(bidders, limit):
@@ -294,7 +303,7 @@ def start(skipPrompts):
     matchmakingResults = matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
     
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
-    distance = matchmakingResults[0].get('avgDistance', None)                   
+    distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     
     print(f"Best fairness value: {fairness}")                                   #Use if sorted by fairness in referenceCalculator
     print(f"Average distance {distance}")
@@ -317,3 +326,5 @@ def start(skipPrompts):
 
 if __name__ == "__main__":
     start(False)
+    
+    
