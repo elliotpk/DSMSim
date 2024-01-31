@@ -24,7 +24,7 @@ def list_find(some_list,some_item,find_all=False):
                 return None 
         
 def Continent(city):
-
+    ny = []
     with open('Database/places.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         cities = list(reader)
@@ -46,8 +46,11 @@ def distanceCalc(seller, buyer):
         
         API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
         
-        if(Continent(seller)==Continent(buyer)): 
+        if(Continent(seller)== Continent(buyer)): 
                 print( "Samma region") 
+                
+                print(str(seller + " " + buyer + " TEST" ))             #TODO somehow two countries with separate continents slip in here 
+                
                 print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')
                 return API_Handling.Route(API_KEY, seller, buyer)
         elif(Continent(seller)=="Europe" and Continent(buyer)== "America"): 
