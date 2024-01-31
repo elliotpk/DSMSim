@@ -41,8 +41,8 @@ def Continent(city):
 
 def mix(fromcity, tocity):
         return (fromcity + tocity + 6458)
-#bbb
-def DistanceCalc(seller, buyer):
+
+def distanceCalc(seller, buyer):
         
         API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
         
@@ -66,6 +66,6 @@ def DistanceCalc(seller, buyer):
 seller= "Malmö"
 buyer= "Lund"       
 
-DistanceCalc(seller, buyer)
+#distanceCalc(seller, buyer)
 
 # Bränsleberäkning för sjörutt
