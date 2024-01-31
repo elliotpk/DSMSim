@@ -25,13 +25,17 @@ def list_find(some_list,some_item,find_all=False):
         
 def Continent(city):
     ny = []
+    print(city + " YEAH")
     with open('Database/places.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         cities = list(reader)
+        #print(cities)
         for rows in cities:
-            if (city) in rows:
+            
+            if (city) in rows:                  #TODO this doesn't trigger.... because of faulty input string? IMPORTANT
+                print("YAW")
                 ny = ", ".join(rows)
-                print(ny) 
+                print(ny)
 
         it_is_at = list_find(ny,"Europe") 
         if (it_is_at != None): 
@@ -66,9 +70,10 @@ def distanceCalc(seller, buyer):
                 print("To Rotterdam from New York")
                 return mix(x,y)
                    
-seller= "Malmö"
-buyer= "Lund"       
+seller= "'Madrid', 'Spain'"
+buyer= "'Boston', 'United States'"       
 
-#distanceCalc(seller, buyer)
+#Continent(seller)
+distanceCalc(seller, buyer)
 
 # Bränsleberäkning för sjörutt
