@@ -1,0 +1,10 @@
+seed: 7709
+sellers: 11
+bidders: 3
+resource-usage: 0.5205
+distance-limit: 4
+distance-penalty: 7.38
+slotsize: 2
+end-threshold: 2
+min-block: 1
+max-block: 1
