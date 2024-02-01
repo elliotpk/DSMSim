@@ -6,17 +6,21 @@ import pymongo
 # of the current python module, flask needs it for some work behind the scenes
 app = Flask(__name__) 
     
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["mydatabase"]
-mycol = mydb["customers"]
+# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+# mydb = myclient["mydatabase"]
+# mycol = mydb["customers"]
 
 y = []
-for x in mycol.find():
-  y.append(list(x.values()))
+# for x in mycol.find():
+#   y.append(list(x.values()))
 
-a = y[0]
-b = y[1]
-c = y[2]
+# a = y[0]
+# b = y[1]
+# c = y[2]
+
+a= ["x", "9", "10", "Stockholm"]
+b = a
+c = a
 
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
 def index():

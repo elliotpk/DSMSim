@@ -14,7 +14,7 @@
 	<script>
 		function changeInfo(x){
 			if(x == 0){
-			calcRoute("Linköping", '{{data[3]}}');
+			calcRoute("Las Vegas, America", '{{data[3]}}, Europe');
 			document.getElementById("info").innerHTML = "<p>Score = {{data[1]}}</p><p>Fairness index = {{data[2]}}</p><p>Location = {{data[3]}}</p><p>Info Info Info</p>";
 			}
 			if(x == 1){
@@ -22,14 +22,14 @@
 			document.getElementById("info").innerHTML = "<p>Score = {{data2[1]}}</p><p>Fairness index = {{data2[2]}}</p><p>Location = {{data2[3]}}</p><p>Info Info Info</p>";
 			}
 			if(x == 2){
-			calcRoute("Linköping", '{{data3[3]}}');
+			calcRoute("Luleå", '{{data3[3]}}');
 			document.getElementById("info").innerHTML = "<p>Score = {{data3[1]}}</p><p>Fairness index = {{data3[2]}}</p><p>Location = {{data3[3]}}</p><p>Info Info Info</p>";
 			}
 		}
 	</script>
 
 	<script async
-    src="https://maps.googleapis.com/maps/api/js?key=[API_KEY_HERE]&loading=async&callback=initMap">
+	src="">
 	</script>
 <div>
 	<label for="sort">

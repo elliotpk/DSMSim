@@ -66,30 +66,78 @@ var mapOptions = {
 
 map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-directionsService = new google.maps.DirectionsService()
-directionsRenderer = new google.maps.DirectionsRenderer()
-directionsRenderer.setMap(map)
+directionsService = new google.maps.DirectionsService();
+directionsRenderer = new google.maps.DirectionsRenderer();
+directionsRenderer.setMap(map);
 
 }
 
 //Make a route and then display it on the map
 function calcRoute(source, destination){
 
-  let req = {
-    origin: source,
-    destination: destination,
-    travelMode: "DRIVING",
+  var mapOptions = {
+    center: start,
+    zoom: 4,
   };
-  directionsService.route(req,function(result,status){
-    if(status == "OK"){
-        directionsRenderer.setDirections(result)
-    }
-  })
+
+  map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map);
 
   var overSea = false;
+
+  var rendererOptions = {
+    preserveViewport: true,
+    suppressMarkers: false,
+  };
+
+  var sourceSplit = source.split(', ');
+  var destinationSplit = destination.split(', ');
+
+  if (sourceSplit[1] != destinationSplit[1]) {
+    overSea = true;
+
+    var routes = [{ origin: sourceSplit[0], destination: "194 Edgewater street, New York" }, { origin: "Rotterdam sea port", destination: destinationSplit[0] }];
+
+    const drawContinental = (route) => {
+      var request = {
+        origin: route.origin,
+        destination: route.destination,
+        travelMode: "DRIVING"
+      };
+
+      var directionsRenderer = new google.maps.DirectionsRenderer(rendererOptions);
+      directionsRenderer.setMap(map);
+
+      directionsService.route(request, function (result, status) {
+
+        if (status == "OK") {
+          directionsRenderer.setDirections(result);
+        }
+      });
+    };
+
+    routes.forEach(drawContinental);
+
+  }
+  else {
+    let req = {
+      origin: source,
+      destination: destination,
+      travelMode: "DRIVING",
+    };
+    directionsService.route(req, function (result, status) {
+      if (status == "OK") {
+        directionsRenderer.setDirections(result)
+      }
+    })
+  }
+  
   shippingCoords = [
-    { lat: 51.938406, lng: 4.140486},
-    { lat: 40.617694, lng: -74.066921}
+    {lat: 51.949597, lng: 4.145262},
+    {lat: 40.617483, lng: -74.066808}
   ]
   if(overSea == true){
     shippingPath = new google.maps.Polyline({
