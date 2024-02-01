@@ -20,6 +20,7 @@ def matchMakingCalculation(sellerList, bidderList):
     validCombinations = []
    
     blocks = getBlocks(sellerList)          #Get list of blocks for sale
+    print(str(blocks) + "NNNN")
    
     print(f"Beginning matchmaking calculation\n {int((len(blocks) / 2) + 1) * math.comb(len(blocks), len(bidderList))* len(blocks)} combinations to test")
 
@@ -28,7 +29,7 @@ def matchMakingCalculation(sellerList, bidderList):
         for rot in listRotator(perm):                               # For every Rotation of every permutation of blocks for sale
             for combination in splitfinder(rot, len(bidderList)):   # For every combination of every rotation of every permutation of blocks for sale
                                                                     # This will collect every way all blocks can be allotted to buyers      
-                if(validateCombination(combination, bidderList)):  
+                if(validateCombination(combination, bidderList)):   #TODO NEVERTRUE, ?
                     validCombinations.append(formatCombination(combination, bidderList))    # if combination adheres to rules set by auction, validate it
                    
                 permComb +=1
@@ -94,7 +95,7 @@ def evaluateCombinations(combinations):
     return sortedOutput
    
        
-
+#TODO currently, this never  returns true
 
 def validateCombination(combination, buyers): # Combination = list with (number of buyers)+1 lists within, each containing (block,seller) tuples, combination[-1] containing "unbought" blocks
     "Function to determine if a combination of blocks is valid"
@@ -102,14 +103,18 @@ def validateCombination(combination, buyers): # Combination = list with (number 
     # Validate if the order of buying blocks is broken
     for block in combination[-1]:
         if(not checkIfPreviousBlockUnbought(block[0], combination[:len(combination)-2])):
+            print("error1")
             return False
 
 
     # Validate if every buyer has a fulfilled need
     for i in range(len(buyers)):
         need = buyers[i].needs
+        print(str(need) + " need")
         for block in combination[i]:
+            print(str(block[0].Amount) + "Amount")
             need -= block[0].Amount
+            print(str(need) + "THISHISHISHSI")
         if(need > 0): return False
     return True
 
@@ -120,20 +125,19 @@ def validateCombination(combination, buyers): # Combination = list with (number 
 
 def formatCombination(combination, buyers):
     "Process and format combination data to be saved, compute fairness, distance data etc"
-   
+    
+    ("entered formatCombination")       #This never happens now
+    
     combinationData = []
     for i in range(len(buyers)):
         temp = {'buyer':buyers[i],'blocks':combination[i]}
        
-        quantity,price,distanceSum = (0,0,0)               # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
+        quantity,price,distanceSum = (0,0,0)            # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
        
         for block in combination[i]: # TODO Change location in below row to route calc
          
-         
-                      #TODO slutar inte med ett komma för att köras in igen
-           # print(envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))))
-
             distanceSum += envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))) #TODO Convert X and Y to location names
+            print(distanceSum + "GGGGG")
            
             #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount

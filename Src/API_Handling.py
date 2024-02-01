@@ -9,7 +9,7 @@ def Route(api_key, origin, destination):      #will return KeyError: Distance if
 
     if matrix['status'] == 'OK':
         distans = matrix['rows'][0]['elements'][0]['distance']['text']
-        x1= distans.replace(',', '')                          # tar bort komma tecken, fuckar med apin annars
+        x1= distans.replace(',', '')                          # tar bort komma tecken, fuckar med APIn annars
         x2 =x1.split('.')[0]                                  #tar bort decimalvärden helt, dvs avrundar till golvet.
 
         x3 = [int(i) for i in x2.split() if i.isdigit()]      # tar ut individuella siffror

@@ -327,7 +327,7 @@ def start(skipPrompts):
     fairness = 1
     #TODO Serialize matchmaking results and store in appropriate way
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
-   
+    print(str(matchmakingResults) + "aaaaa")
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
    
