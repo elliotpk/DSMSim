@@ -128,8 +128,10 @@ def formatCombination(combination, buyers):
         quantity,price,distanceSum = (0,0,0)               # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
        
         for block in combination[i]: # TODO Change location in below row to route calc
-            #print(block[1].location, buyers[i].location)                     #TODO slutar inte med ett komma för att köras in igen
-            print(envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))))
+         
+         
+                      #TODO slutar inte med ett komma för att köras in igen
+           # print(envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))))
 
             distanceSum += envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))) #TODO Convert X and Y to location names
            
@@ -212,7 +214,7 @@ def randLocation():
     with open('Database/places.csv', 'r', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
         rows = list(csv_reader)
-        return(str(rows[x][0] + ', ' +rows[x][1]))
+        return(str(rows[x][0] + ',' +rows[x][1]))
    
 
 

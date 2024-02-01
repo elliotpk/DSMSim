@@ -23,8 +23,8 @@ bidderFile = "bidders.yaml"
 
 
 # Default limits how many blocks each seller can have randomized
-MAX_BLOCK = 3
-MIN_BLOCK = 2
+MAX_BLOCK = 1
+MIN_BLOCK = 1
 
 
 
@@ -304,7 +304,6 @@ def genLocation(radius):
 
 
 def genLocation():
-    print(refCalc.randLocation())
     return refCalc.randLocation()
 
 
