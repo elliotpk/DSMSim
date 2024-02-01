@@ -42,7 +42,7 @@ def Continent(city, country):
 def mix(fromcity, tocity):
         return (fromcity + tocity + 6458)
 
-def distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry):
+def preDistanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry):
         
         seller= sellerCity + "," + sellerCountry
         print(seller)
@@ -70,13 +70,27 @@ def distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry):
                 print(str(mix(x,y))+' km')
                 print("To Rotterdam from New York")
                 return mix(x,y)
-                   
+                  
+def distanceCalc(seller, buyer):
+
+    x = str.split(seller , ',')
+    print(x)
+    y= str.split(buyer, ',')
+    print (y)
+    
+    a= x[0]
+    b= x[1]
+    c = y[0]
+    d = y[1]
+
+    preDistanceCalc(a,b,c,d)
+ 
 sellerCity= "Sheridan"
 sellerCountry="United States"
 buyerCity= "Luleå" 
 buyerCountry = "Sweden"     
 
 #Continent(seller)
-distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry)
+#distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry)
 
 # Bränsleberäkning för sjörutt
