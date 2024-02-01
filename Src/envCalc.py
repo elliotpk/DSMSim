@@ -23,19 +23,15 @@ def list_find(some_list,some_item,find_all=False):
             else: 
                 return None 
         
-def Continent(city):
-    ny = []
-    print(city + " YEAH")
+def Continent(city, country):
     with open('Database/places.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         cities = list(reader)
-        #print(cities)
+       # print(cities)
         for rows in cities:
             
-            if (city) in rows:                  #TODO this doesn't trigger.... because of faulty input string? IMPORTANT
-                print("YAW")
+            if (city and country) in rows:                  #TODO this doesn't trigger.... because of faulty input string? IMPORTANT
                 ny = ", ".join(rows)
-                print(ny)
 
         it_is_at = list_find(ny,"Europe") 
         if (it_is_at != None): 
@@ -46,34 +42,41 @@ def Continent(city):
 def mix(fromcity, tocity):
         return (fromcity + tocity + 6458)
 
-def distanceCalc(seller, buyer):
+def distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry):
+        
+        seller= sellerCity + "," + sellerCountry
+        print(seller)
+        buyer= buyerCity + "," + buyerCountry
+        print(buyer)
         
         API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
         
-        if(Continent(seller)== Continent(buyer)): 
+        if(Continent(sellerCity, sellerCountry)== Continent(buyerCity, buyerCountry)): 
                 print( "Samma region") 
                 
                 print(str(seller + " " + buyer + " TEST" ))             #TODO somehow two countries with separate continents slip in here 
                 
-                print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')
+                print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')         
                 return API_Handling.Route(API_KEY, seller, buyer)
-        elif(Continent(seller)=="Europe" and Continent(buyer)== "America"): 
+        elif(Continent(sellerCity, sellerCountry)== "Europe" and Continent(buyerCity, buyerCountry)== "America"): 
                 print("To New York from Rotterdam") 
                 x=API_Handling.Route(API_KEY, seller, 'Rotterdam')
                 y =API_Handling.Route(API_KEY, 'New York City', buyer)
                 print(str(mix(x,y))+' km')
                 return mix(x,y)
-        elif(Continent(buyer)=="Europe" and Continent(seller)== "America"): 
+        elif(Continent(sellerCity, sellerCountry)== "America" and Continent(buyerCity, buyerCountry)== "Europe"):
                 x=API_Handling.Route(API_KEY, seller, 'New York City')
                 y =API_Handling.Route(API_KEY, 'Rotterdam', buyer)
                 print(str(mix(x,y))+' km')
                 print("To Rotterdam from New York")
                 return mix(x,y)
                    
-seller= "'Madrid', 'Spain'"
-buyer= "'Boston', 'United States'"       
+sellerCity= "Sheridan"
+sellerCountry="United States"
+buyerCity= "Luleå" 
+buyerCountry = "Sweden"     
 
 #Continent(seller)
-distanceCalc(seller, buyer)
+distanceCalc(sellerCity, sellerCountry, buyerCity, buyerCountry)
 
 # Bränsleberäkning för sjörutt
