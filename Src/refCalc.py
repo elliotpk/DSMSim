@@ -114,7 +114,6 @@ def validateCombination(combination, buyers): # Combination = list with (number 
         for block in combination[i]:
             print(str(block[0].Amount) + "Amount")
             need -= block[0].Amount
-            print(str(need) + "THISHISHISHSI")
         if(need > 0): return False
     return True
 
@@ -137,7 +136,6 @@ def formatCombination(combination, buyers):
         for block in combination[i]: # TODO Change location in below row to route calc
          
             distanceSum += envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))) #TODO Convert X and Y to location names
-            print(distanceSum + "GGGGG")
            
             #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount
@@ -260,19 +258,3 @@ def list_find(some_list,some_item,find_all=False):
             else:
                 return None
        
-def Continent(city):
-
-
-    with open('locations1.csv', 'r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            if city in row:
-                ny = ", ".join(row)
-                print(ny)
-
-
-    it_is_at = list_find(ny,"Europe")
-    if (it_is_at != None):
-        print("Europe")
-    else:
-        print("America")
