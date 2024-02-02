@@ -20,7 +20,6 @@ def matchMakingCalculation(sellerList, bidderList):
     validCombinations = []
    
     blocks = getBlocks(sellerList)          #Get list of blocks for sale
-    print(str(blocks) + "NNNN")
    
     print(f"Beginning matchmaking calculation\n {int((len(blocks) / 2) + 1) * math.comb(len(blocks), len(bidderList))* len(blocks)} combinations to test")
 
@@ -103,16 +102,13 @@ def validateCombination(combination, buyers): # Combination = list with (number 
     # Validate if the order of buying blocks is broken
     for block in combination[-1]:
         if(not checkIfPreviousBlockUnbought(block[0], combination[:len(combination)-2])):
-            print("error1")
             return False
 
 
     # Validate if every buyer has a fulfilled need
     for i in range(len(buyers)):
         need = buyers[i].needs
-        print(str(need) + " need")
         for block in combination[i]:
-            print(str(block[0].Amount) + "Amount")
             need -= block[0].Amount
         if(need > 0): return False
     return True
