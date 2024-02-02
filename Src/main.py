@@ -23,8 +23,8 @@ bidderFile = "bidders.yaml"
 
 
 # Default limits how many blocks each seller can have randomized
-MAX_BLOCK = 3
-MIN_BLOCK = 2
+MAX_BLOCK = 0
+MIN_BLOCK = 0           # = refers to index not amount
 
 
 
@@ -304,7 +304,6 @@ def genLocation(radius):
 
 
 def genLocation():
-    print(refCalc.randLocation())
     return refCalc.randLocation()
 
 
@@ -328,7 +327,6 @@ def start(skipPrompts):
     fairness = 1
     #TODO Serialize matchmaking results and store in appropriate way
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
-   
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
    
