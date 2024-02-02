@@ -30,7 +30,7 @@ def matchMakingCalculation(sellerList, bidderList):
                                                                     # This will collect every way all blocks can be allotted to buyers      
                 if(validateCombination(combination, bidderList)):   #TODO NEVERTRUE, ?
                     validCombinations.append(formatCombination(combination, bidderList))    # if combination adheres to rules set by auction, validate it
-                   
+                    
                 permComb +=1
         permNum += 1
 
@@ -84,10 +84,12 @@ def evaluateCombinations(combinations):
         nom = nom**2
         denom = denom * len(combo)
         avgDistance /= len(combo)       # Compute avg distance
+        
        
         output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice})
-       
+        print(str(output[-1].get('fairness', None))+"OOOOO")
     sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
+    #print(str(sortedOutput)+ "XXXX")
    
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
    
@@ -130,8 +132,10 @@ def formatCombination(combination, buyers):
         quantity,price,distanceSum = (0,0,0)            # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
        
         for block in combination[i]: # TODO Change location in below row to route calc
-         
-            distanceSum += envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location)))) #TODO Convert X and Y to location names
+            x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
+            ecoFriendly = (100 -(x / 225))/100
+            distanceSum += x #TODO Convert X and Y to location names
+            buyers[i].eco = ecoFriendly
            
             #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount
@@ -146,6 +150,12 @@ def formatCombination(combination, buyers):
     return combinationData
    
 
+#   Fairness =    0,50
+#   ecoFriendly = 0.75
+
+ #   ecofriendly * 0,7 = ecofriendlyX
+#   Fairness * 0,3 = FairnessX
+# ecoFriendlyX+ FairnessX = 0,675 score
 
 
 
