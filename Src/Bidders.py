@@ -22,6 +22,8 @@ class Bidders:
         self.wonItems = 0
         self.currentRound = 0
         self.bidIndex = 0
+        self.eco = 0
+        self.score = 0
 
     def generateBids(self, inputAuction):
         "Generate a bid we should place"
