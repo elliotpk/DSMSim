@@ -321,6 +321,21 @@ def overridePenalty(bidders, penalty):
         bidder[1]['distancePenalty'] = penalty
 
 
+def fuling(input, score, fairness):
+    
+    x= input        #matchmakingResults[0].get('combo', None)
+    y= x[0]
+    z= y.get('buyer', None)
+    v = z.location
+    output= []
+    output2 = []
+    
+    output2.append(score)
+    output2.append(fairness)
+    output2.append(v)
+    output.append(output2)
+    return output
+
 def start(skipPrompts):
     'Master function'
    
@@ -331,15 +346,10 @@ def start(skipPrompts):
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
     
+    print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
     
-    print(matchmakingResults[0])
-    print(f"Best fairness value: {fairness}")                                   #Use if sorted by fairness in referenceCalculator
-    print(f"Average distance {distance}")
-    print(f"score {score}")
-    
-   
-    #print(f"fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
-    #print(f"Best Average distance {distance}")
+    print(f"fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Best Average distance {distance}")
     
    
     if fairness == None:
