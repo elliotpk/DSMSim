@@ -23,10 +23,9 @@ bidderFile = "bidders.yaml"
 
 
 # Default limits how many blocks each seller can have randomized
-MAX_BLOCK = 0
-MIN_BLOCK = 0           # = refers to index not amount
 
-
+MAX_BLOCK = 0           # = refers to index not amount
+MIN_BLOCK = 0           
 
 
 def readConfig(skipPrompts):
@@ -68,12 +67,12 @@ def readConfig(skipPrompts):
    
     # Checks to ensure that there is a max and min block, constants defined at the top
        
-    if conf["min-block"] == None:
-        conf["min-block"] = MIN_BLOCK
+#    if conf["min-block"] == None:
+ #       conf["min-block"] = MIN_BLOCK
 
 
-    if conf["max-block"] == None:
-        conf["max-block"] = MAX_BLOCK
+  #  if conf["max-block"] == None:
+   #     conf["max-block"] = MAX_BLOCK
    
    
     # Determines supply and demand, based on Whether bidders and Sellers are present or not
@@ -125,6 +124,8 @@ def genConfig():
     conf["end-threshold"] = 2
     conf["min-block"] = 1
     conf["max-block"] = 1
+    conf["fairnessPercent"] = 0.5
+    conf["ecoPercent"] = 0.5
     with open("config.yaml", "w") as f:
         yaml.dump(conf, f, sort_keys=False)
 
@@ -153,6 +154,10 @@ def verifyConfig(conf):
         conf["min-block"] = 1
     if not conf["max-block"]:
         conf["max-block"] = 1
+    if not conf["fairnessPercent"]:
+        conf["fairnessPercent"] = 0.5
+    if not conf["ecoPercent"]:
+        conf["ecoPercent="] = 0.5
        
     #suggested "improvement" on basis of amount of lines    
        
@@ -315,15 +320,6 @@ def overridePenalty(bidders, penalty):
     for bidder in bidders.items():
         bidder[1]['distancePenalty'] = penalty
 
-def getScore(fairness, ecoFriendly): # TODO Add fairnessProcent and ecoFriendlyProcent to config
-    fairnessProcent = 0,5 
-    ecoFriendlyProcent = 0,75
-    
-    fairnessRes = fairness * fairnessProcent 
-    ecoFriendlyRes = ecoFriendly * ecoFriendlyProcent
-    score = fairnessRes + ecoFriendlyRes
-    return score
-
 
 def start(skipPrompts):
     'Master function'
@@ -333,12 +329,18 @@ def start(skipPrompts):
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
+    score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
     
+    
+    print(matchmakingResults[0])
     print(f"Best fairness value: {fairness}")                                   #Use if sorted by fairness in referenceCalculator
     print(f"Average distance {distance}")
+    print(f"score {score}")
+    
    
     #print(f"fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
     #print(f"Best Average distance {distance}")
+    
    
     if fairness == None:
         print("No valid combinations were found")

@@ -7,9 +7,10 @@ import random
 import json
 import API_Handling
 import envCalc
+import yaml
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
-
+configFile = "config.yaml"
 
 
 
@@ -44,11 +45,8 @@ def matchMakingCalculation(sellerList, bidderList):
         return None
    
     validCombinations = evaluateCombinations(validCombinations)         # sorts either by Fairness or average distance depending on preference.
+
     return validCombinations
-
-
-
-
 
 
 def getBlocks(sellerList):
@@ -60,10 +58,6 @@ def getBlocks(sellerList):
         for block in sellerBlockList:
             blocks.append((block, seller))
     return blocks
-
-
-
-
 
 
 def evaluateCombinations(combinations):
@@ -79,6 +73,7 @@ def evaluateCombinations(combinations):
             avgDistance += buyerSet['distanceSum']
             nom += buyerSet['pricePerUnit']
             denom += buyerSet['pricePerUnit']**2
+            green= buyerSet['eco']  
            
         avgPrice = nom / len(combo)     # Compute Jain's fairness index
         nom = nom**2
@@ -86,16 +81,14 @@ def evaluateCombinations(combinations):
         avgDistance /= len(combo)       # Compute avg distance
         
        
-        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice})
-        #print(str(output[-1].get('combo', None)))
-        #print(str(output[-1].get(blocks[0]), None))
-    sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
-    print(str(output[-1].get('fairness', None))+" Fairness")
-    print(str(output[-1]))
-    x=output[-1].get('buyer', None)
-    print(x)
-    
+        score= getScore(green, (nom/denom), configFile)
+       
+        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score })
+        
+    #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
+    sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)          #Sort by score
+    
    
     return sortedOutput
    
@@ -137,31 +130,21 @@ def formatCombination(combination, buyers):
        
         for block in combination[i]: # TODO Change location in below row to route calc
             
-            quantity += block[0].Amount
-            price += block[0].Price
             
             x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
-            ecoFriendly = (100 -(x / 225))/100
+            quantity += block[0].Amount
+            price += block[0].Price
             distanceSum += x 
-            buyers[i].eco = ecoFriendly
+            ecoFriendly = (100 -(x / 225))/100
 
 
         temp['pricePerUnit'] = round(price/quantity, 2)
         temp['distanceSum'] = round(distanceSum, 2)
+        temp['eco'] = ecoFriendly
         combinationData.append(temp)
 
 
     return combinationData
-   
-
-#   Fairness =    0,50
-#   ecoFriendly = 0.75
-
- #   ecofriendly * 0,7 = ecofriendlyX
-#   Fairness * 0,3 = FairnessX
-# ecoFriendlyX+ FairnessX = 0,675 score
-
-
 
 def listRotator(inputList):
     'Takes a list and returns every possible rotation of it in an array'
@@ -239,7 +222,16 @@ def specLocation(city, country):
                 return ny
    
    
+def getScore(fairness, ecoFriendly, conf): 
+    with open(configFile, "r") as f:
+            conf = yaml.load(f, Loader=yaml.FullLoader)
+            ecoProcent = conf.get('ecoPercent', None)
+            fairnessProcent = conf.get('fairnessPercent', None)
 
+    fairnessRes = fairness * ecoProcent
+    ecoFriendlyRes = ecoFriendly * fairnessProcent
+    score = (fairnessRes + ecoFriendlyRes)
+    return score
 
 
 

@@ -1,6 +1,4 @@
-#ATT TÄNKA PÅ
-#6,458 Kilometres is distance between  rotterdam new york
-#
+
 import googlemaps
 import API_Handling
 import csv
@@ -62,7 +60,7 @@ def distanceCalc(seller, buyer):
         return API_Handling.Route(API_KEY, seller, buyer)
     elif(Continent(a,b)== "Europe" and Continent(c,d)== "America"): 
         #print("To New York from Rotterdam") 
-        #x=API_Handling.Route(API_KEY, seller1, 'Rotterdam')
+        x=API_Handling.Route(API_KEY, seller1, 'Rotterdam')
         y =API_Handling.Route(API_KEY, 'New York City', buyer1)
         #print(str(mix(x,y))+' km')
         return mix(x,y)
@@ -71,6 +69,7 @@ def distanceCalc(seller, buyer):
         y =API_Handling.Route(API_KEY, 'Rotterdam', buyer1)
         #print(str(mix(x,y))+' km')
         #print("To Rotterdam from New York")
+        
         return mix(x,y)
     
     
