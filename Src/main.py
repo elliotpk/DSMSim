@@ -306,10 +306,6 @@ def genLocation(radius):
 def genLocation():
     return refCalc.randLocation()
 
-
-   
-
-
 def overrideLimit(bidders, limit):
     for bidder in bidders.items():
         bidder[1]['distanceLimit'] = limit
@@ -337,8 +333,7 @@ def start(skipPrompts):
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
-    #x = getScore(fairness,)
-    #print(str(x)+"XXXX")
+    
     print(f"Best fairness value: {fairness}")                                   #Use if sorted by fairness in referenceCalculator
     print(f"Average distance {distance}")
    

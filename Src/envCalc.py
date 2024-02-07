@@ -58,26 +58,26 @@ def distanceCalc(seller, buyer):
         
     if(Continent(a,b)== Continent(c, d)): 
         #print( "Samma region")           
-        print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')         
+        #print(str(API_Handling.Route(API_KEY, seller, buyer))+' km')         
         return API_Handling.Route(API_KEY, seller, buyer)
     elif(Continent(a,b)== "Europe" and Continent(c,d)== "America"): 
-        print("To New York from Rotterdam") 
-        x=API_Handling.Route(API_KEY, seller1, 'Rotterdam')
+        #print("To New York from Rotterdam") 
+        #x=API_Handling.Route(API_KEY, seller1, 'Rotterdam')
         y =API_Handling.Route(API_KEY, 'New York City', buyer1)
-        print(str(mix(x,y))+' km')
+        #print(str(mix(x,y))+' km')
         return mix(x,y)
     elif(Continent(a,b)== "America" and Continent(c,d)== "Europe"):
         x=API_Handling.Route(API_KEY, seller1, 'New York City')
         y =API_Handling.Route(API_KEY, 'Rotterdam', buyer1)
-        print(str(mix(x,y))+' km')
-        print("To Rotterdam from New York")
+        #print(str(mix(x,y))+' km')
+        #print("To Rotterdam from New York")
         return mix(x,y)
     
     
     
  
-seller = "Los Angeles,United States"
-buyer = "Vladivostok,Russia"  
+#seller = "Los Angeles,United States"
+#buyer = "Vladivostok,Russia"  
 
 #Continent(seller)
     

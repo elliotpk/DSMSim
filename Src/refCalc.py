@@ -87,10 +87,14 @@ def evaluateCombinations(combinations):
         
        
         output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice})
-        print(str(output[-1].get('fairness', None))+"OOOOO")
+        #print(str(output[-1].get('combo', None)))
+        #print(str(output[-1].get(blocks[0]), None))
     sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
-    #print(str(sortedOutput)+ "XXXX")
-   
+    print(str(output[-1].get('fairness', None))+" Fairness")
+    print(str(output[-1]))
+    x=output[-1].get('buyer', None)
+    print(x)
+    
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
    
     return sortedOutput
@@ -132,14 +136,14 @@ def formatCombination(combination, buyers):
         quantity,price,distanceSum = (0,0,0)            # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
        
         for block in combination[i]: # TODO Change location in below row to route calc
-            x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
-            ecoFriendly = (100 -(x / 225))/100
-            distanceSum += x #TODO Convert X and Y to location names
-            buyers[i].eco = ecoFriendly
-           
-            #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
+            
             quantity += block[0].Amount
             price += block[0].Price
+            
+            x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
+            ecoFriendly = (100 -(x / 225))/100
+            distanceSum += x 
+            buyers[i].eco = ecoFriendly
 
 
         temp['pricePerUnit'] = round(price/quantity, 2)
@@ -233,9 +237,6 @@ def specLocation(city, country):
             ny = ",".join(row)
             if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
                 return ny
-
-
-print(specLocation("Paris", "France"+'.'))
    
    
 
