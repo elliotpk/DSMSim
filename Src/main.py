@@ -348,8 +348,10 @@ def start(skipPrompts):
     
     print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
     
-    print(f"fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
     print(f"Best Average distance {distance}")
+    print(f"Best score {score}")
+    
     
    
     if fairness == None:

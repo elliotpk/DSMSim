@@ -84,7 +84,7 @@ def evaluateCombinations(combinations):
         score= getScore(green, (nom/denom), configFile)
        
         output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score })
-        
+        print(output[-1])
     #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
     sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)          #Sort by score
@@ -161,10 +161,6 @@ def listRotator(inputList):
     return outputList
 
 
-
-
-
-
 def splitfinder(blocklist, numBuyers):      # blocklist = All the blocks from the sellers arranged in a specific permutation
    
     'Find all possible ways to split the blocks between the buyers (including one "buyer" for unbought blocks)'
@@ -203,9 +199,8 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
     else:
         return True
      
-# Gen Rand Location works
 def randLocation():
-    x= random.randint(0,95144)
+    x= random.randint(0,469)
     with open('Database/places.csv', 'r', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
         rows = list(csv_reader)
@@ -232,28 +227,3 @@ def getScore(fairness, ecoFriendly, conf):
     ecoFriendlyRes = ecoFriendly * fairnessProcent
     score = (fairnessRes + ecoFriendlyRes)
     return score
-
-
-
-# finds continent  can also potentially save as variable
-
-
-
-
-   
-
-
-def list_find(some_list,some_item,find_all=False):
-   
-            if (some_item in some_list):
-                if find_all:
-                    index_list = []
-                    for an_index in range(len(some_list)):
-                        if some_list[an_index] == some_item:
-                            index_list.append(an_index)
-                    return index_list
-                else:
-                    return some_list.index(some_item)
-            else:
-                return None
-       
