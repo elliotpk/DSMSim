@@ -8,7 +8,18 @@ class City:
         self.connection3 = [None, None]   
         self.connection4 = [None, None]   
         
-getCity()    
+def get_Connection(self, index):
+        "if more connections desired, add extra getter"
+        if index == 1:
+            return getattr(self, 'connection1', None)
+        elif index == 2:
+            return getattr(self, 'connection2', None)
+        elif index == 3:
+            return getattr(self, 'connection3', None)
+        elif index == 4:
+            return getattr(self, 'connection4', None)
+        else:
+            raise ValueError("Invalid index")
 
         
 class Country:
