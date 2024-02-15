@@ -76,14 +76,43 @@ def nationalDistances(countryObj):
         citiesObj.append(scan)
         
     for i in range(0, len(citiesObj)):
+        distanceList = []
         for j in range(0, len(citiesObj)):
-        distance = API_Handling.Route(API_KEY,citiesObj[i],citiesObj[j])
+            distance = API_Handling.Route(API_KEY,citiesObj[i],citiesObj[j])
+            distanceList.append([citiesObj[j], distance])
         '''put smallest nonzero value  in connection 1 , 2nd smallest connection2 etc.'''
-        
-    
-    
-    
-    
+        sorted= sorted(distanceList)
+        for i in range(0, len(distanceList)):
+            count=0
+            if (j.connection4 != None):
+                break
+            
+            if (i.connection1 == None):
+                i.connection1 == distanceList[count]
+                x=connectionsScanner(j)
+                
+                
+                
+'''                if (i.connection2 == None):
+                    
+                    
+                    if (i.connection3 == None):
+                        
+                        
+                        if (i.connection4 == None)
+'''
+            
+def connectionsScanner(cityObj):
+    x= cityObj.connections
+    if (x[0] ==None):
+        return cityObj.connection1
+    elif (x[1] == None):
+        return cityObj.connection2
+    elif (x[2] == None):
+        return cityObj.connection3
+    elif (x[3] == None):
+        return cityObj.connection4
+
 
                 
 
