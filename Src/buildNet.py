@@ -67,29 +67,33 @@ def list_find(some_list,some_item,find_all=False):
 
 def countryBuilder():
     "builds a country object that contains relevant city objects, given a structured csv file"
-    countriesWithCities =[]
-    built = []
-    listCountry = []
+    
+    countriesWithCities =[]             # return variable            
+    countryList = []
+    
+    
     with open('Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
-        for row in reader:
-            listCountry.append([row[0],row[1]])
-        for d in range(0, len(listCountry)-1):
-            if listCountry[d][1] == listCountry[d+1][1]:
-                print("same")
-            else:
-                print("different")
         
+        
+        for row in reader:                              #create temporary list for interaction from csv file
+            countryList.append([row[0],row[1]])         #goes through csv file
             
-            #if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
-
+        currentCities = []                              # holds cities in current country
+        
+        for d in range(0, len(countryList)-1):          # goes through whole list of cities
             
-
-                               
-            #built.append(x)
-            #countriesWithCities.append(countryObject) 
-            #count += 1
-    return "test"#countriesWithCities 
+            nowCountry= placeClasses.Country(countryList[d][1])     #creates country object
+            
+            if countryList[d][1] == countryList[d+1][1]:
+            
+                currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
+            else:
+                
+                nowCountry.cities= currentCities                        # starts new country object
+                countriesWithCities.append(nowCountry)                  # bulds on list of country objects
+        
+    return countriesWithCities 
     
             
 def connectionsScanner(cityObj):
@@ -173,7 +177,7 @@ def countryNet(countryObj):
 
 x = placeClasses.Country('Sweden')
 x.cities=['Stockholm', 'Gothenburg', 'Malmo','Vasteras']
-countryBuilder()
+print(countryBuilder())
     
     
 
