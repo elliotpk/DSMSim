@@ -8,11 +8,12 @@ import envCalc
 import yaml
 import placeClasses
 
- API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
+lastconnection = "connection4"                      #if more connections  than 4 are desired, the maximum amount of connections should be inserted here
+
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 
-''''
-
+'''
 Each country has a local network stored withiin a Country class variable
 One route should be established between each neighbouring  country by means of the warehouse closest to the border
 make a list of distances from each warehouse to each other warehouse in a country
@@ -34,7 +35,8 @@ for loop that identifies each specific country and runs the following on said co
 * How to identify best city to neighbouring country
 '''
 
-lastconnection = "connection4"                      #if more connections  than 4 are desired, the maximum amount of connections should be inserted here
+
+
 
 def buildNet():
     "collects Country networks and connects them"
@@ -45,31 +47,52 @@ def cityBuilder(name):
     x= placeClasses.City(name)
     return x
     
+def is_string(variable):
+    
+    return isinstance(variable, str)
+
+def list_find(some_list,some_item,find_all=False): 
+
+            if (some_item in some_list): 
+                if find_all: 
+                    index_list = [] 
+                    for an_index in range(len(some_list)): 
+                        if some_list[an_index] == some_item: 
+                            index_list.append(an_index) 
+                    return index_list 
+                else: 
+                    return some_list.index(some_item) 
+            else: 
+                return None
+
 def countryBuilder():
     "builds a country object that contains relevant city objects, given a structured csv file"
     countriesWithCities =[]
     built = []
-    with open('Database/places.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    listCountry = []
+    with open('Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            count = 0
+            listCountry.append([row[0],row[1]])
+        for d in range(0, len(listCountry)-1):
+            if listCountry[d][1] == listCountry[d+1][1]:
+                print("same")
+            else:
+                print("different")
+        
             
-            if (row[1] not in built):
-                countryObject= placeClasses.genCountry(row[1])
-                countryName = row[1]               
-                
-                for row in range(count,count + 10000000):           # given an organized cvs file, finds all instances of cities in country.
-                    if row[1] != countryName:       
-                        break
-                    else:
-                        countryObject.cities.append(cityBuilder(row[0]))    # appends city objects
- 
-                built.append(x)
-                countriesWithCities.append(countryObject) 
-            count += 1
-    return countriesWithCities 
+            #if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
+
+            
+
+                               
+            #built.append(x)
+            #countriesWithCities.append(countryObject) 
+            #count += 1
+    return "test"#countriesWithCities 
     
- def connectionsScanner(cityObj):
+            
+def connectionsScanner(cityObj):
     "returns which delivery-connection should be established"
     x= cityObj.connections
     count= 1
@@ -90,57 +113,67 @@ def countryNet(countryObj):
     for i in range(0, len(cities)):
         distanceList = []
         
-        for j in range(0, len(cities)):
+        for j in range(1, len(cities)):
             
             distance = API_Handling.Route(API_KEY,cities[i],cities[j])
-            distanceList.append([cities[j].name, distance])
+            distanceList.append([cities[j], distance])
         
-    
-        sorted= sorted(distanceList)                #returns sorted list of city objects according to of distances from currently researched city
+        sortedx= sorted(distanceList)                #returns sortedx list of city objects according to of distances from currently researched city
         
-        ''' ###PROBLEM does not check for multiplicity on second search PROBLEM###'''
+        
+        ''' ###PROBLEM does not check for multiplicity on second search
+                       no distance limit for connections
+        
+        
+        
+        
+        PROBLEM###'''
         
       
-        for j in range(1, len(sorted)):                                              #the 1 excludes the closest city (itself)
-            
-            openConnection1 = connectionsScanner(sorted[i])                           #checks for open connection 
-            openConnection2 = connectionsScanner(sorted[j])
+        for j in range(1, len(sortedx)):                                              #the 1 excludes the closest city (itself)
+
+            openConnection1 = connectionsScanner(sortedx[i][0].connections)                           #checks for open connection 
+            openConnection2 = connectionsScanner(sortedx[j][0].connections)
             name1= "connection" + openConnection1                                     #name1 becomes connection1, connection2, connection3, etc.
             name2 = "connection" + openConnection2                 
             
             if (openConnection1 != -1  and openConnection2 != -1):                    #if both objects have open connections 
                 
                 
-                if (getattr(sorted[i], name1) == None 
-                    and sorted[j].name not in getattr(sorted[i, "connections"])):       # checks which connection is open  and not already connected 
+                if (getattr(sortedx[i], name1) == None 
+                    and sortedx[j].name not in getattr(sortedx[i, "connections"])):       # checks which connection is open  and not already connected 
                     
-                    setattr(sorted[i], name1, sorted[j] )                             # sets  an open connection in city1 to (city2, distance)
-                    setattr(sorted[j], name2, ([sorted[i][0], sorted[j][1]]))         # sets connection  in city2 to [city1, distance]
+                    setattr(sortedx[i], name1, sortedx[j] )                             # sets  an open connection in city1 to (city2, distance)
+                    setattr(sortedx[j], name2, ([sortedx[i][0], sortedx[j][1]]))         # sets connection  in city2 to [city1, distance]
 
-                    list1 = getattr(sorted[i, "connections"])
-                    list1[openConnection1] = sorted[j].name                            # sets closed flag on object 1 connections with "city2"
-                    setattr(sorted[i], "connections", list1)
+                    list1 = getattr(sortedx[i, "connections"])
+                    list1[openConnection1] = sortedx[j].name                            # sets closed flag on object 1 connections with "city2"
+                    setattr(sortedx[i], "connections", list1)
                     
-                    list2 = getattr([sorted[j], "connections"])                                         
-                    list2[openConnection2] = sorted[j].name                             # sets closed flag on object 2 connections  with "city1" 
-                    setattr(sorted[i], "connections", list2 )
+                    list2 = getattr([sortedx[j], "connections"])                                         
+                    list2[openConnection2] = sortedx[j].name                             # sets closed flag on object 2 connections  with "city1" 
+                    setattr(sortedx[i], "connections", list2 )
             
             
             elif(openConnection2 == -1):                # if the closest city is fully connected
                 
-                if (getattr(sorted[i], name1) == None):
-                    setattr(sorted[i], name1, sorted[j])
-                    setattr(sorted[j], lastconnection, ([sorted[i][0], API_Handling.Route(sorted[j].name,sorted[i].name)]))   # replace last connection on city2, so that every city is in network
+                if (getattr(sortedx[i], name1) == None):
+                    setattr(sortedx[i], name1, sortedx[j])
+                    setattr(sortedx[j], lastconnection, ([sortedx[i][0], API_Handling.Route(sortedx[j].name,sortedx[i].name)]))   # replace last connection on city2, so that every city is in network
                     
-                    list1 = getattr(sorted[i, "connections"])
-                    list1[openConnection1] = sorted[j].name                                        # sets closed flag on object 1 connections
-                    setattr(sorted[i], "connections", list1)
+                    list1 = getattr(sortedx[i, "connections"])
+                    list1[openConnection1] = sortedx[j].name                                        # sets closed flag on object 1 connections
+                    setattr(sortedx[i], "connections", list1)
                     break           # this should only happen to one city 
 
-        countryNet.append(sorted[i])
+        countryNet.append(sortedx[i])
         
     return countryNet
 
+
+x = placeClasses.Country('Sweden')
+x.cities=['Stockholm', 'Gothenburg', 'Malmo','Vasteras']
+countryBuilder()
     
     
 
