@@ -7,9 +7,10 @@ import random
 import json
 import API_Handling
 import envCalc
+import yaml
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
-
+configFile = "config.yaml"
 
 
 
@@ -44,11 +45,8 @@ def matchMakingCalculation(sellerList, bidderList):
         return None
    
     validCombinations = evaluateCombinations(validCombinations)         # sorts either by Fairness or average distance depending on preference.
+
     return validCombinations
-
-
-
-
 
 
 def getBlocks(sellerList):
@@ -60,10 +58,6 @@ def getBlocks(sellerList):
         for block in sellerBlockList:
             blocks.append((block, seller))
     return blocks
-
-
-
-
 
 
 def evaluateCombinations(combinations):
@@ -79,6 +73,7 @@ def evaluateCombinations(combinations):
             avgDistance += buyerSet['distanceSum']
             nom += buyerSet['pricePerUnit']
             denom += buyerSet['pricePerUnit']**2
+            green= buyerSet['eco']  
            
         avgPrice = nom / len(combo)     # Compute Jain's fairness index
         nom = nom**2
@@ -86,12 +81,14 @@ def evaluateCombinations(combinations):
         avgDistance /= len(combo)       # Compute avg distance
         
        
-        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice})
-        print(str(output[-1].get('fairness', None))+"OOOOO")
-    sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
-    #print(str(sortedOutput)+ "XXXX")
-   
+        score= getScore(green, (nom/denom), configFile)
+       
+        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score })
+        print(output[-1])
+    #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
+    sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)          #Sort by score
+    
    
     return sortedOutput
    
@@ -132,32 +129,22 @@ def formatCombination(combination, buyers):
         quantity,price,distanceSum = (0,0,0)            # Sum up the distance of sales, sqrt((x2-x1)^2 + (y2-y1)^2)
        
         for block in combination[i]: # TODO Change location in below row to route calc
+            
+            
             x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
-            ecoFriendly = (100 -(x / 225))/100
-            distanceSum += x #TODO Convert X and Y to location names
-            buyers[i].eco = ecoFriendly
-           
-            #distanceSum += math.sqrt((buyers[i].location[0]-block[1].location[0])**2 + (buyers[i].location[1]-block[1].location[1])**2)
             quantity += block[0].Amount
             price += block[0].Price
+            distanceSum += x 
+            ecoFriendly = (100 -(x / 225))/100
 
 
         temp['pricePerUnit'] = round(price/quantity, 2)
         temp['distanceSum'] = round(distanceSum, 2)
+        temp['eco'] = ecoFriendly
         combinationData.append(temp)
 
 
     return combinationData
-   
-
-#   Fairness =    0,50
-#   ecoFriendly = 0.75
-
- #   ecofriendly * 0,7 = ecofriendlyX
-#   Fairness * 0,3 = FairnessX
-# ecoFriendlyX+ FairnessX = 0,675 score
-
-
 
 def listRotator(inputList):
     'Takes a list and returns every possible rotation of it in an array'
@@ -172,10 +159,6 @@ def listRotator(inputList):
         rotations -= 1
    
     return outputList
-
-
-
-
 
 
 def splitfinder(blocklist, numBuyers):      # blocklist = All the blocks from the sellers arranged in a specific permutation
@@ -216,9 +199,8 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
     else:
         return True
      
-# Gen Rand Location works
 def randLocation():
-    x= random.randint(0,95144)
+    x= random.randint(0,469)
     with open('Database/places.csv', 'r', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
         rows = list(csv_reader)
@@ -233,34 +215,15 @@ def specLocation(city, country):
             ny = ",".join(row)
             if ny.__contains__(city+',') == True and ny.__contains__(country+',') == True:
                 return ny
-
-
-print(specLocation("Paris", "France"+'.'))
    
    
+def getScore(fairness, ecoFriendly, conf): 
+    with open(configFile, "r") as f:
+            conf = yaml.load(f, Loader=yaml.FullLoader)
+            ecoProcent = conf.get('ecoPercent', None)
+            fairnessProcent = conf.get('fairnessPercent', None)
 
-
-
-
-# finds continent  can also potentially save as variable
-
-
-
-
-   
-
-
-def list_find(some_list,some_item,find_all=False):
-   
-            if (some_item in some_list):
-                if find_all:
-                    index_list = []
-                    for an_index in range(len(some_list)):
-                        if some_list[an_index] == some_item:
-                            index_list.append(an_index)
-                    return index_list
-                else:
-                    return some_list.index(some_item)
-            else:
-                return None
-       
+    fairnessRes = fairness * ecoProcent
+    ecoFriendlyRes = ecoFriendly * fairnessProcent
+    score = (fairnessRes + ecoFriendlyRes)
+    return score
