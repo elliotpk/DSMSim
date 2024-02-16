@@ -78,7 +78,7 @@
     width: 100%;
     height: 10%;
     display: flex;
-    background-color: firebrick;
+    background-color: #D9D9D9;
     align-items: center;
     justify-content: left;
 }
@@ -88,14 +88,15 @@
     text-align: center;
     text-decoration: none;
     display: block;
-    background-color: firebrick;
+    background-color: #D9D9D9;
     cursor: pointer;
     border: 1px solid grey;
     height: 100px;
     font-size: 26px;
 }
 .navBtn:hover{
-    background-color: darkred;
+    background-color: grey;
+    color: black;
 }
 body{
     margin: 0px;

@@ -9,6 +9,7 @@ app = Flask(__name__)
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["mydatabase"]
 mycol = mydb["customers"]
+city = mydb["city"]
 
 y = []
 for x in mycol.find():
@@ -19,6 +20,14 @@ b = y[1]
 c = y[2]
 
 companyNames = ['Company 1','Company 2','Company 3']
+
+z = []
+for x in city.find():
+  z.append(list(x.values()))
+temp = []
+for x in z:
+    temp.append(x[1])
+z = temp
     
 
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
@@ -27,7 +36,7 @@ def index():
 
 @app.route('/result')
 def result():
-    return render_template("result.html", names = companyNames, data = a, data2 = b, data3 = c)
+    return render_template("result.html", names = companyNames, data = y)
 
 @app.route('/sortfairness')
 def sortfairness():
@@ -56,11 +65,8 @@ def sortfairness():
         y2 = temp2
         companyNames2 = temp
         j+=1
-    aa= y2[0]
-    bb=y2[1]
-    cc=y2[2]
 
-    return render_template("sortfairness.html", names = companyNames2, data = aa, data2 = bb, data3 = cc)
+    return render_template("sortfairness.html", names = companyNames2, data = y)
 
 @app.route('/config')
 def config():

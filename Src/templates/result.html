@@ -12,18 +12,30 @@
 </head>
 <body onload="changeInfo(0)">
 	<script>
+		var t ='{{data}}';
+		const arr = t.split("],");
+		console.log(arr);
+		for (let i = 0; i < arr.length; i++) {
+			let f = arr[i];
+			const arr2 = f.split(",");
+			arr[i] = arr2;
+		}
+		const buy1 = arr[0];
+		const buy2 = arr[1];
+		const buy3 = arr[2];
+
 		function changeInfo(x){
 			if(x == 0){
-			calcRoute("Las Vegas, America", '{{data[3]}}, Europe');
-			document.getElementById("info").innerHTML = "<p>Score = {{data[1]}}</p><p>Fairness index = {{data[2]}}</p><p>Location = {{data[3]}}</p><p>Info Info Info</p>";
+			calcRoute("Las Vegas, America", buy1[3]+', Europe');
+			document.getElementById("info").innerHTML = "<p>Score = "+buy1[1]+ "</p><p>Fairness index = "+buy1[2]+ "</p><p>Location = "+buy1[3]+ "</p><p>Info Info Info</p>";
 			}
 			if(x == 1){
-			calcRoute("Linköping", '{{data2[3]}}');
-			document.getElementById("info").innerHTML = "<p>Score = {{data2[1]}}</p><p>Fairness index = {{data2[2]}}</p><p>Location = {{data2[3]}}</p><p>Info Info Info</p>";
+			calcRoute("Linköping", buy2[3]);
+			document.getElementById("info").innerHTML = "<p>Score = "+buy2[1]+ "</p><p>Fairness index = "+buy2[2]+ "</p><p>Location = "+buy2[3]+ "</p><p>Info Info Info</p>";
 			}
 			if(x == 2){
-			calcRoute("Luleå", '{{data3[3]}}');
-			document.getElementById("info").innerHTML = "<p>Score = {{data3[1]}}</p><p>Fairness index = {{data3[2]}}</p><p>Location = {{data3[3]}}</p><p>Info Info Info</p>";
+			calcRoute("Luleå", buy3[3]);
+			document.getElementById("info").innerHTML = "<p>Score = "+buy3[1]+ "</p><p>Fairness index = "+buy3[2]+ "</p><p>Location = "+buy3[3]+ "</p><p>Info Info Info</p>";
 			}
 		}
 	</script>
