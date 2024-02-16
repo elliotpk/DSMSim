@@ -96,11 +96,9 @@ def countryNet(countryObj):
             distanceList.append([cities[j].name, distance])
         
     
-        sorted= sorted(distanceList)                #returns sorted range of distances from other cities
+        sorted= sorted(distanceList)                #returns sorted list of city objects according to of distances from currently researched city
         
-        '''###PROBLEM  does not ensure that all cities have connections currently PROBLEM ###'''
-        
-        ''' if closest city is full of connections, establish a connection with their least significant connection, erase previous connection'''
+        ''' ###PROBLEM does not check for multiplicity on second search PROBLEM###'''
         
       
         for j in range(1, len(sorted)):                                              #the 1 excludes the closest city (itself)
@@ -112,25 +110,32 @@ def countryNet(countryObj):
             
             if (openConnection1 != -1  and openConnection2 != -1):                    #if both objects have open connections 
                 
-                if (getattr(sorted[i], name1) == None):                               #checks which connection is open    
+                
+                if (getattr(sorted[i], name1) == None 
+                    and sorted[j].name not in getattr(sorted[i, "connections"])):       # checks which connection is open  and not already connected 
+                    
                     setattr(sorted[i], name1, sorted[j] )                             # sets  an open connection in city1 to (city2, distance)
                     setattr(sorted[j], name2, ([sorted[i][0], sorted[j][1]]))         # sets connection  in city2 to [city1, distance]
 
                     list1 = getattr(sorted[i, "connections"])
-                    list1[openConnection1] = 1                                        # sets closed flag on object 1 connections
+                    list1[openConnection1] = sorted[j].name                            # sets closed flag on object 1 connections with "city2"
                     setattr(sorted[i], "connections", list1)
                     
-                    list2 = getattr([sorted[j], "connections"])                       # # sets closed flag on object 2 connections                    
-                    list2[openConnection2] = 1              
+                    list2 = getattr([sorted[j], "connections"])                                         
+                    list2[openConnection2] = sorted[j].name                             # sets closed flag on object 2 connections  with "city1" 
                     setattr(sorted[i], "connections", list2 )
             
             
-            elif(openConnection2 == -1):                # if the closest city is full of connections
+            elif(openConnection2 == -1):                # if the closest city is fully connected
                 
                 if (getattr(sorted[i], name1) == None):
                     setattr(sorted[i], name1, sorted[j])
                     setattr(sorted[j], lastconnection, ([sorted[i][0], API_Handling.Route(sorted[j].name,sorted[i].name)]))   # replace last connection on city2, so that every city is in network
-                    break           # this should only happen to one city   
+                    
+                    list1 = getattr(sorted[i, "connections"])
+                    list1[openConnection1] = sorted[j].name                                        # sets closed flag on object 1 connections
+                    setattr(sorted[i], "connections", list1)
+                    break           # this should only happen to one city 
 
         countryNet.append(sorted[i])
         
