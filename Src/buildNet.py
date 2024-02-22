@@ -7,6 +7,37 @@ import API_Handling
 import envCalc
 import yaml
 import placeClasses
+from collections import defaultdict
+import itertools
+
+def distance(city1, city2):
+    # Dummy distance calculation function based on the index of the cities in the list
+    return abs(city1 - city2)
+
+def build_network(city_lists):
+    network = {}
+    for cities in city_lists:
+        for distance, city_name in cities:
+            if city_name not in network:
+                network[city_name] = {'connections': []}
+        
+        for city_index, (distance, city_name) in enumerate(cities):
+            distances_to_other_cities = [(distance(city_index, i), other_city_name) for i, (other_distance, other_city_name) in enumerate(cities) if other_city_name != city_name]
+            sorted_distances = sorted(distances_to_other_cities)
+            closest_cities = [city_name for _, city_name in sorted_distances[:4]]
+            network[city_name]['connections'] = closest_cities
+    return network
+
+def limit_connections(network):
+    for city, data in network.items():
+        # Ensure each city has at least one connection
+        if not data['connections']:
+            # Add the closest city as a connection if none exist
+            closest_city = min((distance(city, other_city), other_city) for other_city in network.keys() if other_city != city)[1]
+            network[city]['connections'].append(closest_city)
+        
+        # Limit the number of connections to four
+        network[city]['connections'] = data['connections'][:4]  
 
 lastconnection = "connection4"                      #if more connections  than 4 are desired, the maximum amount of connections should be inserted here
 
@@ -87,86 +118,79 @@ def connectionsScanner(cityObj):
         if (x[i] ==None):
             return count
         else: count += 1
-    return -1   
+    return -1  
+
+def insertion_sort(arr):
+    x = []
+    for q in range(0, len(arr)):
+        x.append(arr[q])
+    
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key[0] < arr[j][0]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    
+    return arr
     
            
 def countryNet(countryObj):
-    "takes a single country object and establishes a proximity net which is represented by a list of arrays"
+    "takes a single country object and establishes a proximity net which is represented in the connections attribute of the city objects"
     
     cities = countryObj.cities
-    print(cities)
+    #print(cities)
     countryNet = []
+    x= []
+    y =[]
     
-
-    for i in range(1, len(cities)):
+    #print (len(cities) -1)
+    for i in range(0, len(cities)):
+        #print(i)
         distanceList = []
         
+        
+           #### index fault ,will currently not take into account subsequent uses of sortedx#######
+            #### CANT EDIT CONNECTIONS IF CONNECTIONS ARE ESTABLISHED################
         for j in range(0, len(cities)):
             
             distance = API_Handling.Route(API_KEY,cities[i].name,cities[j].name)
             distanceList.append([distance, cities[j]])
-            
         
         sortedx= sorted(distanceList)                #returns sortedx list of city objects according to of distances from currently researched city
-        print(str(len(sortedx)) + " sortedx" )
-        print(str(len(cities)) + " cities")
-        '''###PROBLEM   no distance limit for connections  PROBLEM###'''
         
-        
-        
-        
-      
-        
-    
-        for j in range(1, len(sortedx)):                                              #the 1 excludes the closest city (itself)
-            openConnection1 = connectionsScanner(sortedx[i][1])                           #checks for open connection 
-            openConnection2 = connectionsScanner(sortedx[j][1])
+        for j in range(0, len(sortedx)):
+            p= []  
+            for h in range(0, len(sortedx)):
+                p.append(sortedx[h][1].name)
+             
+            #print(str(p) + " ashjdflhsal") # checks current order of cities
+            
+            openConnection1 = connectionsScanner(sortedx[0][1])                           #checks for open connection 
+            openConnection2 = connectionsScanner(cities[j])
             name1= "connection" + str(openConnection1)                                     #name1 becomes connection1, connection2, connection3, etc.
-            name2 = "connection" + str(openConnection2)                 
+            name2 = "connection" + str(openConnection2)      
+            placeholder1 =getattr(sortedx[0][1], "connections")
+            placeholder2= getattr(cities[j], "connections")        
+            #print(str(placeholder1) + " " +str(sortedx[0][1].name) + "  Connection List:  Object is " + str(cities[j].name))
             
-            if (openConnection1 != -1  and openConnection2 != -1):                    #if both objects have open connections 
-                
-                
-                if (getattr(sortedx[i][1], name1) == None 
-                    and sortedx[j][1].name not in getattr([sortedx[i][1], "connections"])):       # checks which connection is open  and not already connected 
-                    
-                    setattr(sortedx[i], name1, sortedx[j] )                             # sets  an open connection in city1 to (city2, distance)
-                    setattr(sortedx[j], name2, ([sortedx[i][1], sortedx[j][0]]))         # sets connection  in city2 to [city1, distance]
-
-                    list1 = getattr(sortedx[i, "connections"])
-                    list1[openConnection1] = sortedx[j].name                            # sets closed flag on object 1 connections with "city2"
-                    setattr(sortedx[i], "connections", list1)
-                    
-                    list2 = getattr([sortedx[j], "connections"])                                         
-                    list2[openConnection2] = sortedx[j].name                             # sets closed flag on object 2 connections  with "city1" 
-                    setattr(sortedx[i], "connections", list2 )
-            
-            
-            elif(openConnection2 == -1):                # if the closest city is fully connected
-                
-                if (getattr(sortedx[i], name1) == None):
-                    setattr(sortedx[i], name1, sortedx[j])
-                    setattr(sortedx[j], lastconnection, ([sortedx[i][1], API_Handling.Route(sortedx[j].name,sortedx[i].name)]))   # replace last connection on city2, so that every city is in network
-                    
-                    list1 = getattr(sortedx[i, "connections"])
-                    list1[openConnection1] = sortedx[j].name                                        # sets closed flag on object 1 connections
-                    setattr(sortedx[i], "connections", list1)
-                    break           # this should only happen to one city 
-
-        countryNet.append(sortedx[i])
-        
-    return countryNet
-
+            x =insertion_sort(sortedx)
+      
+        m =[]
+        for s in range(0, 3):
+            m.append([x[s+1][0], x[s+1][1].name])
+        y.append(m)
+        y.append ("\n")
+        print(y)
+        return y
 
 x = placeClasses.Country('Sweden')
-x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Gothenburg"), placeClasses.City("Malmo"),placeClasses.City("Vasteras")]
-cities = [placeClasses.City("Stockholm"), placeClasses.City("Gothenburg"), placeClasses.City("Malmo"),placeClasses.City("Vasteras")]
-print(countryNet(x))
-    
-    
+x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
+cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
 
-                
 
-            
-            
-      
+z= countryNet(x)
+print(z)
+#for i in range(0, 4):
+#    print(str(z[i].connections) + " " + str(z[i].name))
