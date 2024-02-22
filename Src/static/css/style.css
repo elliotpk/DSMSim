@@ -51,9 +51,9 @@
     font-weight: 400; 
     word-wrap: break-word
 }
-.text{
+/* .text{
     margin-top: 100px;
-}
+} */
 
 .button {
     border: none;
@@ -100,4 +100,11 @@
 }
 body{
     margin: 0px;
+}
+.infoInner{
+    display: flex;
+    justify-content: center;
+}
+.infoInnerDiv{
+    margin: 20px;
 }

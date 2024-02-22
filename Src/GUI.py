@@ -15,9 +15,7 @@ y = []
 for x in mycol.find():
   y.append(list(x.values()))
 
-a = y[0]
-b = y[1]
-c = y[2]
+y2=y
 
 companyNames = ['Company 1','Company 2','Company 3']
 
@@ -66,7 +64,7 @@ def sortfairness():
         companyNames2 = temp
         j+=1
 
-    return render_template("sortfairness.html", names = companyNames2, data = y)
+    return render_template("sortfairness.html", names = companyNames2, data = y2)
 
 @app.route('/config')
 def config():
