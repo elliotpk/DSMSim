@@ -9,37 +9,63 @@ import yaml
 import placeClasses
 from collections import defaultdict
 import itertools
+from math import inf
 
-def distance(city1, city2):
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
+
+
+def buildNet():
+# Step 1: Parse data from file1
+    cities = defaultdict(list)  # Store cities by country
+    with open('Database/varuhus.csv', 'r', newline='', encoding='utf-8') as file1:
+        reader = csv.reader(file1)
+        next(reader)  # Skip header row
+        for row in reader:
+            country, city = row[1], row[0]
+            cities[country].append(city)    
+   
+# Step 2: Parse data from file2
+    
+    neighbors = defaultdict(list)  # Store neighboring countries
+    with open('Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file2:
+        reader = csv.reader(file2)
+        next(reader)  # Skip header row
+        for row in reader:
+            country, *neighboring_countries = row
+            neighbors[country] = neighboring_countries
+
+# Step 3: Find the closest cities between neighboring countries
+    closest_cities = defaultdict(dict)
+    for country, neighboring_countries in neighbors.items():
+    
+        print("started " + str(country) + " first city is " +  str(cities[" " + str(country)][0]))
+        for neighbor in neighboring_countries:
+            for city1 in cities[" " + str(country)]:
+                for city2 in cities[" " + str(neighbor)]:
+                # Assuming you have a function to calculate the distance between two cities
+                    distance = getDistance(city1, city2)
+                    if distance < closest_cities[country].get(neighbor, (inf, None))[0]:
+                        closest_cities[country][neighbor] = (distance, (city1, city2))
+                       
+
+# Step 4: Write the results to a new file
+    with open('Database/closest_cities.csv', 'w', newline='', encoding='utf-8') as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(['Country', 'Neighboring Country', 'City 1', 'City 2', 'Distance'])
+        for country, neighboring_countries in closest_cities.items():
+            for neighbor, (distance, (city1, city2)) in neighboring_countries.items():
+                writer.writerow([country, neighbor, city1, city2, distance])
+
+def getDistance(city1, city2):
     # Dummy distance calculation function based on the index of the cities in the list
-    return abs(city1 - city2)
+    x = 300000
+    try:
+      x= API_Handling.Route(API_KEY, city1, city2)
+    except:
+        pass
+    return x
 
-def build_network(city_lists):
-    network = {}
-    for cities in city_lists:
-        for distance, city_name in cities:
-            if city_name not in network:
-                network[city_name] = {'connections': []}
-        
-        for city_index, (distance, city_name) in enumerate(cities):
-            distances_to_other_cities = [(distance(city_index, i), other_city_name) for i, (other_distance, other_city_name) in enumerate(cities) if other_city_name != city_name]
-            sorted_distances = sorted(distances_to_other_cities)
-            closest_cities = [city_name for _, city_name in sorted_distances[:4]]
-            network[city_name]['connections'] = closest_cities
-    return network
 
-def limit_connections(network):
-    for city, data in network.items():
-        # Ensure each city has at least one connection
-        if not data['connections']:
-            # Add the closest city as a connection if none exist
-            closest_city = min((distance(city, other_city), other_city) for other_city in network.keys() if other_city != city)[1]
-            network[city]['connections'].append(closest_city)
-        
-        # Limit the number of connections to four
-        network[city]['connections'] = data['connections'][:4]  
-
-lastconnection = "connection4"                      #if more connections  than 4 are desired, the maximum amount of connections should be inserted here
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
@@ -68,10 +94,6 @@ for loop that identifies each specific country and runs the following on said co
 
 
 
-
-def buildNet():
-    "collects Country networks and connects them"
-    return
 
 def cityBuilder(name):
     "Creates a city object"
@@ -140,19 +162,15 @@ def countryNet(countryObj):
     "takes a single country object and establishes a proximity net which is represented in the connections attribute of the city objects"
     
     cities = countryObj.cities
-    #print(cities)
     countryNet = []
     x= []
     y =[]
     
-    #print (len(cities) -1)
+
     for i in range(0, len(cities)):
-        #print(i)
+        
         distanceList = []
         
-        
-           #### index fault ,will currently not take into account subsequent uses of sortedx#######
-            #### CANT EDIT CONNECTIONS IF CONNECTIONS ARE ESTABLISHED################
         for j in range(0, len(cities)):
             
             distance = API_Handling.Route(API_KEY,cities[i].name,cities[j].name)
@@ -173,24 +191,34 @@ def countryNet(countryObj):
             name2 = "connection" + str(openConnection2)      
             placeholder1 =getattr(sortedx[0][1], "connections")
             placeholder2= getattr(cities[j], "connections")        
-            #print(str(placeholder1) + " " +str(sortedx[0][1].name) + "  Connection List:  Object is " + str(cities[j].name))
             
             x =insertion_sort(sortedx)
-      
+ 
         m =[]
         for s in range(0, 3):
-            m.append([x[s+1][0], x[s+1][1].name])
+            m.append((x[s+1][0], x[s+1][1].name))
         y.append(m)
-        y.append ("\n")
         print(y)
-        return y
+    return y
+    
+    
 
 x = placeClasses.Country('Sweden')
 x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
 cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
 
 
-z= countryNet(x)
-print(z)
+
+buildNet()
+#z= countryNet(x)
+#print(z)
 #for i in range(0, 4):
 #    print(str(z[i].connections) + " " + str(z[i].name))
+
+    
+
+                
+
+            
+            
+      
