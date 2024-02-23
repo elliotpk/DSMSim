@@ -17,7 +17,7 @@ for x in mycol.find():
 
 y2=y
 
-companyNames = ['Company 1','Company 2','Company 3']
+companyNames = ['Company 1','Company 2','Company 3', 'Company 4']
 
 z = []
 for x in city.find():

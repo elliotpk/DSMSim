@@ -33,7 +33,8 @@
 
 .info{
     width: 851px; 
-    height: 941px; 
+    height: auto;
+    padding: 50px; 
     left: 0px; 
     top: 0px; 
     position: absolute; 

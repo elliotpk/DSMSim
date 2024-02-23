@@ -25,35 +25,6 @@
 		const info = arr[x];
 		return info;
 	}
-	function changeInfo(x){
-			if(x == 0){
-				const info = getInfo(x);
-			calcRoute(info[1], info[3]);
-			document.getElementById("info").innerHTML = "<div><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p><p>Info Info Info</p></div>";
-			if(info[5] != null){
-				calcRoute(info[1], info[7]);
-			document.getElementById("info").innerHTML = "<div class='infoInner'><div class='infoInnerDiv'><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p></div><div class='infoInnerDiv'><h2>Buyer "+(x+1)+"</h2><p>Score = "+info[6]+ "</p><p>Fairness index = "+info[5]+ "</p><p>Location = "+info[7];
-			}
-		}
-			if(x == 1){
-				const info = getInfo(x);
-			calcRoute(info[1], info[3]);
-			document.getElementById("info").innerHTML = "<div><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p><p>Info Info Info</p></div>";
-			if(info[5] != null){
-				calcRoute(info[1], info[7]);
-			document.getElementById("info").innerHTML = "<div class='infoInner'><div class='infoInnerDiv'><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p></div><div class='infoInnerDiv'><h2>Buyer "+(x+1)+"</h2><p>Score = "+info[6]+ "</p><p>Fairness index = "+info[5]+ "</p><p>Location = "+info[7];
-			}
-		}
-			if(x == 2){
-				const info = getInfo(x);
-			calcRoute(info[1], info[3]);
-			document.getElementById("info").innerHTML = "<div><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p><p>Info Info Info</p></div>";
-			if(info[5] != null){
-				calcRoute(info[1], info[7]);
-			document.getElementById("info").innerHTML = "<div class='infoInner'><div class='infoInnerDiv'><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p></div><div class='infoInnerDiv'><h2>Buyer "+(x+1)+"</h2><p>Score = "+info[6]+ "</p><p>Fairness index = "+info[5]+ "</p><p>Location = "+info[7];
-			}
-		}
-		}
 	</script>
 
 	<script async
@@ -96,7 +67,6 @@
 		<div style="width: 851px; height: 941px; position: relative">
 
 			<div class="info" id="infoBox">
-				<h1>Info</h1>
 
 				<div class="text" id="info">
 				</div>

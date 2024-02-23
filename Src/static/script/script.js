@@ -1,54 +1,54 @@
 
 function changeClass0(){
-    var element = document.querySelector("#nr0");
-    element.classList.replace("options", "selected");
-    var button = document.querySelector("#button0");
-    button.classList.replace("options", "selected");
+  var element = document.querySelector("#nr0");
+  element.classList.replace("options", "selected");
+  var button = document.querySelector("#button0");
+  button.classList.replace("options", "selected");
 
-    var element2 = document.querySelector("#nr1");
-    element2.classList.replace("selected", "options");
-    var button1 = document.querySelector("#button1");
-    button1.classList.replace("selected", "options");
+  var element2 = document.querySelector("#nr1");
+  element2.classList.replace("selected", "options");
+  var button1 = document.querySelector("#button1");
+  button1.classList.replace("selected", "options");
 
-    var element3 = document.querySelector("#nr2");
-    element3.classList.replace("selected", "options");
-    var button2 = document.querySelector("#button2");
-    button2.classList.replace("selected", "options");
+  var element3 = document.querySelector("#nr2");
+  element3.classList.replace("selected", "options");
+  var button2 = document.querySelector("#button2");
+  button2.classList.replace("selected", "options");
 }
 
 function changeClass1(){
-    var element = document.querySelector("#nr1");
-    element.classList.replace("options", "selected");
-    var button1 = document.querySelector("#button1");
-    button1.classList.replace("options", "selected");
+  var element = document.querySelector("#nr1");
+  element.classList.replace("options", "selected");
+  var button1 = document.querySelector("#button1");
+  button1.classList.replace("options", "selected");
 
-    var element2 = document.querySelector("#nr0");
-    element2.classList.replace("selected", "options");
-    var button = document.querySelector("#button0");
-    button.classList.replace("selected", "options");
+  var element2 = document.querySelector("#nr0");
+  element2.classList.replace("selected", "options");
+  var button = document.querySelector("#button0");
+  button.classList.replace("selected", "options");
 
-    var element3 = document.querySelector("#nr2");
-    element3.classList.replace("selected", "options");
-    var button2 = document.querySelector("#button2");
-    button2.classList.replace("selected", "options");
+  var element3 = document.querySelector("#nr2");
+  element3.classList.replace("selected", "options");
+  var button2 = document.querySelector("#button2");
+  button2.classList.replace("selected", "options");
 }
 
 function changeClass2(){
-    var element = document.querySelector("#nr2");
-    element.classList.replace("options", "selected");
-    var button2 = document.querySelector("#button2");
-    button2.classList.replace("options", "selected");
+  var element = document.querySelector("#nr2");
+  element.classList.replace("options", "selected");
+  var button2 = document.querySelector("#button2");
+  button2.classList.replace("options", "selected");
 
-    var element2 = document.querySelector("#nr0");
-    element2.classList.replace("selected", "options");
-    var button = document.querySelector("#button0");
-    button.classList.replace("selected", "options");
+  var element2 = document.querySelector("#nr0");
+  element2.classList.replace("selected", "options");
+  var button = document.querySelector("#button0");
+  button.classList.replace("selected", "options");
 
-    var element3 = document.querySelector("#nr1");
-    element3.classList.replace("selected", "options");
-    var button1 = document.querySelector("#button1");
-    button1.classList.replace("selected", "options");
-    
+  var element3 = document.querySelector("#nr1");
+  element3.classList.replace("selected", "options");
+  var button1 = document.querySelector("#button1");
+  button1.classList.replace("selected", "options");
+  
 }
 
 //start coordinates for the map //its coordinates for stockholm
@@ -58,10 +58,10 @@ let directionsService, directionsRenderer
 
 //initialize the Google Map
 function initMap(){
-    
+  
 var mapOptions = {
-    center: start,
-    zoom: 4,
+  center: start,
+  zoom: 4,
 };
 
 map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
@@ -96,11 +96,13 @@ function calcRoute(source, destination){
   var sourceSplit = source.split(', ');
   var destinationSplit = destination.split(', ');
 
-  if (sourceSplit[1] != destinationSplit[1]) {
+  if (destinationSplit[1] != null) {
     overSea = true;
-
-    var routes = [{ origin: sourceSplit[0], destination: "194 Edgewater street, New York" }, { origin: "Rotterdam sea port", destination: destinationSplit[0] }];
-
+    if(destinationSplit[2] == null){
+      var routes = [{ origin: sourceSplit[0], destination: destinationSplit[0] }, { origin: sourceSplit[0], destination: destinationSplit[1] }];
+    }else{
+      var routes = [{ origin: sourceSplit[0], destination: destinationSplit[0] }, { origin: sourceSplit[0], destination: destinationSplit[1]}, { origin: sourceSplit[0], destination: destinationSplit[2] }];
+    }
     const drawContinental = (route) => {
       var request = {
         origin: route.origin,
@@ -135,23 +137,21 @@ function calcRoute(source, destination){
     })
   }
 
-  shippingCoords = [
-    { lat: 51.949597, lng: 4.145262 },
-    { lat: 40.617483, lng: -74.066808 }
-  ]
-  if (overSea == true) {
-    shippingPath = new google.maps.Polyline({
-      path: shippingCoords,
-      geodesic: true,
-      strokeColor: "#000000",
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-    })
+// shippingCoords = [
+//   { lat: 51.949597, lng: 4.145262 },
+//   { lat: 40.617483, lng: -74.066808 }
+// ]
+// if (overSea == true) {
+//   shippingPath = new google.maps.Polyline({
+//     path: shippingCoords,
+//     geodesic: true,
+//     strokeColor: "#000000",
+//     strokeOpacity: 1.0,
+//     strokeWeight: 2,
+//   })
 
-    shippingPath.setMap(map)
-  }
-
-
+//   shippingPath.setMap(map)
+// }
 
   seller = "Stockholm"
   buyer = "Luleå"
@@ -190,9 +190,16 @@ function calcRoute(source, destination){
   }
 
 }
-function sort(){
-  selectElement = document.querySelector('#checkbox');
-  output = selectElement.value;
-  if(output == Fairness){}
-  if(output == Environment){}
+function changeInfo(x){
+  const info = getInfo(x);
+  if(info[5] == null && info[10]==null){
+    calcRoute(info[1], info[4]);
+    document.getElementById("info").innerHTML = "<div><h1>Seller</h1><p>Location: "+info[1]+"</p></div><div><h2>Buyer 1</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p><p>Info Info Info</p></div>";
+  }else if(info[10]==null){
+    calcRoute(info[1], info[4]+','+info[7]);
+    document.getElementById("info").innerHTML = "<div><h1>Seller</h1><p>Location: "+info[1]+"</p></div><div class='infoInner'><div class='infoInnerDiv'><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p></div><div class='infoInnerDiv'><h2>Buyer "+(x+1)+"</h2><p>Score = "+info[6]+ "</p><p>Fairness index = "+info[5]+ "</p><p>Location = "+info[7];
+  }else{
+    calcRoute(info[1], info[4]+','+info[7]+','+info[10]);
+    document.getElementById("info").innerHTML = "<div><h1>Seller</h1><p>Location: "+info[1]+"</p></div><div class='infoInner'><div class='infoInnerDiv'><h2>Buyer "+x+"</h2><p>Score = "+info[3]+ "</p><p>Fairness index = "+info[2]+ "</p><p>Location = "+info[4]+ "</p></div><div class='infoInnerDiv'><h2>Buyer "+(x+1)+"</h2><p>Score = "+info[6]+ "</p><p>Fairness index = "+info[5]+ "</p><p>Location = "+info[7]+"</div></div><div class='infoInnerDiv'><h2>Buyer "+(x+2)+"</h2><p>Score = "+info[9]+ "</p><p>Fairness index = "+info[8]+ "</p><p>Location = "+info[10];
+  }
 }
