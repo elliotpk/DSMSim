@@ -134,12 +134,12 @@ function calcRoute(source, destination){
       }
     })
   }
-  
+
   shippingCoords = [
-    {lat: 51.949597, lng: 4.145262},
-    {lat: 40.617483, lng: -74.066808}
+    { lat: 51.949597, lng: 4.145262 },
+    { lat: 40.617483, lng: -74.066808 }
   ]
-  if(overSea == true){
+  if (overSea == true) {
     shippingPath = new google.maps.Polyline({
       path: shippingCoords,
       geodesic: true,
@@ -147,8 +147,46 @@ function calcRoute(source, destination){
       strokeOpacity: 1.0,
       strokeWeight: 2,
     })
-    
+
     shippingPath.setMap(map)
+  }
+
+
+
+  seller = "Stockholm"
+  buyer = "Luleå"
+
+  wareHouses = ["Sundsvall", "Sundsvall", "Umeå", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Uppsala"]
+
+  buyerWH = ""
+  sellerWH = ""
+  let buyerDistance, sellerDistance
+
+  calcDist(seller, wareHouses[0]);
+  calcDist(seller, wareHouses[9]);
+
+  function calcDist(i, y) {
+    var origin = i;
+    var destination = y;
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations: [destination],
+        travelMode: "DRIVING",
+      }, callback);
+  }
+
+  function callback(response, status) {
+    if (status != "OK") {
+      console.log("ERRORRRRRR");
+    } else {
+      if (response.rows[0].elements[0].status == "ZERO_RESULTS") {
+        console.log("Could not be found");
+      } else {
+        console.log(response.rows[0].elements[0].distance.value / 1000 + "km");
+      };
+    }
   }
 
 }
