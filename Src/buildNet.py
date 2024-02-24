@@ -122,22 +122,22 @@ def countryNet(countryObj):
             x =insertion_sort(sortedx)
         
         z= []
-        for h in range(0, x):
+        for h in range(0, len(x)):
             z.append(x[h][1].name)
         print(z)
         
  
         m =[]
-        m.append([sortedx[i][1].name])
+        m.append([x[i][1].name])
         for s in range(0, 3):
             m.append([x[s+1][0], x[s+1][1].name])
         y.append(m)
         print(str(i))
         
         origins=defaultdict(list)
-        print(sortedx[i][1].name)
+        print(x[i][1].name)
         for a in range(0,3):
-            origins[sortedx[i][1].name].append([x[a+1][0], x[a+1][1].name])
+            origins[x[a][1].name].append([x[a+1][0], x[a+1][1].name])
         
     return y
     
