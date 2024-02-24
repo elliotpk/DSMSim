@@ -14,21 +14,25 @@ from math import inf
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 def internationalRouting():
-    cities = defaultdict(list)  # Store cities by country
+    
+    nationalNets = allNationalNetworks() 
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
             country, neighbor, city1, city2, distance =  row[0], row[1], row[2], row[3], row[4]
-            '''CANNOT PROCEED UNTIL ALL NATIONAL NETWORKS HAVE BEEN ESTABLISHED'''
-
+            nationalNets[country]
+                
+            
+                
 
 def allNationalNetworks():
     countriesWithCities = countryBuilder()
-    nationalnetworks = []
-    for i in range(0, countriesWithCities):
-        print(i)
-        nationalnetworks.append(countryNet(countriesWithCities[i]))
+    nationalnetworks = defaultdict(list) 
+    for i in range(0, countriesWithCities): 
+        country =countriesWithCities[i].name
+        cities = countryNet(countriesWithCities[i])
+        nationalnetworks[country].append[cities]
     return nationalnetworks
                 
     
@@ -62,7 +66,6 @@ def countryBuilder():
             
                 currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
             else:
-                
                 nowCountry.cities= currentCities                        # starts new country object
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
         
@@ -92,8 +95,7 @@ def insertion_sort(arr):
             j -= 1
         arr[j + 1] = key
     
-    return arr
-    
+    return arr   
            
 def countryNet(countryObj):
     "takes a single country object and establishes a proximity net which is represented in the connections attribute of the city objects"
@@ -114,22 +116,16 @@ def countryNet(countryObj):
             distanceList.append([distance, cities[j]])
         
         sortedx= sorted(distanceList)                #returns sortedx list of city objects according to of distances from currently researched city
+       
         
         for j in range(0, len(sortedx)):
-            p= []  
-            for h in range(0, len(sortedx)):
-                p.append(sortedx[h][1].name)
-             
-            #print(str(p) + " ashjdflhsal") # checks current order of cities
-            
-            openConnection1 = connectionsScanner(sortedx[0][1])                           #checks for open connection 
-            openConnection2 = connectionsScanner(cities[j])
-            name1= "connection" + str(openConnection1)                                     #name1 becomes connection1, connection2, connection3, etc.
-            name2 = "connection" + str(openConnection2)      
-            placeholder1 =getattr(sortedx[0][1], "connections")
-            placeholder2= getattr(cities[j], "connections")        
-            
             x =insertion_sort(sortedx)
+        
+        z= []
+        for h in range(0, x):
+            z.append(x[h][1].name)
+        print(z)
+        
  
         m =[]
         m.append([sortedx[i][1].name])
@@ -137,6 +133,12 @@ def countryNet(countryObj):
             m.append([x[s+1][0], x[s+1][1].name])
         y.append(m)
         print(str(i))
+        
+        origins=defaultdict(list)
+        print(sortedx[i][1].name)
+        for a in range(0,3):
+            origins[sortedx[i][1].name].append([x[a+1][0], x[a+1][1].name])
+        
     return y
     
     
@@ -144,7 +146,6 @@ def countryNet(countryObj):
 x = placeClasses.Country('Sweden')
 x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
 cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
-
 
 
 z= countryNet(x)
