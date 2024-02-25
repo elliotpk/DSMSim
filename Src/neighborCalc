@@ -55,7 +55,7 @@ def buildNet():
 def getDistance(city1, city2):
     x = 500000     # value larger than the circumference of the earth in case city is not found since sim needs ints
     try:
-      x= API_Handling.Route(API_KEY, city1, city2)
+      x= API_Handling.Route2(city1, city2)
     except:
         pass
     return x

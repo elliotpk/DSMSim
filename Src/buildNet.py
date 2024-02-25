@@ -111,8 +111,7 @@ def countryNet(countryObj):
         distanceList = []
         
         for j in range(0, len(cities)):
-            
-            distance = API_Handling.Route(API_KEY,cities[i].name,cities[j].name)
+            distance = API_Handling.Route2(cities[i].name,cities[j].name)
             distanceList.append([distance, cities[j]])
         
         sortedx= sorted(distanceList)                #returns sortedx list of city objects according to of distances from currently researched city
@@ -126,6 +125,7 @@ def countryNet(countryObj):
             z.append(x[h][1].name)
         print(z)
         
+        ''' CONTINUE HERE'''
  
         m =[]
         m.append([x[i][1].name])
