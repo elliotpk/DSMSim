@@ -100,16 +100,15 @@ def insertion_sort(arr):
 def countryNet(countryObj):
     "takes a single country object and establishes a proximity net which is represented in the connections attribute of the city objects"
     
-    cities = countryObj.cities
-    countryNet = []
-    x= []
+    origins=defaultdict(list)          #our input
+    cities = countryObj.cities         #our input         
+    countryNet = []                         
     y =[]
     
 
     for i in range(0, len(cities)):
         
         distanceList = []
-        
         for j in range(0, len(cities)):
             distance = API_Handling.Route2(cities[i].name,cities[j].name)
             distanceList.append([distance, cities[j]])
@@ -121,25 +120,19 @@ def countryNet(countryObj):
             x =insertion_sort(sortedx)
         
         z= []
-        for h in range(0, len(x)):
-            z.append(x[h][1].name)
+        zObj= []
+        
+        for h in range(0, len(x)):                          #this is the order we want it to be in
+            z.append(x[h][1].name) #add .name to check city
+            zObj.append([x[h][0], x[h][1]]) 
         print(z)
         
-        ''' CONTINUE HERE'''
- 
-        m =[]
-        m.append([x[i][1].name])
-        for s in range(0, 3):
-            m.append([x[s+1][0], x[s+1][1].name])
-        y.append(m)
-        print(str(i))
-        
-        origins=defaultdict(list)
-        print(x[i][1].name)
-        for a in range(0,3):
-            origins[x[a][1].name].append([x[a+1][0], x[a+1][1].name])
-        
-    return y
+        for d in range(0, 3):
+            print(z[0])
+            print([zObj[d+1][0], zObj[d+1][1].name])
+            origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
+
+    return origins
     
     
 
