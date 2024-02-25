@@ -18,7 +18,9 @@ def buildNet():
         next(reader)  # Skip header row
         for row in reader:
             country, city = row[1], row[0]
-            cities[country].append(city)    
+            cities[country].append(city)
+    
+ 
    
 # Step 2: handles countries from neighbours
     
@@ -28,16 +30,17 @@ def buildNet():
         next(reader)  # Skip header row
         for row in reader:
             country, *neighboring_countries = row
-            neighbors[country] = neighboring_countries
-
+            neighbors[country] = neighboring_countries 
+    
+    
 # Step 3: Find the closest cities between neighboring countries
     closest_cities = defaultdict(dict)
     for country, neighboring_countries in neighbors.items():
-    
-        print("started " + str(country) + " first city is " +  str(cities[" " + str(country)][0]))
+        print(cities[country])
+        #print("started " + str(country) + " first city is " +  str(cities[" " + str(country)][0]))
         for neighbor in neighboring_countries:
-            for city1 in cities[" " + str(country)]:
-                for city2 in cities[" " + str(neighbor)]:
+            for city1 in cities[str(country)]:
+                for city2 in cities[str(neighbor)]:
                 # Assuming you have a function to calculate the distance between two cities
                     distance = getDistance(city1, city2)
                     if distance < closest_cities[country].get(neighbor, (inf, None))[0]:
@@ -51,6 +54,7 @@ def buildNet():
         for country, neighboring_countries in closest_cities.items():
             for neighbor, (distance, (city1, city2)) in neighboring_countries.items():
                 writer.writerow([country, neighbor, city1, city2, distance])
+        
                 
 def getDistance(city1, city2):
     x = 500000     # value larger than the circumference of the earth in case city is not found since sim needs ints

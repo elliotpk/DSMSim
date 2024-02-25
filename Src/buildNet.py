@@ -21,21 +21,21 @@ def internationalRouting():
         next(reader)  # Skip header row
         for row in reader:
             country, neighbor, city1, city2, distance =  row[0], row[1], row[2], row[3], row[4]
-            nationalNets[country]
-                
-            
-                
+            print(nationalNets[country])
+    return 2               
 
 def allNationalNetworks():
+    "returns a  {country: (all connections within that countrys network)} dictionary"
     countriesWithCities = countryBuilder()
-    nationalnetworks = defaultdict(list) 
-    for i in range(0, countriesWithCities): 
+    nationalnetworks = defaultdict(list)
+    print(countriesWithCities[1].name)
+    #for i in range(0, len(countriesWithCities[1].cities)):
+    #    print(countriesWithCities[1].cities[i].name)
+    for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
         cities = countryNet(countriesWithCities[i])
         nationalnetworks[country].append[cities]
     return nationalnetworks
-                
-    
 
 def cityBuilder(name):
     "Creates a city object"
@@ -58,29 +58,21 @@ def countryBuilder():
             
         currentCities = []                              # holds cities in current country
         
-        for d in range(0, len(countryList)-1):          # goes through whole list of cities
+        for d in range(0, len(countryList)-1):          # goes through list of cities in csv file
             
             nowCountry= placeClasses.Country(countryList[d][1])     #creates country object
             
             if countryList[d][1] == countryList[d+1][1]:
-            
+                
                 currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
             else:
                 nowCountry.cities= currentCities                        # starts new country object
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
-        
-    return countriesWithCities 
-                
-def connectionsScanner(cityObj):
-    "returns which delivery-connection should be established"
+                currentCities = []
     
-    x= cityObj.connections
-    count= 1
-    for i in range(len(x)):
-        if (x[i] ==None):
-            return count
-        else: count += 1
-    return -1  
+    for i in range(0, len(countriesWithCities[1].cities)):
+        print(countriesWithCities[1].cities[i].name)
+    return countriesWithCities 
 
 def insertion_sort(arr):
     x = []
@@ -98,32 +90,30 @@ def insertion_sort(arr):
     return arr   
            
 def countryNet(countryObj):
-    "takes a single country object and establishes a proximity net which is represented in the connections attribute of the city objects"
+    "takes a single country object and establishes a proximity net which is represented in a dictionary of tuples containing target city and distance"
     
-    origins=defaultdict(list)          #our input
-    cities = countryObj.cities         #our input         
-    countryNet = []                         
-    y =[]
     
+    cities = countryObj.cities         #our input  
+    origins=defaultdict(list)          #our output       
 
     for i in range(0, len(cities)):
         
+        " This segment prepares a list of distances to currently investigated city"
         distanceList = []
         for j in range(0, len(cities)):
             distance = API_Handling.Route2(cities[i].name,cities[j].name)
-            distanceList.append([distance, cities[j]])
-        
-        sortedx= sorted(distanceList)                #returns sortedx list of city objects according to of distances from currently researched city
-       
-        
+            distanceList.append([distance, cities[j]])  
+        sortedx= sorted(distanceList)                
         for j in range(0, len(sortedx)):
             x =insertion_sort(sortedx)
         
+        
+        "This segment prepares everything for the output dictionary the three closest cities are regarded for the network"
         z= []
         zObj= []
         
-        for h in range(0, len(x)):                          #this is the order we want it to be in
-            z.append(x[h][1].name) #add .name to check city
+        for h in range(0, len(x)):                  
+            z.append(x[h][1].name) 
             zObj.append([x[h][0], x[h][1]]) 
         print(z)
         
@@ -131,7 +121,7 @@ def countryNet(countryObj):
             print(z[0])
             print([zObj[d+1][0], zObj[d+1][1].name])
             origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
-
+    print("done")
     return origins
     
     
@@ -141,13 +131,10 @@ x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClas
 cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
 
 
-z= countryNet(x)
-print(z)
+#z= countryNet(x)
 #print(z)
-#for i in range(0, 4):
-#    print(str(z[i].connections) + " " + str(z[i].name))
-
-    
+ 
+e= internationalRouting()  
 
                 
 

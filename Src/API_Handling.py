@@ -9,7 +9,6 @@ def get_coordinates(city_name):
         for row in reader:
             if row['City'] == city_name:
                 return float(row['Latitude']), float(row['Longitude'])
-    print("no city found in CSV file")
     return None, None  # Return None if city is not found
 
 
