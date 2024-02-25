@@ -26,15 +26,16 @@ def internationalRouting():
 
 def allNationalNetworks():
     "returns a  {country: (all connections within that countrys network)} dictionary"
+    
     countriesWithCities = countryBuilder()
     nationalnetworks = defaultdict(list)
     print(countriesWithCities[1].name)
-    #for i in range(0, len(countriesWithCities[1].cities)):
-    #    print(countriesWithCities[1].cities[i].name)
+
     for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
         cities = countryNet(countriesWithCities[i])
-        nationalnetworks[country].append[cities]
+        nationalnetworks[country].append(cities)
+        
     return nationalnetworks
 
 def cityBuilder(name):
@@ -42,7 +43,7 @@ def cityBuilder(name):
     x= placeClasses.City(name)
     return x
 
-def countryBuilder():
+def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""THE PROBLEMS ARE HERE """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     "builds a country object that contains relevant city objects, given a structured csv file"
     
     countriesWithCities =[]             # return variable            
@@ -63,15 +64,14 @@ def countryBuilder():
             nowCountry= placeClasses.Country(countryList[d][1])     #creates country object
             
             if countryList[d][1] == countryList[d+1][1]:
-                
                 currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
             else:
                 nowCountry.cities= currentCities                        # starts new country object
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
                 currentCities = []
+                print("AAAAAAA")
+               
     
-    for i in range(0, len(countriesWithCities[1].cities)):
-        print(countriesWithCities[1].cities[i].name)
     return countriesWithCities 
 
 def insertion_sort(arr):
@@ -115,17 +115,19 @@ def countryNet(countryObj):
         for h in range(0, len(x)):                  
             z.append(x[h][1].name) 
             zObj.append([x[h][0], x[h][1]]) 
-        print(z)
+
         
         for d in range(0, 3):
-            print(z[0])
-            print([zObj[d+1][0], zObj[d+1][1].name])
-            origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
+            try:
+                print(z[0])
+                print([zObj[d+1][0], zObj[d+1][1].name])
+                origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
+            except:
+                pass
+    print("last city was " +str(cities[-1].name))
     print("done")
     return origins
     
-    
-
 x = placeClasses.Country('Sweden')
 x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
 cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
