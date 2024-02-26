@@ -1,4 +1,3 @@
-import googlemaps
 from datetime import datetime
 import math
 import csv

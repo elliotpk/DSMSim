@@ -1,5 +1,3 @@
-
-import googlemaps
 import API_Handling
 
 def distanceCalc(seller, buyer):

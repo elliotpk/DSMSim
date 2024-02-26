@@ -50,27 +50,26 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
     countryList = []
     
     
-    with open('Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open('Database/output.csv', 'r', newline='', encoding='utf-8') as csvfile:
         
         reader = csv.reader(csvfile)
         
         for row in reader:                              #create temporary list for interaction from csv file
+            print(row)
             countryList.append([row[0],row[1]])         #goes through csv file
             
         currentCities = []                              # holds cities in current country
         
-        for d in range(0, len(countryList)-1):          # goes through list of cities in csv file
+        for d in range(1, len(countryList)-1):          # goes through list of cities in csv file
             
             nowCountry= placeClasses.Country(countryList[d][1])     #creates country object
             
-            if countryList[d][1] == countryList[d+1][1]:
+            if countryList[d][1] == countryList[d-1][1]:
                 currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
             else:
                 nowCountry.cities= currentCities                        # starts new country object
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
-                currentCities = []
-                print("AAAAAAA")
-               
+                currentCities = []   
     
     return countriesWithCities 
 
@@ -91,8 +90,7 @@ def insertion_sort(arr):
            
 def countryNet(countryObj):
     "takes a single country object and establishes a proximity net which is represented in a dictionary of tuples containing target city and distance"
-    
-    
+
     cities = countryObj.cities         #our input  
     origins=defaultdict(list)          #our output       
 
@@ -119,13 +117,13 @@ def countryNet(countryObj):
         
         for d in range(0, 3):
             try:
-                print(z[0])
-                print([zObj[d+1][0], zObj[d+1][1].name])
                 origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
             except:
                 pass
-    print("last city was " +str(cities[-1].name))
-    print("done")
+    try:
+        print("last city was " +str(cities[-1].name))
+    except:
+        pass
     return origins
     
 x = placeClasses.Country('Sweden')
