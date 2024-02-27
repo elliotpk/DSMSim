@@ -37,6 +37,8 @@ def Route(api_key, origin, destination):      #will return KeyError: Distance if
 def Route2(city1, city2): # distance Calculation using latitude and longitude with haversine formula
     lat1, lon1 =get_coordinates(city1)
     lat2, lon2 =get_coordinates(city2)
+    print(str(lat1) + str(lon1) + city1)
+    print ("           " + str(lat2) + str(lon2) + city2)
     
     """
     Calculate the great circle distance between two points 

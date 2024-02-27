@@ -1,14 +1,14 @@
 City,Country,Latitude,Longitude
 Tirana,Albania,41.3289,19.8178
-Durrës,Albania,41.3111,19.4392
-Vlorë,Albania,40.4667,19.4833
-Shkodër,Albania,42.0681,19.5119
+Durres,Albania,41.3111,19.4392
+Vlore,Albania,40.4667,19.4833
+Shkoder,Albania,42.0681,19.5119
 Fier,Albania,40.7250,19.5572
-Korçë,Albania,40.6167,20.7667
+Korce,Albania,40.6167,20.7667
 Berat,Albania,40.7000,19.9500
-Lushnjë,Albania,40.9333,19.7000
+Lushnje,Albania,40.9333,19.7000
 Pogradec,Albania,40.9000,20.6500
-Gjirokastër,Albania,40.0667,20.1333
+Gjirokaster,Albania,40.0667,20.1333
 Andorra la Vella,Andorra,42.5000,1.5000
 Escaldes-Engordany,Andorra,42.5089,1.5408
 Yerevan,Armenia,40.1814,44.5144
@@ -27,10 +27,12 @@ Innsbruck,Austria,47.2683,11.3933
 Klagenfurt,Austria,46.6167,14.3000
 Villach,Austria,46.6167,13.8333
 Wels,Austria,48.1500,14.0167
-Sankt Pölten,Austria,48.2000,15.6167
+Sankt Polten,Austria,48.2000,15.6167
 Dornbirn,Austria,47.4167,9.7500
 Baku,Azerbaijan,40.3667,49.8352
-Şirvan,Azerbaijan,39.9323,48.9203
+Sumqayit,Azerbaijan,40.5917,49.6397
+Lankaran,Azerbaijan,38.7536,48.8511
+Sirvan,Azerbaijan,39.9323,48.9203
 Baku,Azerbaijan,40.3667,49.8352
 Minsk,Belarus,53.9000,27.5667
 Hrodna,Belarus,53.6667,23.8333
@@ -40,7 +42,7 @@ Pinsk,Belarus,52.1153,26.1031
 Brussels,Belgium,50.8467,4.3525
 Antwerp,Belgium,51.2178,4.4003
 Charleroi,Belgium,50.4000,4.4333
-Liège,Belgium,50.6397,5.5706
+Liege,Belgium,50.6397,5.5706
 Bruges,Belgium,51.2089,3.2242
 Namur,Belgium,50.4667,4.8667
 Leuven,Belgium,50.8833,4.7000
@@ -53,7 +55,7 @@ Zenica,Bosnia and Herzegovina,44.2017,17.9039
 Mostar,Bosnia and Herzegovina,43.3436,17.8075
 Bijeljina,Bosnia and Herzegovina,44.7500,19.2167
 Prijedor,Bosnia and Herzegovina,44.9667,16.7000
-Brčko,Bosnia and Herzegovina,44.8783,18.8092
+Brcko,Bosnia and Herzegovina,44.8783,18.8092
 Trebinje,Bosnia and Herzegovina,42.7089,18.3217
 Doboj,Bosnia and Herzegovina,44.7333,18.1333
 Sofia,Bulgaria,42.7000,23.3300
@@ -75,17 +77,17 @@ Slavonski Brod,Croatia,45.1667,18.0167
 Pula,Croatia,44.8703,13.8456
 Karlovac,Croatia,45.4833,15.5500
 Sisak,Croatia,45.4872,16.3761
-Varaždin,Croatia,46.3081,16.3378
+Varazdin,Croatia,46.3081,16.3378
 Prague,Czechia,50.0875,14.4214
 Brno,Czechia,49.1925,16.6083
 Ostrava,Czechia,49.8356,18.2925
-Plzeň,Czechia,49.7475,13.3775
+Plzen,Czechia,49.7475,13.3775
 Liberec,Czechia,50.7667,15.0667
 Olomouc,Czechia,49.5939,17.2508
-Ústí nad Labem,Czechia,50.6583,14.0417
-Hradec Králové,Czechia,50.2092,15.8322
+Usti nad Labem,Czechia,50.6583,14.0417
+Hradec Kralove,Czechia,50.2092,15.8322
 Pardubice,Czechia,50.0386,15.7792
-Zlín,Czechia,49.2331,17.6669
+Zlin,Czechia,49.2331,17.6669
 Copenhagen,Denmark,55.6761,12.5683
 Aarhus,Denmark,56.1572,10.2107
 Odense,Denmark,55.3958,10.3886
@@ -99,20 +101,20 @@ Roskilde,Denmark,55.6500,12.0833
 Tallinn,Estonia,59.4372,24.7453
 Tartu,Estonia,58.3833,26.7167
 Narva,Estonia,59.3758,28.1961
-Pärnu,Estonia,58.3833,24.5000
-Kohtla-Järve,Estonia,59.3978,27.2572
+Parnu,Estonia,58.3833,24.5000
+Kohtla-Jarve,Estonia,59.3978,27.2572
 Viljandi,Estonia,58.3667,25.6000
 Rakvere,Estonia,59.3500,26.3500
 Maardu,Estonia,59.4781,25.0161
 Kuressaare,Estonia,58.2500,22.4833
-Võru,Estonia,57.8486,26.9928
+Voru,Estonia,57.8486,26.9928
 Helsinki,Finland,60.1708,24.9375
 Espoo,Finland,60.2056,24.6556
 Tampere,Finland,61.4981,23.7600
 Vantaa,Finland,60.2944,25.0403
 Oulu,Finland,65.0142,25.4719
 Turku,Finland,60.4500,22.2667
-Jyväskylä,Finland,62.2417,25.7417
+Jyvaskyla,Finland,62.2417,25.7417
 Lahti,Finland,60.9833,25.6500
 Kuopio,Finland,62.8925,27.6783
 Kouvola,Finland,60.8681,26.7042
@@ -142,20 +144,24 @@ Munich,Germany,48.1375,11.5750
 Cologne,Germany,50.9364,6.9528
 Frankfurt,Germany,50.1106,8.6822
 Stuttgart,Germany,48.7775,9.1800
-Düsseldorf,Germany,51.2333,6.7833
+Dusseldorf,Germany,51.2333,6.7833
 Dortmund,Germany,51.5167,7.4667
 Essen,Germany,51.4508,7.0131
 Bremen,Germany,53.0833,8.8000
 Athens,Greece,37.9842,23.7281
+Thessaloniki,Greece,40.6403,22.9347
+Volos,Greece,39.3667,22.9333
+Ioannina,Greece,39.6636,20.8522
+Chania,Greece,35.5167,24.0167
 Budapest,Hungary,47.4925,19.0514
 Debrecen,Hungary,47.5300,21.6392
 Szeged,Hungary,46.2550,20.1450
 Miskolc,Hungary,48.0833,20.6667
-Pécs,Hungary,46.0708,18.2331
-Győr,Hungary,47.6842,17.6344
-Nyíregyháza,Hungary,47.9531,21.7271
-Kecskemét,Hungary,46.9061,19.6897
-Székesfehérvár,Hungary,47.1956,18.4089
+Pecs,Hungary,46.0708,18.2331
+Gyor,Hungary,47.6842,17.6344
+Nyiregyhaza,Hungary,47.9531,21.7271
+Kecskemet,Hungary,46.9061,19.6897
+Szekesfehervar,Hungary,47.1956,18.4089
 Szombathely,Hungary,47.2351,16.6219
 Dublin,Ireland,53.3500,-6.2603
 Cork,Ireland,51.8972,-8.4700
@@ -190,11 +196,11 @@ Vushtrri,Kosovo,42.8222,20.9694
 Lipjan,Kosovo,42.5300,21.1386
 Riga,Latvia,56.9489,24.1064
 Daugavpils,Latvia,55.8750,26.5356
-Liepāja,Latvia,56.5117,21.0139
+Liepaja,Latvia,56.5117,21.0139
 Jelgava,Latvia,56.6483,23.7139
-Jūrmala,Latvia,56.9681,23.7703
+Jurmala,Latvia,56.9681,23.7703
 Ventspils,Latvia,57.3906,21.5733
-Rēzekne,Latvia,56.5127,27.3427
+Rezekne,Latvia,56.5127,27.3427
 Valmiera,Latvia,57.5500,25.4000
 Ogre,Latvia,56.8186,24.6056
 Tukums,Latvia,56.9667,23.1500
@@ -210,12 +216,12 @@ Schellenberg,Liechtenstein,47.2336,9.5481
 Planken,Liechtenstein,47.1833,9.5333
 Vilnius,Lithuania,54.6872,25.2800
 Kaunas,Lithuania,54.8972,23.8861
-Klaipėda,Lithuania,55.7500,21.1667
-Šiauliai,Lithuania,55.9333,23.3167
-Panevėžys,Lithuania,55.7333,24.3500
+Klaipeda,Lithuania,55.7500,21.1667
+Siauliai,Lithuania,55.9333,23.3167
+Panevezys,Lithuania,55.7333,24.3500
 Alytus,Lithuania,54.4014,24.0492
-Marijampolė,Lithuania,54.5472,23.3500
-Mažeikiai,Lithuania,56.3167,22.3333
+Marijampole,Lithuania,54.5472,23.3500
+Mazeikiai,Lithuania,56.3167,22.3333
 Jonava,Lithuania,55.0722,24.2806
 Utena,Lithuania,55.5000,25.6000
 Esch-sur-Alzette,Luxembourg,49.4969,5.9806
@@ -228,22 +234,25 @@ Remich,Luxembourg,49.5444,6.3667
 Valletta,Malta,35.8983,14.5125
 Birkirkara,Malta,35.8967,14.4625
 Mosta,Malta,35.9097,14.4261
-Żabbar,Malta,35.8772,14.5381
+Zabbar,Malta,35.8772,14.5381
 Fgura,Malta,35.8725,14.5228
-Żejtun,Malta,35.8556,14.5333
+Zejtun,Malta,35.8556,14.5333
 Sliema,Malta,35.9122,14.5042
 Qormi,Malta,35.8794,14.4722
 Attard,Malta,35.8928,14.4383
+Chisinau,Moldova,47.0228,28.8353
 Tiraspol,Moldova,46.8403,29.6433
+Balti,Moldova,47.7667,27.9167
 Bender,Moldova,46.8333,29.4833
+Ribnita,Moldova,47.7667,29.0000
 Cahul,Moldova,45.9167,28.1836
 Ungheni,Moldova,47.2167,27.8167
 Soroca,Moldova,48.1667,28.3000
 Orhei,Moldova,47.3833,28.8167
-Dubăsari,Moldova,47.2667,29.1667
+Dubasari,Moldova,47.2667,29.1667
 Monaco,Monaco,43.7333,7.4167
 Podgorica,Montenegro,42.4413,19.2629
-Nikšić,Montenegro,42.7778,18.9500
+Niksic,Montenegro,42.7778,18.9500
 Herceg Novi,Montenegro,42.4530,18.5312
 Pljevlja,Montenegro,43.3567,19.3583
 Bijelo Polje,Montenegro,43.0400,19.7500
@@ -251,7 +260,7 @@ Cetinje,Montenegro,42.3800,18.9200
 Bar,Montenegro,42.1000,19.1000
 Berane,Montenegro,42.8400,19.8600
 Ulcinj,Montenegro,41.9200,19.2000
-Rožaje,Montenegro,42.8400,20.1600
+Rozaje,Montenegro,42.8400,20.1600
 Amsterdam,Netherlands,52.3728,4.8936
 Rotterdam,Netherlands,51.9167,4.5000
 The Hague,Netherlands,52.0800,4.3100
@@ -262,6 +271,16 @@ Groningen,Netherlands,53.2167,6.5667
 Almere,Netherlands,52.3667,5.2167
 Breda,Netherlands,51.5889,4.7758
 Nijmegen,Netherlands,51.8475,5.8625
+Skopje,Macedonia,41.9961,21.4317
+Bitola,Macedonia,41.0319,21.3347
+Kumanovo,Macedonia,42.1322,21.7144
+Prilep,Macedonia,41.3464,21.5542
+Tetovo,Macedonia,42.0103,20.9714
+Veles,Macedonia,41.7153,21.7753
+Ohrid,Macedonia,41.1169,20.8019
+Gostivar,Macedonia,41.8000,20.9167
+Struga,Macedonia,41.1775,20.6789
+Kavadarci,Macedonia,41.4328,22.0117
 Oslo,Norway,59.9133,10.7389
 Bergen,Norway,60.3894,5.3300
 Trondheim,Norway,63.4297,10.3933
@@ -270,14 +289,14 @@ Drammen,Norway,59.7378,10.2050
 Fredrikstad,Norway,59.2053,10.9500
 Kristiansand,Norway,58.1472,7.9972
 Sandnes,Norway,58.8517,5.7361
-Tromsø,Norway,69.6828,18.9428
+Tromso,Norway,69.6828,18.9428
 Sarpsborg,Norway,59.2858,11.1119
 Warsaw,Poland,52.2300,21.0111
-Kraków,Poland,50.0614,19.9372
-Łódź,Poland,51.7769,19.4547
-Wrocław,Poland,51.1100,17.0325
-Poznań,Poland,52.4083,16.9336
-Gdańsk,Poland,54.3475,18.6453
+Krakow,Poland,50.0614,19.9372
+Lodz,Poland,51.7769,19.4547
+Wroclaw,Poland,51.1100,17.0325
+Poznan,Poland,52.4083,16.9336
+Gdansk,Poland,54.3475,18.6453
 Szczecin,Poland,53.4325,14.5481
 Bydgoszcz,Poland,53.1219,18.0003
 Lublin,Poland,51.2500,22.5667
@@ -289,11 +308,17 @@ Amadora,Portugal,38.7333,-9.2333
 Braga,Portugal,41.5503,-8.4200
 Funchal,Portugal,32.6500,-16.9167
 Coimbra,Portugal,40.2111,-8.4292
-Setúbal,Portugal,38.5243,-8.8926
+Setubal,Portugal,38.5243,-8.8926
 Queluz,Portugal,38.7514,-9.2664
 Bucharest,Romania,44.4325,26.1039
 Cluj-Napoca,Romania,46.7667,23.5833
+Timisoara,Romania,45.7597,21.2300
+Iasi,Romania,47.1622,27.5889
+Constanta,Romania,44.1667,28.6333
 Craiova,Romania,44.3333,23.8167
+Brasov,Romania,45.6667,25.6167
+Galati,Romania,45.4233,28.0425
+Ploiesti,Romania,44.9411,26.0225
 Oradea,Romania,47.0722,21.9211
 Moscow,Russia,55.7558,37.6178
 Saint Petersburg,Russia,59.9500,30.3167
@@ -306,23 +331,23 @@ Samara,Russia,53.2028,50.1408
 San Marino,San Marino,43.9346,12.4473
 Belgrade,Serbia,44.8200,20.4600
 Novi Sad,Serbia,45.2542,19.8425
-Niš,Serbia,43.3192,21.8961
+Nis,Serbia,43.3192,21.8961
 Kragujevac,Serbia,44.0142,20.9394
 Subotica,Serbia,46.1003,19.6656
 Zrenjanin,Serbia,45.3833,20.3894
-Pančevo,Serbia,44.8706,20.6403
-Čačak,Serbia,43.8914,20.3497
+Pancevo,Serbia,44.8706,20.6403
+Cacak,Serbia,43.8914,20.3497
 Novi Pazar,Serbia,43.1500,20.5167
 Kraljevo,Serbia,43.7234,20.6870
 Bratislava,Slovakia,48.1439,17.1097
-Košice,Slovakia,48.7167,21.2500
-Prešov,Slovakia,49.0017,21.2394
-Žilina,Slovakia,49.2228,18.7400
+Kosice,Slovakia,48.7167,21.2500
+Presov,Slovakia,49.0017,21.2394
+Zilina,Slovakia,49.2228,18.7400
 Nitra,Slovakia,48.3069,18.0864
-Banská Bystrica,Slovakia,48.7353,19.1453
+Banska Bystrica,Slovakia,48.7353,19.1453
 Trnava,Slovakia,48.3775,17.5883
 Martin,Slovakia,49.0650,18.9219
-Trenčín,Slovakia,48.8919,18.0367
+Trencin,Slovakia,48.8919,18.0367
 Poprad,Slovakia,49.0594,20.2975
 Ljubljana,Slovenia,46.0514,14.5061
 Maribor,Slovenia,46.5575,15.6456
@@ -338,25 +363,26 @@ Madrid,Spain,40.4169,-3.7033
 Barcelona,Spain,41.3825,2.1769
 Valencia,Spain,39.4700,-0.3764
 Zaragoza,Spain,41.6500,-0.8833
-Málaga,Spain,36.7194,-4.4200
+Malaga,Spain,36.7194,-4.4200
 Murcia,Spain,37.9861,-1.1303
 Palma,Spain,39.5667,2.6500
 Las Palmas,Spain,28.1272,-15.4314
 Bilbao,Spain,43.2569,-2.9236
 Stockholm,Sweden,59.3294,18.0686
 Gothenburg,Sweden,57.7075,11.9675
-Malmö,Sweden,55.6058,13.0358
+Malmo,Sweden,55.6058,13.0358
 Uppsala,Sweden,59.8601,17.6400
-Västerås,Sweden,59.6161,16.5528
-Örebro,Sweden,59.2739,15.2075
-Linköping,Sweden,58.4158,15.6253
+Vasteras,Sweden,59.6161,16.5528
+Orebro,Sweden,59.2739,15.2075
+Linkoping,Sweden,58.4158,15.6253
 Helsingborg,Sweden,56.0500,12.7167
-Jönköping,Sweden,57.7828,14.1606
-Norrköping,Sweden,58.6000,16.2000
-Luleå,Sweden,65.5844,22.1539
-Piteå,Sweden,65.3333,21.5000
-Umeå,Sweden,63.8250,20.2639
+Jonkoping,Sweden,57.7828,14.1606
+Norrkoping,Sweden,58.6000,16.2000
+Lulea,Sweden,65.5844,22.1539
+Pitea,Sweden,65.3333,21.5000
+Umea,Sweden,63.8250,20.2639
 Sundsvall,Sweden,62.4000,17.3167
+Zurich,Switzerland,47.3744,8.5411
 Geneva,Switzerland,46.2017,6.1469
 Basel,Switzerland,47.5547,7.5906
 Lausanne,Switzerland,46.5198,6.6335
@@ -367,7 +393,7 @@ Lugano,Switzerland,46.0050,8.9525
 Biel/Bienne,Switzerland,47.1333,7.2500
 Istanbul,Turkey,41.0136,28.9550
 Ankara,Turkey,39.9300,32.8500
-İzmir,Turkey,38.4200,27.1400
+Izmir,Turkey,38.4200,27.1400
 Bursa,Turkey,40.1833,29.0500
 Adana,Turkey,37.0000,35.3213
 Gaziantep,Turkey,37.0628,37.3792

@@ -14,14 +14,19 @@ from math import inf
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 def internationalRouting():
+    "connects two cities in separate countries which are closest to each other"
     
     nationalNets = allNationalNetworks() 
+    #print(nationalNets['Albania'])
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
             country, neighbor, city1, city2, distance =  row[0], row[1], row[2], row[3], row[4]
-            print(nationalNets[country])
+            print( city1 + city2)
+            distance = API_Handling.Route2(city1, city2)
+            x =nationalNets[country]
+            #print(type(nationalNets))  
     return 2               
 
 def allNationalNetworks():
@@ -29,13 +34,13 @@ def allNationalNetworks():
     
     countriesWithCities = countryBuilder()
     nationalnetworks = defaultdict(list)
-    print(countriesWithCities[1].name)
+    #print(countriesWithCities[1].name)
 
     for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
         cities = countryNet(countriesWithCities[i])
         nationalnetworks[country].append(cities)
-        
+    print(nationalnetworks['Greece']) 
     return nationalnetworks
 
 def cityBuilder(name):
@@ -55,7 +60,7 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
         reader = csv.reader(csvfile)
         
         for row in reader:                              #create temporary list for interaction from csv file
-            print(row)
+            #print(row)
             countryList.append([row[0],row[1]])         #goes through csv file
             
         currentCities = []                              # holds cities in current country
@@ -121,14 +126,14 @@ def countryNet(countryObj):
             except:
                 pass
     try:
-        print("last city was " +str(cities[-1].name))
+        pass    #print("last city was " +str(cities[-1].name))
     except:
         pass
     return origins
     
-x = placeClasses.Country('Sweden')
-x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
-cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
+#x = placeClasses.Country('Sweden')
+#x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
+#cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
 
 
 #z= countryNet(x)
