@@ -17,16 +17,14 @@ def internationalRouting():
     "connects two cities in separate countries which are closest to each other"
     
     nationalNets = allNationalNetworks() 
-    #print(nationalNets['Albania'])
+    print(nationalNets['Sweden'])
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
             country, neighbor, city1, city2, distance =  row[0], row[1], row[2], row[3], row[4]
-            print( city1 + city2)
             distance = API_Handling.Route2(city1, city2)
             x =nationalNets[country]
-            #print(type(nationalNets))  
     return 2               
 
 def allNationalNetworks():
@@ -34,13 +32,11 @@ def allNationalNetworks():
     
     countriesWithCities = countryBuilder()
     nationalnetworks = defaultdict(list)
-    #print(countriesWithCities[1].name)
 
     for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
         cities = countryNet(countriesWithCities[i])
-        nationalnetworks[country].append(cities)
-    print(nationalnetworks['Greece']) 
+        nationalnetworks[country].append(cities) 
     return nationalnetworks
 
 def cityBuilder(name):
@@ -60,14 +56,13 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
         reader = csv.reader(csvfile)
         
         for row in reader:                              #create temporary list for interaction from csv file
-            #print(row)
             countryList.append([row[0],row[1]])         #goes through csv file
             
         currentCities = []                              # holds cities in current country
         
         for d in range(1, len(countryList)-1):          # goes through list of cities in csv file
             
-            nowCountry= placeClasses.Country(countryList[d][1])     #creates country object
+            nowCountry= placeClasses.Country(countryList[d-1][1])     #creates country object
             
             if countryList[d][1] == countryList[d-1][1]:
                 currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
