@@ -17,7 +17,7 @@ def internationalRouting():
     "connects two cities in separate countries which are closest to each other"
     
     nationalNets = allNationalNetworks() 
-    print(nationalNets['Andorra'])
+    print(nationalNets['Albania'])
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
@@ -63,7 +63,7 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
             
         currentCities = []                              # holds cities in current country
         
-        for d in range(1, len(countryList)-1):          # goes through list of cities in csv file
+        for d in range(0, len(countryList)):          # goes through list of cities in csv file
             
             nowCountry= placeClasses.Country(countryList[d-1][1])     #creates country object
             
@@ -74,7 +74,7 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
                 currentCities = []  
                 currentCities.append(cityBuilder(countryList[d][0])) 
-                
+                            
     return countriesWithCities 
 
 def insertion_sort(arr):
