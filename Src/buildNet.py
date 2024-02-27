@@ -17,7 +17,7 @@ def internationalRouting():
     "connects two cities in separate countries which are closest to each other"
     
     nationalNets = allNationalNetworks() 
-    print(nationalNets['Germany'])
+    print(nationalNets['Andorra'])
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
@@ -35,7 +35,10 @@ def allNationalNetworks():
 
     for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
-        cities = countryNet(countriesWithCities[i])
+        try:
+            cities = countryNet(countriesWithCities[i])
+        except:
+            pass
         nationalnetworks[country].append(cities) 
     return nationalnetworks
 
@@ -54,23 +57,24 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
     with open('Database/output.csv', 'r', newline='', encoding='utf-8') as csvfile:
         
         reader = csv.reader(csvfile)
-        
+        next(reader)
         for row in reader:                              #create temporary list for interaction from csv file
-            countryList.append([row[0],row[1]])         #goes through csv file creates local image
+            countryList.append([row[0],row[1]])         #goes through csv file
             
         currentCities = []                              # holds cities in current country
         
-        for d in range(1, len(countryList)-1):          # goes through image
+        for d in range(1, len(countryList)-1):          # goes through list of cities in csv file
             
             nowCountry= placeClasses.Country(countryList[d-1][1])     #creates country object
             
             if countryList[d][1] == countryList[d-1][1]:
-                currentCities.append(cityBuilder(countryList[d-1][0]))    # appends city objects to country object
+                currentCities.append(cityBuilder(countryList[d][0]))    # appends city objects to country object
             else:
                 nowCountry.cities= currentCities                        # starts new country object
                 countriesWithCities.append(nowCountry)                  # bulds on list of country objects
-                currentCities = []   
-    
+                currentCities = []  
+                currentCities.append(cityBuilder(countryList[d][0])) 
+                
     return countriesWithCities 
 
 def insertion_sort(arr):
@@ -95,12 +99,12 @@ def countryNet(countryObj):
     origins=defaultdict(list)          #our output       
 
     for i in range(0, len(cities)):
-        
         " This segment prepares a list of distances to currently investigated city"
+        
         distanceList = []
         for j in range(0, len(cities)):
             distance = API_Handling.Route2(cities[i].name,cities[j].name)
-            distanceList.append([distance, cities[j]])  
+            distanceList.append([distance, cities[j]])     
         sortedx= sorted(distanceList)                
         for j in range(0, len(sortedx)):
             x =insertion_sort(sortedx)
@@ -120,10 +124,6 @@ def countryNet(countryObj):
                 origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
             except:
                 pass
-    try:
-        pass    #print("last city was " +str(cities[-1].name))
-    except:
-        pass
     return origins
     
 #x = placeClasses.Country('Sweden')
