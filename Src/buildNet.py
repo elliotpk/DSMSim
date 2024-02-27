@@ -34,10 +34,10 @@ def internationalRouting():
             except:
                 pass
             
-    z = nationalNets['Denmark']
+    z = nationalNets['Finland']
     v=z[0] 
-    print(v['Copenhagen'])        
-    return 2              
+    print(v['Oulu'])        #
+    return nationalNets              
 
 def allNationalNetworks():
     "returns a  {country: (all connections within that countrys network)} dictionary"
