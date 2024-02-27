@@ -1,5 +1,3 @@
-
-import googlemaps
 import API_Handling
 
 def distanceCalc(seller, buyer):
@@ -16,4 +14,4 @@ def distanceCalc(seller, buyer):
     buyer1=  c +"," + d
         
     API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'        
-    return API_Handling.Route(API_KEY, seller, buyer)
+    return API_Handling.Route2(seller, buyer)
