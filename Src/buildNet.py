@@ -16,16 +16,28 @@ API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 def internationalRouting():
     "connects two cities in separate countries which are closest to each other"
     
-    nationalNets = allNationalNetworks() 
-    print(nationalNets['Albania'])
+    nationalNets = allNationalNetworks()
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
             country, neighbor, city1, city2, distance =  row[0], row[1], row[2], row[3], row[4]
             distance = API_Handling.Route2(city1, city2)
-            x =nationalNets[country]
-    return 2               
+            
+            x= nationalNets[country]
+            try:
+                y= x[0]
+                print(y[city1])
+                y[city1].append([distance, city2])
+                x[0]= y
+                nationalNets[country] = x
+            except:
+                pass
+            
+    z = nationalNets['Denmark']
+    v=z[0] 
+    print(v['Copenhagen'])        
+    return 2              
 
 def allNationalNetworks():
     "returns a  {country: (all connections within that countrys network)} dictionary"
@@ -61,6 +73,7 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
         for row in reader:                              #create temporary list for interaction from csv file
             countryList.append([row[0],row[1]])         #goes through csv file
             
+                
         currentCities = []                              # holds cities in current country
         
         for d in range(0, len(countryList)):          # goes through list of cities in csv file
@@ -124,6 +137,7 @@ def countryNet(countryObj):
                 origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
             except:
                 pass
+    #print(origins)
     return origins
     
 #x = placeClasses.Country('Sweden')
