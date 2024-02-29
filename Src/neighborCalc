@@ -1,13 +1,6 @@
-import math
 import csv
-import random
-import json
 import API_Handling
-import envCalc
-import yaml
-import placeClasses
 from collections import defaultdict
-import itertools
 from math import inf
 
 def buildNet():
@@ -21,9 +14,7 @@ def buildNet():
             cities[country].append(city)
     
  
-   
 # Step 2: handles countries from neighbours
-    
     neighbors = defaultdict(list)  # Store neighboring countries
     with open('Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file2:
         reader = csv.reader(file2)
@@ -37,11 +28,9 @@ def buildNet():
     closest_cities = defaultdict(dict)
     for country, neighboring_countries in neighbors.items():
         print(cities[country])
-        #print("started " + str(country) + " first city is " +  str(cities[" " + str(country)][0]))
         for neighbor in neighboring_countries:
             for city1 in cities[str(country)]:
                 for city2 in cities[str(neighbor)]:
-                # Assuming you have a function to calculate the distance between two cities
                     distance = getDistance(city1, city2)
                     if distance < closest_cities[country].get(neighbor, (inf, None))[0]:
                         closest_cities[country][neighbor] = (distance, (city1, city2))
