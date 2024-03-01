@@ -1,21 +1,13 @@
-
-import math
 import csv
-import random
-import json
 import API_Handling
-import envCalc
-import yaml
 import placeClasses
 from collections import defaultdict
-import itertools
 from math import inf
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 def internationalRouting():
-    "connects two cities in separate countries which are closest to each other"
-    
+    "connects the  two closest cities in neighbouring countries for all cities in database"
     nationalNets = allNationalNetworks()
     with open('Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
@@ -25,22 +17,23 @@ def internationalRouting():
             distance = API_Handling.Route2(city1, city2)
             
             x= nationalNets[country]
-            try:
-                y= x[0]
-                print(y[city1])
+            if len(x) == 0:
+                emptyCountry = defaultdict(list)
+                emptyCountry[city1].append([distance, city2]) 
+                x.append(emptyCountry)  # Use append to add the dictionary to the list
+            else:
+                y = x[0]
                 y[city1].append([distance, city2])
-                x[0]= y
-                nationalNets[country] = x
-            except:
-                pass
+                x[0] = y
             
-    z = nationalNets['Finland']
-    v=z[0] 
-    print(v['Oulu'])        #
+    #z = nationalNets['Albania']        # check specific cities for outcomes
+    #v=z[0] 
+    #print(v['Tirana'])        
+    
     return nationalNets              
 
 def allNationalNetworks():
-    "returns a  {country: (all connections within that countrys network)} dictionary"
+    "returns a  {country: (all intercity-connections within that country)} dictionary"
     
     countriesWithCities = countryBuilder()
     nationalnetworks = defaultdict(list)
@@ -149,6 +142,7 @@ def countryNet(countryObj):
 #print(z)
  
 e= internationalRouting()  
+print(e)
 
                 
 
