@@ -40,10 +40,9 @@ def allNationalNetworks():
 
     for i in range(1, len(countriesWithCities)): 
         country =countriesWithCities[i].name
-        try:
-            cities = countryNet(countriesWithCities[i])
-        except:
-            pass
+        
+        cities = countryNet(countriesWithCities[i])             #"Problems"
+        
         nationalnetworks[country].append(cities) 
     return nationalnetworks
 
@@ -110,13 +109,17 @@ def countryNet(countryObj):
         distanceList = []
         for j in range(0, len(cities)):
             distance = API_Handling.Route2(cities[i].name,cities[j].name)
-            distanceList.append([distance, cities[j]])     
-        sortedx= sorted(distanceList)                
+            distanceList.append([distance, cities[j]]) 
+        try:    
+            sortedx= sorted(distanceList)
+        except:
+            sortedx = distanceList   
+                     
         for j in range(0, len(sortedx)):
             x =insertion_sort(sortedx)
         
         
-        "This segment prepares everything for the output dictionary the three closest cities are regarded for the network"
+        "This segment prepares everything for the output dictionary. it establishes the three closest cities egarded for the network"
         z= []
         zObj= []
         
