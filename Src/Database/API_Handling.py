@@ -3,36 +3,12 @@ import math
 import csv
 
 def get_coordinates(city_name):
-    with open('Database/output.csv', newline='') as csvfile:
+    with open('output.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row['City'] == city_name:
                 return float(row['Latitude']), float(row['Longitude'])
     return None, None  # Return None if city is not found
-
-
-
-def Route(api_key, origin, destination):      #will return KeyError: Distance if no viable route is found.
-    'Tar två städer, ger distans med en int'
-    gmaps = googlemaps.Client(key=api_key)
-
-    # Make the distance matrix request
-    matrix = gmaps.distance_matrix(origin, destination)
-
-    if matrix['status'] == 'OK':
-        distans = matrix['rows'][0]['elements'][0]['distance']['text']
-        x1= distans.replace(',', '')                          #tar bort komma tecken när distansen blir stor
-        x2 =x1.split('.')[0]                                  #tar bort punkter när distanser blir små
-
-        x3 = [int(i) for i in x2.split() if i.isdigit()]      # tar ut individuella siffror
-        output = (str(x3))[1:-1]                              # behåller siffervärdet
-        output = int(output)
-
-        return output
-    else:
-        return None 
-    
-    
 
 def Route2(city1, city2): # distance Calculation using latitude and longitude with haversine formula
     lat1, lon1 =get_coordinates(city1)
