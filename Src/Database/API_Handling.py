@@ -3,11 +3,11 @@ import math
 import csv
 
 def get_coordinates(city_name):
-    with open('output.csv', newline='') as csvfile:
+    with open('Network_Database/worldcities.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if row['City'] == city_name:
-                return float(row['Latitude']), float(row['Longitude'])
+            if row['city_ascii'] == city_name:
+                return float(row['lat']), float(row['lng'])
     return None, None  # Return None if city is not found
 
 def Route2(city1, city2): # distance Calculation using latitude and longitude with haversine formula
@@ -64,3 +64,6 @@ if __name__ == "__main__":
     else:
         print("Failed to fetch distance and duration. Please check your input and API key.")
 '''
+
+x= Route2('Hudiksvall', 'Stockholm')
+print(x)
