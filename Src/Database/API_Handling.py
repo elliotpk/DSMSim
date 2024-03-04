@@ -3,7 +3,7 @@ import math
 import csv
 
 def get_coordinates(city_name):
-    with open('Network_Database/worldcities.csv', newline='') as csvfile:
+    with open('Database/Network_Database/worldcities.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row['city_ascii'] == city_name:
