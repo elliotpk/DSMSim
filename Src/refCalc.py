@@ -130,8 +130,15 @@ def formatCombination(combination, buyers):
        
         for block in combination[i]: # TODO Change location in below row to route calc
             
+            CityCountryString1 =str(block[1].location)
+            CCS1comma = CityCountryString1.find(',')
+            City1 = CityCountryString1[:CCS1comma]
             
-            x = envCalc.distanceCalc((str((block[1].location))) , (str((buyers[i].location))))
+            CityCountryString2 =str(buyers[i].location)
+            CCS2comma = CityCountryString2.find(',')
+            City2 = CityCountryString2[:CCS2comma]
+            
+            x = envCalc.distanceCalc(City1, City2)
             quantity += block[0].Amount
             price += block[0].Price
             distanceSum += x 
@@ -201,7 +208,7 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
      
 def randLocation():
     x= random.randint(0,469)
-    with open('Database/varuhus.csv', 'r', encoding='utf-8') as csvfile:
+    with open('Database/Network_Database/varuhus.csv', 'r', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
         rows = list(csv_reader)
         return(str(rows[x][0] + ',' +rows[x][1]))
@@ -209,7 +216,7 @@ def randLocation():
 
 
 def specLocation(city, country):
-    with open('Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open('Database/Network_Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             ny = ",".join(row)
