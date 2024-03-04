@@ -1,6 +1,7 @@
 from flask import Flask,url_for,render_template
 import webbrowser
 import pymongo
+import csv
 
 # Creates Flask application named "app" and pass it the __name__,  which holds the name
 # of the current python module, flask needs it for some work behind the scenes
@@ -27,6 +28,23 @@ for x in z:
     temp.append(x[1])
 z = temp
     
+####
+buyersandseller = [["berlin","barcelona"],["stockholm","berlin"]]
+allWaypoints = []
+
+for pair in buyersandseller:
+    with open('Network_Database/worldcities.csv', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['From'] == pair[0]:
+                if row['To'] == pair[1]:
+                    waypoints = row['Path']
+            elif row['To'] == pair[0]:
+                if row['From'] == pair[1]:
+                    waypoints = row['Path']
+    allWaypoints.append(waypoints + ";")
+                
+####
 
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
 def index():
@@ -34,7 +52,7 @@ def index():
 
 @app.route('/result')
 def result():
-    return render_template("result.html", names = companyNames, data = y)
+    return render_template("result.html", names = companyNames, data = y, neededRoutes = allWaypoints)
 
 @app.route('/sortfairness')
 def sortfairness():
