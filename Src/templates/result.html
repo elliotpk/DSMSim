@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="test.css" /> -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
+	<!-- <script src="script.js"></script> -->
+	<script rel="text/javascript" src="{{ url_for('static', filename='script/script.js') }}" >
+	</script>
+
+</head>
+<body onload="changeInfo(0)">
+	<script>
+		function getInfo(x){
+		var t ='{{data}}';
+		t.replace("]]", '');
+		const arr = t.split("],");
+		console.log(arr);
+		for (let i = 0; i < arr.length; i++) {
+			let f = arr[i];
+			const arr2 = f.split(",");
+			arr[i] = arr2;
+		}
+		const info = arr[x];
+		return info;
+	}
+	</script>
+
+<script async
+src="">
+</script>
+<div class="nav">
+	<div id="navText">
+		<h1>Sort by:</h1>
+	</div>
+	<div class="navBtn" id="scoreBtn">
+		<form method="GET" action="/result"> 
+			<button class="navBtn">Score</button>
+		</form>
+	</div>
+	<div class="navBtn" id="fairBtn">
+		<form method="GET" action="/sortfairness"> 
+			<button class="navBtn">Fairness</button>
+		</form>
+	</div>
+</div>
+
+	<div style="width: 100%; height: 100%; padding-top: 29px; padding-bottom: 53.96px; padding-left: 59px; padding-right: 100px; background: white; justify-content: flex-start; align-items: flex-end; gap: 116px; display: inline-flex">
+
+		<div style="width: 314px; height: 915.04px; position: relative">
+			
+			<div class="selected m" id="nr0">
+				<button onclick="changeClass0(), changeInfo(0)" class="selected button" id="button0"><p>{{names [0]}}</p></button>
+			</div>
+			
+			<div class="options m" id="nr1">
+				<button onclick="changeClass1(), changeInfo(1)" class="options button" id="button1"><p>{{names [1]}}</p></button>
+			</div>
+
+			<div class="options m" id="nr2">
+				<button onclick="changeClass2(), changeInfo(2)" class="options button" id="button2"><p>{{names [2]}}</p></button>
+			</div>
+
+		</div>
+
+		<div style="width: 851px; height: 941px; position: relative">
+
+			<div class="info" id="infoBox">
+				<div class="text" id="info">
+				</div>
+
+				<div id="googleMap"></div>
+			</div>
+
+		</div>
+	</div>
+	</body>
+</html>

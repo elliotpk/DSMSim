@@ -1,0 +1,469 @@
+City,Country,Continent
+Tirana,Albania,Europe        
+Durres,Albania,Europe
+Vlore,Albania,Europe
+Shkoder,Albania,Europe
+Fier,Albania,Europe
+Korce,Albania,Europe
+Berat,Albania,Europe
+Lushnje,Albania,Europe
+Pogradec,Albania,Europe
+Gjirokaster,Albania,Europe
+Andorra la Vella,Andorra,Europe
+Escaldes-Engordany,Andorra,Europe
+Yerevan, Armenia, Europe
+Gyumri,Armenia,Europe
+Vanadzor,Armenia,Europe
+Ejmiatsin,Armenia,Europe
+Hrazdan,Armenia,Europe
+Abovyan,Armenia,Europe
+Kapan,Armenia,Europe
+Ararat,Armenia,Europe
+Armavir,Armenia,Europe
+Gavar,Armenia,Europe
+Vienna,Austria,Europe
+Graz,Austria,Europe
+Linz,Austria,Europe
+Salzburg,Austria,Europe
+Innsbruck,Austria,Europe
+Klagenfurt,Austria,Europe
+Villach,Austria,Europe
+Wels,Austria,Europe
+Sankt Polten,Austria,Europe
+Dornbirn,Austria,Europe
+Baku,Azerbaijan,Europe
+Ganja,Azerbaijan,Europe
+Sumqayit,Azerbaijan,Europe
+Mingachevir,Azerbaijan,Europe
+Lankaran,Azerbaijan,Europe
+Sirvan,Azerbaijan,Europe
+Baku,Azerbaijan,Europe
+Nakhchivan,Azerbaijan,Europe
+Shaki,Azerbaijan,Europe
+Yevlakh,Azerbaijan,Europe
+Minsk,Belarus,Europe
+Gomel,Belarus,Europe
+Mogilev,Belarus,Europe
+Vitebsk,Belarus,Europe
+Hrodna,Belarus,Europe
+Brest,Belarus,Europe
+Bobruisk,Belarus,Europe
+Baranovichi,Belarus,Europe
+Babruysk,Belarus,Europe
+Pinsk,Belarus,Europe
+Brussels,Belgium,Europe
+Antwerp,Belgium,Europe
+Ghent,Belgium,Europe
+Charleroi,Belgium,Europe
+Liege,Belgium,Europe
+Bruges,Belgium,Europe
+Namur,Belgium,Europe
+Leuven,Belgium,Europe
+Mons,Belgium,Europe
+Aalst,Belgium,Europe
+Sarajevo,Bosnia and Herzegovina,Europe
+Banja Luka,Bosnia and Herzegovina,Europe
+Tuzla,Bosnia and Herzegovina,Europe
+Zenica,Bosnia and Herzegovina,Europe
+Mostar,Bosnia and Herzegovina,Europe
+Bijeljina,Bosnia and Herzegovina,Europe
+Prijedor,Bosnia and Herzegovina,Europe
+Brcko,Bosnia and Herzegovina,Europe
+Trebinje,Bosnia and Herzegovina,Europe
+Doboj,Bosnia and Herzegovina,Europe
+Sofia,Bulgaria,Europe
+Plovdiv,Bulgaria,Europe
+Varna,Bulgaria,Europe
+Burgas,Bulgaria,Europe
+Ruse,Bulgaria,Europe
+Stara Zagora,Bulgaria,Europe
+Pleven,Bulgaria,Europe
+Sliven,Bulgaria,Europe
+Dobrich,Bulgaria,Europe
+Shumen,Bulgaria,Europe
+Zagreb,Croatia,Europe
+Split,Croatia,Europe
+Rijeka,Croatia,Europe
+Osijek,Croatia,Europe
+Zadar,Croatia,Europe
+Slavonski Brod,Croatia,Europe
+Pula,Croatia,Europe
+Karlovac,Croatia,Europe
+Sisak,Croatia,Europe
+Varazdin,Croatia,Europe
+Prague,Czechia,Europe
+Brno,Czechia,Europe
+Ostrava,Czechia,Europe
+Plzen,Czechia,Europe
+Liberec,Czechia,Europe
+Olomouc,Czechia,Europe
+Usti nad Labem,Czechia,Europe
+Hradec Kralove,Czechia,Europe
+Pardubice,Czechia,Europe
+Zlin,Czechia,Europe
+Copenhagen,Denmark,Europe
+Aarhus,Denmark,Europe
+Odense,Denmark,Europe
+Aalborg,Denmark,Europe
+Esbjerg,Denmark,Europe
+Randers,Denmark,Europe
+Kolding,Denmark,Europe
+Horsens,Denmark,Europe
+Vejle,Denmark,Europe
+Roskilde,Denmark,Europe
+Tallinn,Estonia,Europe
+Tartu,Estonia,Europe
+Narva,Estonia,Europe
+Parnu,Estonia,Europe
+Kohtla-Jarve,Estonia,Europe
+Viljandi,Estonia,Europe
+Rakvere,Estonia,Europe
+Maardu,Estonia,Europe
+Kuressaare,Estonia,Europe
+Voru,Estonia,Europe
+Helsinki,Finland,Europe
+Espoo,Finland,Europe
+Tampere,Finland,Europe
+Vantaa,Finland,Europe
+Oulu,Finland,Europe
+Turku,Finland,Europe
+Jyvaskyla,Finland,Europe
+Lahti,Finland,Europe
+Kuopio,Finland,Europe
+Kouvola,Finland,Europe
+Paris,France,Europe
+Marseille,France,Europe
+Lyon,France,Europe
+Toulouse,France,Europe
+Nice,France,Europe
+Nantes,France,Europe
+Strasbourg,France,Europe
+Montpellier,France,Europe
+Bordeaux,France,Europe
+Lille,France,Europe
+Tbilisi,Georgia,Europe
+Kutaisi,Georgia,Europe
+Batumi,Georgia,Europe
+Rustavi,Georgia,Europe
+Zugdidi,Georgia,Europe
+Gori,Georgia,Europe
+Poti,Georgia,Europe
+Samtredia,Georgia,Europe
+Khashuri,Georgia,Europe
+Tsqaltubo,Georgia,Europe
+Berlin,Germany,Europe
+Hamburg,Germany,Europe
+Munich,Germany,Europe
+Cologne,Germany,Europe
+Frankfurt,Germany,Europe
+Stuttgart,Germany,Europe
+Dusseldorf,Germany,Europe
+Dortmund,Germany,Europe
+Essen,Germany,Europe
+Bremen,Germany,Europe
+Athens,Greece,Europe
+Thessaloniki,Greece,Europe
+Patras,Greece,Europe
+Heraklion,Greece,Europe
+Larissa,Greece,Europe
+Volos,Greece,Europe
+Rhodes,Greece,Europe
+Ioannina,Greece,Europe
+Chania,Greece,Europe
+Chalcis,Greece,Europe
+Budapest,Hungary,Europe
+Debrecen,Hungary,Europe
+Szeged,Hungary,Europe
+Miskolc,Hungary,Europe
+Pecs,Hungary,Europe
+Gyor,Hungary,Europe
+Nyiregyhaza,Hungary,Europe
+Kecskemet,Hungary,Europe
+Szekesfehervar,Hungary,Europe
+Szombathely,Hungary,Europe
+Dublin,Ireland,Europe
+Cork,Ireland,Europe
+Limerick,Ireland,Europe
+Galway,Ireland,Europe
+Waterford,Ireland,Europe
+Drogheda,Ireland,Europe
+Dundalk,Ireland,Europe
+Navan,Ireland,Europe
+Ennis,Ireland,Europe
+Balbriggan,Ireland,Europe
+Rome,Italy,Europe
+Milan,Italy,Europe
+Naples,Italy,Europe
+Turin,Italy,Europe
+Palermo,Italy,Europe
+Genoa,Italy,Europe
+Bologna,Italy,Europe
+Florence,Italy,Europe
+Bari,Italy,Europe
+Catania,Italy,Europe
+Nur-Sultan,Kazakhstan,Europe
+Almaty,Kazakhstan,Europe
+Shymkent,Kazakhstan,Europe
+Karaganda,Kazakhstan,Europe
+Nur-Sultan,Kazakhstan,Europe
+Aktobe,Kazakhstan,Europe
+Taraz,Kazakhstan,Europe
+Pavlodar,Kazakhstan,Europe
+Ust-Kamenogorsk,Kazakhstan,Europe
+Semey,Kazakhstan,Europe
+Pristina,Kosovo,Europe
+Prizren,Kosovo,Europe
+Gjakove,Kosovo,Europe
+Peje,Kosovo,Europe
+Gjilan,Kosovo,Europe
+Ferizaj,Kosovo,Europe
+Mitrovica,Kosovo,Europe
+Vushtrri,Kosovo,Europe
+Kosovo Polje,Kosovo,Europe
+Lipjan,Kosovo,Europe
+Riga,Latvia,Europe
+Daugavpils,Latvia,Europe
+Liepaja,Latvia,Europe
+Jelgava,Latvia,Europe
+Jurmala,Latvia,Europe
+Ventspils,Latvia,Europe
+Rezekne,Latvia,Europe
+Valmiera,Latvia,Europe
+Ogre,Latvia,Europe
+Tukums,Latvia,Europe
+Vaduz,Liechtenstein,Europe
+Schaan,Liechtenstein,Europe
+Triesen,Liechtenstein,Europe
+Balzers,Liechtenstein,Europe
+Eschen,Liechtenstein,Europe
+Mauren,Liechtenstein,Europe
+Ruggell,Liechtenstein,Europe
+Gamprin,Liechtenstein,Europe
+Schellenberg,Liechtenstein,Europe
+Planken,Liechtenstein,Europe
+Vilnius,Lithuania,Europe
+Kaunas,Lithuania,Europe
+Klaipeda,Lithuania,Europe
+Siauliai,Lithuania,Europe
+Panevezys,Lithuania,Europe
+Alytus,Lithuania,Europe
+Marijampole,Lithuania,Europe
+Mazeikiai,Lithuania,Europe
+Jonava,Lithuania,Europe
+Utena,Lithuania,Europe
+Luxembourg City,Luxembourg,Europe
+Esch-sur-Alzette,Luxembourg,Europe
+Differdange,Luxembourg,Europe
+Dudelange,Luxembourg,Europe
+Ettelbruck,Luxembourg,Europe
+Diekirch,Luxembourg,Europe
+Wiltz,Luxembourg,Europe
+Vianden,Luxembourg,Europe
+Redange,Luxembourg,Europe
+Remich,Luxembourg,Europe
+Valletta,Malta,Europe
+Birkirkara,Malta,Europe
+Mosta,Malta,Europe
+Zabbar,Malta,Europe
+Saint John,Malta,Europe
+Fgura,Malta,Europe
+Zejtun,Malta,Europe
+Sliema,Malta,Europe
+Qormi,Malta,Europe
+Attard,Malta,Europe
+Chisinau,Moldova,Europe
+Tiraspol,Moldova,Europe
+Balti,Moldova,Europe
+Bender,Moldova,Europe
+Ribnita,Moldova,Europe
+Cahul,Moldova,Europe
+Ungheni,Moldova,Europe
+Soroca,Moldova,Europe
+Orhei,Moldova,Europe
+Dubasari,Moldova,Europe
+Monaco,Monaco,Europe
+Monte Carlo,Monaco,Europe
+La Condamine,Monaco,Europe
+Fontvieille,Monaco,Europe
+Jardin Exotique,Monaco,Europe
+Larvotto,Monaco,Europe
+Saint-Roman,Monaco,Europe
+Moneghetti,Monaco,Europe
+Port Hercule,Monaco,Europe
+Les Moneghetti,Monaco,Europe
+Podgorica,Montenegro,Europe
+Niksic,Montenegro,Europe
+Herceg Novi,Montenegro,Europe
+Pljevlja,Montenegro,Europe
+Bijelo Polje,Montenegro,Europe
+Cetinje,Montenegro,Europe
+Bar,Montenegro,Europe
+Berane,Montenegro,Europe
+Ulcinj,Montenegro,Europe
+Rozaje,Montenegro,Europe
+Amsterdam,Netherlands,Europe
+Rotterdam,Netherlands,Europe
+The Hague,Netherlands,Europe
+Utrecht,Netherlands,Europe
+Eindhoven,Netherlands,Europe
+Tilburg,Netherlands,Europe
+Groningen,Netherlands,Europe
+Almere,Netherlands,Europe
+Breda,Netherlands,Europe
+Nijmegen,Netherlands,Europe
+Skopje,Macedonia,Europe
+Bitola,Macedonia,Europe
+Kumanovo,Macedonia,Europe
+Prilep,Macedonia,Europe
+Tetovo,Macedonia,Europe
+Veles,Macedonia,Europe
+Ohrid,Macedonia,Europe
+Gostivar,Macedonia,Europe
+Struga,Macedonia,Europe
+Kavadarci,Macedonia,Europe
+Oslo,Norway,Europe
+Bergen,Norway,Europe
+Trondheim,Norway,Europe
+Stavanger,Norway,Europe
+Drammen,Norway,Europe
+Fredrikstad,Norway,Europe
+Kristiansand,Norway,Europe
+Sandnes,Norway,Europe
+Tromso,Norway,Europe
+Sarpsborg,Norway,Europe
+Warsaw,Poland,Europe
+Krakow,Poland,Europe
+Lodz,Poland,Europe
+Wroclaw,Poland,Europe
+Poznan,Poland,Europe
+Gdansk,Poland,Europe
+Szczecin,Poland,Europe
+Bydgoszcz,Poland,Europe
+Lublin,Poland,Europe
+Katowice,Poland,Europe
+Lisbon,Portugal,Europe
+Porto,Portugal,Europe
+Vila Nova de Gaia,Portugal,Europe
+Amadora,Portugal,Europe
+Braga,Portugal,Europe
+Funchal,Portugal,Europe
+Coimbra,Portugal,Europe
+Setubal,Portugal,Europe
+Queluz,Portugal,Europe
+Agualva-Cacem,Portugal,Europe
+Bucharest,Romania,Europe
+Cluj-Napoca,Romania,Europe
+Timisoara,Romania,Europe
+Iasi,Romania,Europe
+Constanta,Romania,Europe
+Craiova,Romania,Europe
+Brasov,Romania,Europe
+Galati,Romania,Europe
+Ploiesti,Romania,Europe
+Oradea,Romania,Europe
+Moscow,Russia,Europe
+Saint Petersburg,Russia,Europe
+Novosibirsk,Russia,Europe
+Yekaterinburg,Russia,Europe
+Nizhny Novgorod,Russia,Europe
+Kazan,Russia,Europe
+Chelyabinsk,Russia,Europe
+Omsk,Russia,Europe
+Samara,Russia,Europe
+Rostov-on-Don,Russia,Europe
+San Marino,San Marino,Europe
+Belgrade,Serbia,Europe
+Novi Sad,Serbia,Europe
+Nis,Serbia,Europe
+Kragujevac,Serbia,Europe
+Subotica,Serbia,Europe
+Zrenjanin,Serbia,Europe
+Pancevo,Serbia,Europe
+Cacak,Serbia,Europe
+Novi Pazar,Serbia,Europe
+Kraljevo,Serbia,Europe
+Bratislava,Slovakia,Europe
+Kosice,Slovakia,Europe
+Presov,Slovakia,Europe
+Zilina,Slovakia,Europe
+Nitra,Slovakia,Europe
+Banska Bystrica,Slovakia,Europe
+Trnava,Slovakia,Europe
+Martin,Slovakia,Europe
+Trencin,Slovakia,Europe
+Poprad,Slovakia,Europe
+Ljubljana,Slovenia,Europe
+Maribor,Slovenia,Europe
+Celje,Slovenia,Europe
+Kranj,Slovenia,Europe
+Velenje,Slovenia,Europe
+Koper,Slovenia,Europe
+Novo Mesto,Slovenia,Europe
+Ptuj,Slovenia,Europe
+Trbovlje,Slovenia,Europe
+Kamnik,Slovenia,Europe
+Madrid,Spain,Europe
+Barcelona,Spain,Europe
+Valencia,Spain,Europe
+Seville,Spain,Europe
+Zaragoza,Spain,Europe
+Malaga,Spain,Europe
+Murcia,Spain,Europe
+Palma,Spain,Europe
+Las Palmas,Spain,Europe
+Bilbao,Spain,Europe
+Stockholm,Sweden,Europe
+Gothenburg,Sweden,Europe
+Malmo,Sweden,Europe
+Uppsala,Sweden,Europe
+Vasteras,Sweden,Europe
+Orebro,Sweden,Europe
+Linkoping,Sweden,Europe
+Helsingborg,Sweden,Europe
+Jonkoping,Sweden,Europe
+Norrkoping,Sweden,Europe
+Lulea,Sweden,Europe
+Pitea,Sweden,Europe
+Umea,Sweden,Europe
+Sundsvall,Sweden,Europe
+Zurich,Switzerland,Europe
+Geneva,Switzerland,Europe
+Basel,Switzerland,Europe
+Lausanne,Switzerland,Europe
+Bern,Switzerland,Europe
+Winterthur,Switzerland,Europe
+Lucerne,Switzerland,Europe
+St. Gallen,Switzerland,Europe
+Lugano,Switzerland,Europe
+Biel/Bienne,Switzerland,Europe
+Istanbul,Turkey,Europe
+Ankara,Turkey,Europe
+Izmir,Turkey,Europe
+Bursa,Turkey,Europe
+Adana,Turkey,Europe
+Gaziantep,Turkey,Europe
+Konya,Turkey,Europe
+Antalya,Turkey,Europe
+Kayseri,Turkey,Europe
+Mersin,Turkey,Europe
+Kyiv,Ukraine,Europe
+Kharkiv,Ukraine,Europe
+Odesa,Ukraine,Europe
+Dnipro,Ukraine,Europe
+Donetsk,Ukraine,Europe
+Zaporizhzhia,Ukraine,Europe
+Lviv,Ukraine,Europe
+Kryvyi Rih,Ukraine,Europe
+Mykolaiv,Ukraine,Europe
+Mariupol,Ukraine,Europe
+London,United Kingdom,Europe
+Birmingham,United Kingdom,Europe
+Manchester,United Kingdom,Europe
+Glasgow,United Kingdom,Europe
+Newcastle upon Tyne,United Kingdom,Europe
+Sheffield,United Kingdom,Europe
+Liverpool,United Kingdom,Europe
+Leeds,United Kingdom,Europe
+Edinburgh,United Kingdom,Europe
+Bristol,United Kingdom,Europe
+Vatican City,Vatican City,Europe

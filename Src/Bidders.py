@@ -2,7 +2,7 @@ import random
 import Behaviour
 import math
 from itertools import combinations
-import API_Handling
+from Database import API_Handling
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
