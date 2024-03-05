@@ -7,12 +7,6 @@ import yaml
 
 from Database import API_Handling
 import refCalc
-import pymongo
-
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["mydatabase"]
-mycol = mydb["customers"]
-
 
 
 seed = None
@@ -106,11 +100,6 @@ def readConfig(skipPrompts):
     amountOfAuctions, sellerList = initSellers(sellers)
     bidderList = initBidders(bidders, math.ceil(amountOfAuctions / conf["slotsize"]))
     return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
-
-
-
-
-
 
 def genConfig():
     """Generates a config.yaml file and saves it, called if config file is missing"""
@@ -323,21 +312,6 @@ def overridePenalty(bidders, penalty):
         bidder[1]['distancePenalty'] = penalty
 
 
-def fuling(input, score, fairness):
-    
-    x= input        #matchmakingResults[0].get('combo', None)
-    y= x[0]
-    z= y.get('buyer', None)
-    v = z.location
-    output= []
-    output2 = []
-    
-    output2.append(score)
-    output2.append(fairness)
-    output2.append(v)
-    output.append(output2)
-    return output
-
 def start(skipPrompts):
     'Master function'
    
@@ -348,10 +322,37 @@ def start(skipPrompts):
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
+    combo = matchmakingResults[0].get('combo', None)
+    eco = matchmakingResults[0].get('eco', None)
+    sellerCity = combo[0]
+    buyer = sellerCity['buyer']
+    buyerID = buyer.id
+    buyer = buyer.location.split(",")
+    buyerCity = buyer[0]
+    buyerCountry = buyer[1]
     
-    print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
+
+    sellerCity = sellerCity['blocks']
+    sellerCity = sellerCity[0]
+    sellerCity = sellerCity[1]
+    sellerCity = (str(sellerCity)).split(" ")
+    sellerID = sellerCity[0]
+    sellerCity = sellerCity[1]
+    sellerCity = (str(sellerCity)).split(",")
+    stad = sellerCity[0]
+    land = sellerCity[1]
     
+    #print((sellerID, stad, land))
+    #print(matchmakingResults.Bidders.location)
+    print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, stad, land)
     
+    # SellerID, BuyerID, Score, Eco, Fairness, BuyerCity, BuyerCountry, BuyerWarehouse, SellerCity, SellerCountry, SellerWarehouse
+
+    # Checklist
+    # Score, Eco, Fairness X
+    # BuyerCity, Country X
+    # SellerID, SellerCity, Country X
+
     "Case 1, sorting for  Score" 
     print(f"Best score {score}")
     print(f"Fairness value,  While best score: {fairness}")                                       #use if sorted by distance in referenceCalculator
