@@ -1,3 +1,4 @@
+import os
 from Database import API_Handling
 
 def distanceCalc(seller, buyer):
