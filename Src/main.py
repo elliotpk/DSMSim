@@ -319,6 +319,10 @@ def start(skipPrompts):
     #TODO Serialize matchmaking results and store in appropriate way
 
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
+    
+    #Make collection function here
+    
+    
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
@@ -341,10 +345,10 @@ def start(skipPrompts):
     sellerCity = (str(sellerCity)).split(",")
     stad = sellerCity[0]
     land = sellerCity[1]
+    sellerClosest =API_Handling.closestWarehouse(stad, land)
+    buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
     
-    #print((sellerID, stad, land))
-    #print(matchmakingResults.Bidders.location)
-    print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, stad, land)
+    print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, stad, land, sellerClosest)
     
     # SellerID, BuyerID, Score, Eco, Fairness, BuyerCity, BuyerCountry, BuyerWarehouse, SellerCity, SellerCountry, SellerWarehouse
 
@@ -355,21 +359,22 @@ def start(skipPrompts):
 
     "Case 1, sorting for  Score" 
     print(f"Best score {score}")
-    print(f"Fairness value,  While best score: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Fairness value,  While best score: {fairness}")                             #use if sorted by Score in referenceCalculator
     print(f"Average distance over all transports,  While best Score {distance}")
     
-    "Case 2, sorting for  Distance" 
+    "Case 2, sorting for  Distance"                                                     #use if sorted by distance in referenceCalculator
     '''
-    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"fairness value while shortest average distance: {fairness}")                                       
     print(f"Best Average distance {distance}")
-    print(f"Best score {score}")
+    print(f"Best fairness value while shortest average distance: {fairness}")                                      
+    print(f"Score value while shortest average distance  {score}")
     '''
     
-    "Case 1, sorting for  Fairness"
+    "Case 3, sorting for  Fairness"                                                     #use if sorted by fairness in referenceCalculator
     '''
-    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
-    print(f"Best Average distance {distance}")
-    print(f"Best score {score}")
+    print(f"Best fairness value: {fairness}")                                       
+    print(f"Average distance with best fairness value {distance}")
+    print(f"Eco Score whle best fairness value  {score}")
     '''
     
 
@@ -382,9 +387,9 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
-        auctionResults = []                     # always empty
+        auctionResults = []                  
    
-    return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
+    return matchmakingResults, auctionResults        
 
 
 if __name__ == "__main__":

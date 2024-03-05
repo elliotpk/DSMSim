@@ -28,18 +28,20 @@ def get_coordinates(city_name):
 
 def closestWarehouse(city, Country):
     with open('Database/Network_Database/varuhus.csv', 'r', encoding='utf-8') as csvfile:
+        
         reader = csv.reader(csvfile)
         next(reader)  # Skip header row
         closestWarehouseDistance= 999999999999999
         for row in reader:
+            
             if row[1] == Country:
                 currentWarehouse =row[0]
-                print(currentWarehouse)
                 currentCityDistance = Route2(city, currentWarehouse)
+                
                 if currentCityDistance < closestWarehouseDistance:
                     closestWarehouseDistance= currentCityDistance
                     closestWarehouse= currentWarehouse
-                    print(str(closestWarehouse) + ' BESTBESTBESTBESTBESTBESTBESTBESTBEST')
+                    
     return closestWarehouse
 
 
@@ -68,5 +70,5 @@ def Route2(city1, city2): # distance Calculation using latitude and longitude wi
     
     return distance
 
-x=closestWarehouse('Faro', 'Portugal')
+x=closestWarehouse('Umea', 'Sweden')
 print(x)
