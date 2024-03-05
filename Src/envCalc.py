@@ -2,7 +2,6 @@ from Database import API_Handling
 
 def distanceCalc(seller, buyer):
     
-    print(str(seller) + " " + str(buyer) + " CCCCCCC")
     '''
     x = str.split(seller , ',')
     y= str.split(buyer, ',')

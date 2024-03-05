@@ -8,6 +8,12 @@ import yaml
 
 from Database import API_Handling
 import refCalc
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
 
 
 seed = None
@@ -49,9 +55,6 @@ def readConfig(skipPrompts):
         conf["sellers"] = len(sellers)
     except:
         sellers = None
-
-
-
 
     #Loads Bidders from config file, and sets amount of Bidders in the same file, if such a  file exists
     try:
@@ -348,10 +351,25 @@ def start(skipPrompts):
     
     print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
     
+    
+    "Case 1, sorting for  Score" 
+    print(f"Best score {score}")
+    print(f"Fairness value,  While best score: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Average distance over all transports,  While best Score {distance}")
+    
+    "Case 2, sorting for  Distance" 
+    '''
     print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
     print(f"Best Average distance {distance}")
     print(f"Best score {score}")
+    '''
     
+    "Case 1, sorting for  Fairness"
+    '''
+    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Best Average distance {distance}")
+    print(f"Best score {score}")
+    '''
     
    
     if fairness == None:

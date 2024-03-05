@@ -85,6 +85,7 @@ def evaluateCombinations(combinations):
        
         output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score })
         print(output[-1])
+    
     #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
     #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
     sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)          #Sort by score
@@ -139,11 +140,24 @@ def formatCombination(combination, buyers):
             City2 = CityCountryString2[:CCS2comma]
             
             x = envCalc.distanceCalc(City1, City2)
+            
+            '''
+            with open('Database/Network_Database/shortest_paths.csv', newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if row['From'] == City1 and row['To'] == City2:
+                        x= float(row['Distance'])
+            
+            
+                                                                                ####HÄRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR######################
+            '''
+            
+            
             quantity += block[0].Amount
             price += block[0].Price
             distanceSum += x 
             ecoFriendly = (100 -(x / 225))/100
-
+            
 
         temp['pricePerUnit'] = round(price/quantity, 2)
         temp['distanceSum'] = round(distanceSum, 2)
