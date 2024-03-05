@@ -83,7 +83,7 @@ def evaluateCombinations(combinations):
        
         score= getScore(green, (nom/denom), configFile)
        
-        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score })
+        output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score , 'eco' : green})
         print(output[-1])
     
     #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
