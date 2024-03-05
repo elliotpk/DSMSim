@@ -1,6 +1,8 @@
 from datetime import datetime
 import math
 import csv
+from collections import defaultdict
+
 
 def get_coordinates(city_name):
     with open('Database/Network_Database/worldcities.csv', newline='') as csvfile:
@@ -65,5 +67,5 @@ if __name__ == "__main__":
         print("Failed to fetch distance and duration. Please check your input and API key.")
 '''
 
-x= Route2('Hudiksvall', 'Stockholm')
+x= Route2('Tallinn', 'Amsterdam')
 print(x)

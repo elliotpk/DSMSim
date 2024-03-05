@@ -9,7 +9,7 @@ API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 def internationalRouting():
     "connects the  two closest cities in neighbouring countries for all cities in database"
     nationalNets = allNationalNetworks()
-    with open('closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
+    with open('Network_Database/closest_cities.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
@@ -58,7 +58,7 @@ def countryBuilder(): #TODO """"""""""""""""""""""""""""""""""""""""""""""""""""
     countryList = []
     
     
-    with open('output.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open('Network_Database/output.csv', 'r', newline='', encoding='utf-8') as csvfile:
         
         reader = csv.reader(csvfile)
         next(reader)
