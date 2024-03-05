@@ -1,6 +1,22 @@
 from datetime import datetime
 import math
 import csv
+import requests
+
+
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
+
+def get_distance(origin, destination, api_key):
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins={origin}&destinations={destination}&key={api_key}"
+    response = requests.get(url)
+    data = response.json()
+
+    if data['status'] == 'OK':
+        distance = data['rows'][0]['elements'][0]['distance']['text']
+        return distance
+    else:
+        print("Error:", data['status'])
+        return None
 
 def get_coordinates(city_name):
     with open('Database/Network_Database/worldcities.csv', newline='', encoding='utf-8') as csvfile:
@@ -9,6 +25,22 @@ def get_coordinates(city_name):
             if row['city_ascii'] == city_name:
                 return float(row['lat']), float(row['lng'])
     return None, None  # Return None if city is not found
+
+def closestWarehouse(city):
+    with open('Database/Network_Database/varuhus.csv', 'r', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # Skip header row
+        closestWarehouseDistance= 999999999999999
+        for row in reader:
+            currentWarehouse =row[0]
+            print(currentWarehouse)
+            currentCityDistance = Route2(city, currentWarehouse)
+            if currentCityDistance < closestWarehouseDistance:
+                closestWarehouseDistance= currentCityDistance
+                closestWarehouse= currentWarehouse
+                print(str(closestWarehouse) + ' BESTBESTBESTBESTBESTBESTBESTBESTBEST')
+    return closestWarehouse
+
 
 def Route2(city1, city2): # distance Calculation using latitude and longitude with haversine formula
     lat1, lon1 =get_coordinates(city1)
@@ -35,35 +67,5 @@ def Route2(city1, city2): # distance Calculation using latitude and longitude wi
     
     return distance
 
-
-'''
-# Example usage:
-lat1 = 59.3294
-lon1 = 18.0686
-lat2 = 63.8250
-lon2 = 20.2639
-
-distance = haversine(lat1, lon1, lat2, lon2)
-print("Distance:", distance, "kilometers")
-
-
-if __name__ == "__main__":              
-    'Testar APIn'
-    
-    # Replace 'YOUR_API_KEY' with your actual Google Maps API key
-    API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
-
-    # Input the origin and destination locations
-    origin = input("Enter origin: ")
-    destination = input("Enter destination: ")
-    distance = Route(API_KEY, origin, destination)
-
-    if distance:
-        print(f"Distance: {distance}")
-    
-    else:
-        print("Failed to fetch distance and duration. Please check your input and API key.")
-'''
-
-#x= Route2('Tallinn', 'Amsterdam')
-#print(x)
+x=closestWarehouse('Faro')
+print(x)
