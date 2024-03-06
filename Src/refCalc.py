@@ -221,16 +221,16 @@ def checkIfPreviousBlockUnbought(unboughtBlock, boughtBlocks):
         return True
      
 def randLocation():
-    x= random.randint(0,469)
-    with open('Database/Network_Database/varuhus.csv', 'r', encoding='utf-8') as csvfile:
+    x= random.randint(0,13117) # All cities in activecities.csv
+    with open('Database/Network_Database/activecities.csv', 'r', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
         rows = list(csv_reader)
-        return(str(rows[x][0] + ',' +rows[x][1]))
+        return(str(rows[x][1] + ',' +rows[x][4]))
    
 
 
 def specLocation(city, country):
-    with open('Database/Network_Database/varuhus.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open('Database/Network_Database/worldcities.csv', 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             ny = ",".join(row)

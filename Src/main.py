@@ -4,6 +4,7 @@ from Bidders import *
 import random
 import math
 import yaml
+import mongodb
 
 from Database import API_Handling
 import refCalc
@@ -328,27 +329,23 @@ def start(skipPrompts):
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
     combo = matchmakingResults[0].get('combo', None)
     eco = matchmakingResults[0].get('eco', None)
-    sellerCity = combo[0]
-    buyer = sellerCity['buyer']
+    sellers = combo[0]
+    buyer = sellers['buyer']
     buyerID = buyer.id
     buyer = buyer.location.split(",")
     buyerCity = buyer[0]
     buyerCountry = buyer[1]
+    print(buyerCity, buyerCountry)
+    buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
+
+    sellers = sellers['blocks']
+    print("TEST" +str(sellers)+"TEST")
+    mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
+    
     
 
-    sellerCity = sellerCity['blocks']
-    sellerCity = sellerCity[0]
-    sellerCity = sellerCity[1]
-    sellerCity = (str(sellerCity)).split(" ")
-    sellerID = sellerCity[0]
-    sellerCity = sellerCity[1]
-    sellerCity = (str(sellerCity)).split(",")
-    stad = sellerCity[0]
-    land = sellerCity[1]
-    sellerClosest =API_Handling.closestWarehouse(stad, land)
-    buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
     
-    print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, stad, land, sellerClosest)
+    #print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, stad, land, sellerClosest)
     
     # SellerID, BuyerID, Score, Eco, Fairness, BuyerCity, BuyerCountry, BuyerWarehouse, SellerCity, SellerCountry, SellerWarehouse
 

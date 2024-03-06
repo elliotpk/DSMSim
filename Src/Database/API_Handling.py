@@ -41,7 +41,8 @@ def closestWarehouse(city, Country):
                 if currentCityDistance < closestWarehouseDistance:
                     closestWarehouseDistance= currentCityDistance
                     closestWarehouse= currentWarehouse
-                    
+        
+        print(str(closestWarehouseDistance))
     return closestWarehouse
 
 
@@ -69,6 +70,3 @@ def Route2(city1, city2): # distance Calculation using latitude and longitude wi
     distance = R * c
     
     return distance
-
-x=closestWarehouse('Umea', 'Sweden')
-print(x)
