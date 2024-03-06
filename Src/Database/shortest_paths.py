@@ -5,7 +5,7 @@ import csv
 
 def build_shortest_path():
     # Read the CSV file
-    df = pd.read_csv('Network_Database/AdjMatrix.csv')
+    df = pd.read_csv('Database/Network_Database/AdjMatrix.csv')
 
     # Initialize a directed graph
     G = nx.DiGraph()
@@ -28,7 +28,7 @@ def build_shortest_path():
         shortest_paths[node] = nx.single_source_dijkstra_path(G, node)
 
     # Write shortest paths to a CSV file
-    with open('Network_Database/shortest_paths.csv', 'w', newline='') as csvfile:
+    with open('Database/Network_Database/shortest_paths.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         # Write header
         writer.writerow(['From', 'To', 'Path', 'Distance'])

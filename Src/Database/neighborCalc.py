@@ -6,7 +6,7 @@ from math import inf
 def buildNet():
 # Step 1: Handles cities in varuhus
     cities = defaultdict(list)  # Store cities by country
-    with open('Network_Database/varuhus.csv', 'r', newline='', encoding='utf-8') as file1:
+    with open('Database/Network_Database/varuhus.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
@@ -16,7 +16,7 @@ def buildNet():
  
 # Step 2: handles countries from neighbours
     neighbors = defaultdict(list)  # Store neighboring countries
-    with open('Network_Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file2:
+    with open('Database/Network_Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file2:
         reader = csv.reader(file2)
         next(reader)  # Skip header row
         for row in reader:
@@ -37,7 +37,7 @@ def buildNet():
                        
 
 # Step 4: Write the results to a new file
-    with open('Network_Database/closest_cities.csv', 'w', newline='', encoding='utf-8') as output_file:
+    with open('Database/Network_Database/closest_cities.csv', 'w', newline='', encoding='utf-8') as output_file:
         writer = csv.writer(output_file)
         writer.writerow(['Country', 'Neighboring Country', 'City 1', 'City 2', 'Distance'])
         for country, neighboring_countries in closest_cities.items():

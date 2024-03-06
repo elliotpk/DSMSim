@@ -3,6 +3,7 @@ import International_Nw_build
 import buildNet
 import neighborCalc
 import shortest_paths
+import ActiveCities
 
 "Prerequisite files  (Can be found in Network_Databases):"
 "our worldcities.csv file,"
@@ -18,14 +19,21 @@ def runMe2nd():
 def runMe3rd():
     Build_Adj_matrix.buildAdjMatrix()
     
-def runMeLast():
+def runMe4th():
     shortest_paths.build_shortest_path()
-    
+def runMeLast():
+    ActiveCities.activeCities()
 
 runMe1st()
+print("1")
 runMe2nd()
+print("2")
 runMe3rd()
+print("3")
+runMe4th()
+print("4")
 runMeLast()
+print("5")
         
     
     

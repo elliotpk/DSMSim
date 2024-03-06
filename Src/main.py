@@ -4,15 +4,10 @@ from Bidders import *
 import random
 import math
 import yaml
+import mongodb
 
 from Database import API_Handling
 import refCalc
-import pymongo
-
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["mydatabase"]
-mycol = mydb["customers"]
-
 
 
 seed = None
@@ -106,11 +101,6 @@ def readConfig(skipPrompts):
     amountOfAuctions, sellerList = initSellers(sellers)
     bidderList = initBidders(bidders, math.ceil(amountOfAuctions / conf["slotsize"]))
     return conf['slotsize'], conf['end-threshold'], sellerList, bidderList
-
-
-
-
-
 
 def genConfig():
     """Generates a config.yaml file and saves it, called if config file is missing"""
@@ -323,21 +313,6 @@ def overridePenalty(bidders, penalty):
         bidder[1]['distancePenalty'] = penalty
 
 
-def fuling(input, score, fairness):
-    
-    x= input        #matchmakingResults[0].get('combo', None)
-    y= x[0]
-    z= y.get('buyer', None)
-    v = z.location
-    output= []
-    output2 = []
-    
-    output2.append(score)
-    output2.append(fairness)
-    output2.append(v)
-    output.append(output2)
-    return output
-
 def start(skipPrompts):
     'Master function'
    
@@ -345,30 +320,58 @@ def start(skipPrompts):
     #TODO Serialize matchmaking results and store in appropriate way
 
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
+    
+    #Make collection function here
+    
+    
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
+    combo = matchmakingResults[0].get('combo', None)
+    eco = matchmakingResults[0].get('eco', None)
+    sellers = combo[0]
+    buyer = sellers['buyer']
+    buyerID = buyer.id
+    buyer = buyer.location.split(",")
+    buyerCity = buyer[0]
+    buyerCountry = buyer[1]
+    print(buyerCity, buyerCountry)
+    buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
+
+    sellers = sellers['blocks']
+    print("TEST" +str(sellers)+"TEST")
+    mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
     
-    print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
     
+
     
+    #print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, stad, land, sellerClosest)
+    
+    # SellerID, BuyerID, Score, Eco, Fairness, BuyerCity, BuyerCountry, BuyerWarehouse, SellerCity, SellerCountry, SellerWarehouse
+
+    # Checklist
+    # Score, Eco, Fairness X
+    # BuyerCity, Country X
+    # SellerID, SellerCity, Country X
+
     "Case 1, sorting for  Score" 
     print(f"Best score {score}")
-    print(f"Fairness value,  While best score: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"Fairness value,  While best score: {fairness}")                             #use if sorted by Score in referenceCalculator
     print(f"Average distance over all transports,  While best Score {distance}")
     
-    "Case 2, sorting for  Distance" 
+    "Case 2, sorting for  Distance"                                                     #use if sorted by distance in referenceCalculator
     '''
-    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
+    print(f"fairness value while shortest average distance: {fairness}")                                       
     print(f"Best Average distance {distance}")
-    print(f"Best score {score}")
+    print(f"Best fairness value while shortest average distance: {fairness}")                                      
+    print(f"Score value while shortest average distance  {score}")
     '''
     
-    "Case 1, sorting for  Fairness"
+    "Case 3, sorting for  Fairness"                                                     #use if sorted by fairness in referenceCalculator
     '''
-    print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
-    print(f"Best Average distance {distance}")
-    print(f"Best score {score}")
+    print(f"Best fairness value: {fairness}")                                       
+    print(f"Average distance with best fairness value {distance}")
+    print(f"Eco Score whle best fairness value  {score}")
     '''
     
 
@@ -381,9 +384,9 @@ def start(skipPrompts):
         engine = SimEngine(sellerList, bidderList, slotSize, endThreshold)
         auctionResults = engine.simStart()
     else:
-        auctionResults = []                     # always empty
+        auctionResults = []                  
    
-    return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
+    return matchmakingResults, auctionResults        
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ Abovyan,Armenia,Europe
 Kapan,Armenia,Europe
 Ararat,Armenia,Europe
 Armavir,Armenia,Europe
-Gavar,Armenia,Europe
+Gavarr,Armenia,Europe
 Vienna,Austria,Europe
 Graz,Austria,Europe
 Linz,Austria,Europe
@@ -32,28 +32,28 @@ Wels,Austria,Europe
 Sankt Polten,Austria,Europe
 Dornbirn,Austria,Europe
 Baku,Azerbaijan,Europe
-Ganja,Azerbaijan,Europe
+Ganca,Azerbaijan,Europe
 Sumqayit,Azerbaijan,Europe
-Mingachevir,Azerbaijan,Europe
+Mingacevir,Azerbaijan,Europe
 Lankaran,Azerbaijan,Europe
 Sirvan,Azerbaijan,Europe
 Baku,Azerbaijan,Europe
-Nakhchivan,Azerbaijan,Europe
-Shaki,Azerbaijan,Europe
-Yevlakh,Azerbaijan,Europe
+Naxcivan,Azerbaijan,Europe
+Saki,Azerbaijan,Europe
+Yevlax,Azerbaijan,Europe
 Minsk,Belarus,Europe
-Gomel,Belarus,Europe
-Mogilev,Belarus,Europe
-Vitebsk,Belarus,Europe
+Homyel',Belarus,Europe
+Mahilyow,Belarus,Europe
+Vitsyebsk,Belarus,Europe
 Hrodna,Belarus,Europe
 Brest,Belarus,Europe
-Bobruisk,Belarus,Europe
-Baranovichi,Belarus,Europe
+Babruysk,Belarus,Europe
+Baranavichy,Belarus,Europe
 Babruysk,Belarus,Europe
 Pinsk,Belarus,Europe
 Brussels,Belgium,Europe
 Antwerp,Belgium,Europe
-Ghent,Belgium,Europe
+Gent,Belgium,Europe
 Charleroi,Belgium,Europe
 Liege,Belgium,Europe
 Bruges,Belgium,Europe
@@ -163,14 +163,14 @@ Essen,Germany,Europe
 Bremen,Germany,Europe
 Athens,Greece,Europe
 Thessaloniki,Greece,Europe
-Patras,Greece,Europe
-Heraklion,Greece,Europe
-Larissa,Greece,Europe
+Piraeus,Greece,Europe
+Irakleio,Greece,Europe
+Larisa,Greece,Europe
 Volos,Greece,Europe
-Rhodes,Greece,Europe
+Rodos,Greece,Europe
 Ioannina,Greece,Europe
 Chania,Greece,Europe
-Chalcis,Greece,Europe
+Chalkida,Greece,Europe
 Budapest,Hungary,Europe
 Debrecen,Hungary,Europe
 Szeged,Hungary,Europe
@@ -190,7 +190,6 @@ Drogheda,Ireland,Europe
 Dundalk,Ireland,Europe
 Navan,Ireland,Europe
 Ennis,Ireland,Europe
-Balbriggan,Ireland,Europe
 Rome,Italy,Europe
 Milan,Italy,Europe
 Naples,Italy,Europe
@@ -204,12 +203,12 @@ Catania,Italy,Europe
 Nur-Sultan,Kazakhstan,Europe
 Almaty,Kazakhstan,Europe
 Shymkent,Kazakhstan,Europe
-Karaganda,Kazakhstan,Europe
+Qaraghandy,Kazakhstan,Europe
 Nur-Sultan,Kazakhstan,Europe
-Aktobe,Kazakhstan,Europe
+Aqtobe,Kazakhstan,Europe
 Taraz,Kazakhstan,Europe
 Pavlodar,Kazakhstan,Europe
-Ust-Kamenogorsk,Kazakhstan,Europe
+Oskemen,Kazakhstan,Europe
 Semey,Kazakhstan,Europe
 Pristina,Kosovo,Europe
 Prizren,Kosovo,Europe
@@ -217,9 +216,9 @@ Gjakove,Kosovo,Europe
 Peje,Kosovo,Europe
 Gjilan,Kosovo,Europe
 Ferizaj,Kosovo,Europe
-Mitrovica,Kosovo,Europe
+Mitrovice,Kosovo,Europe
 Vushtrri,Kosovo,Europe
-Kosovo Polje,Kosovo,Europe
+Fushe Kosove,Kosovo,Europe
 Lipjan,Kosovo,Europe
 Riga,Latvia,Europe
 Daugavpils,Latvia,Europe
@@ -251,15 +250,14 @@ Marijampole,Lithuania,Europe
 Mazeikiai,Lithuania,Europe
 Jonava,Lithuania,Europe
 Utena,Lithuania,Europe
-Luxembourg City,Luxembourg,Europe
+Luxembourg,Luxembourg,Europe
 Esch-sur-Alzette,Luxembourg,Europe
 Differdange,Luxembourg,Europe
 Dudelange,Luxembourg,Europe
-Ettelbruck,Luxembourg,Europe
 Diekirch,Luxembourg,Europe
 Wiltz,Luxembourg,Europe
 Vianden,Luxembourg,Europe
-Redange,Luxembourg,Europe
+Redange-sur-Attert,Luxembourg,Europe
 Remich,Luxembourg,Europe
 Valletta,Malta,Europe
 Birkirkara,Malta,Europe
@@ -282,15 +280,6 @@ Soroca,Moldova,Europe
 Orhei,Moldova,Europe
 Dubasari,Moldova,Europe
 Monaco,Monaco,Europe
-Monte Carlo,Monaco,Europe
-La Condamine,Monaco,Europe
-Fontvieille,Monaco,Europe
-Jardin Exotique,Monaco,Europe
-Larvotto,Monaco,Europe
-Saint-Roman,Monaco,Europe
-Moneghetti,Monaco,Europe
-Port Hercule,Monaco,Europe
-Les Moneghetti,Monaco,Europe
 Podgorica,Montenegro,Europe
 Niksic,Montenegro,Europe
 Herceg Novi,Montenegro,Europe
@@ -350,7 +339,7 @@ Funchal,Portugal,Europe
 Coimbra,Portugal,Europe
 Setubal,Portugal,Europe
 Queluz,Portugal,Europe
-Agualva-Cacem,Portugal,Europe
+Agualva,Portugal,Europe
 Bucharest,Romania,Europe
 Cluj-Napoca,Romania,Europe
 Timisoara,Romania,Europe
@@ -365,12 +354,12 @@ Moscow,Russia,Europe
 Saint Petersburg,Russia,Europe
 Novosibirsk,Russia,Europe
 Yekaterinburg,Russia,Europe
-Nizhny Novgorod,Russia,Europe
+Nizhniy Novgorod,Russia,Europe
 Kazan,Russia,Europe
 Chelyabinsk,Russia,Europe
 Omsk,Russia,Europe
 Samara,Russia,Europe
-Rostov-on-Don,Russia,Europe
+Rostov,Russia,Europe
 San Marino,San Marino,Europe
 Belgrade,Serbia,Europe
 Novi Sad,Serbia,Europe
@@ -405,7 +394,7 @@ Kamnik,Slovenia,Europe
 Madrid,Spain,Europe
 Barcelona,Spain,Europe
 Valencia,Spain,Europe
-Seville,Spain,Europe
+Sevilla,Spain,Europe
 Zaragoza,Spain,Europe
 Malaga,Spain,Europe
 Murcia,Spain,Europe
@@ -433,7 +422,7 @@ Lausanne,Switzerland,Europe
 Bern,Switzerland,Europe
 Winterthur,Switzerland,Europe
 Lucerne,Switzerland,Europe
-St. Gallen,Switzerland,Europe
+Sankt Gallen,Switzerland,Europe
 Lugano,Switzerland,Europe
 Biel/Bienne,Switzerland,Europe
 Istanbul,Turkey,Europe
@@ -460,7 +449,7 @@ London,United Kingdom,Europe
 Birmingham,United Kingdom,Europe
 Manchester,United Kingdom,Europe
 Glasgow,United Kingdom,Europe
-Newcastle upon Tyne,United Kingdom,Europe
+Newcastle,United Kingdom,Europe
 Sheffield,United Kingdom,Europe
 Liverpool,United Kingdom,Europe
 Leeds,United Kingdom,Europe
