@@ -323,24 +323,26 @@ def start(skipPrompts):
     
     #Make collection function here
     
-    
-    fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing either variable happens refCalc, and not in config or main. pls fix.
-    distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
-    score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
+    fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing fairness, eco or score for the output happens refCalc, and not in config or main. pls fix., here would be a good place to put the sorting function
+    distance = matchmakingResults[0].get('avgDistance', None)                 
+    score = matchmakingResults[0].get('score', None)          
+    eco = matchmakingResults[0].get('eco', None)         
     combo = matchmakingResults[0].get('combo', None)
-    eco = matchmakingResults[0].get('eco', None)
-    sellers = combo[0]
-    buyer = sellers['buyer']
-    buyerID = buyer.id
-    buyer = buyer.location.split(",")
-    buyerCity = buyer[0]
-    buyerCountry = buyer[1]
-    print(buyerCity, buyerCountry)
-    buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
-
-    sellers = sellers['blocks']
-    print("TEST" +str(sellers)+"TEST")
-    mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
+    
+    print(len(combo))
+    for i in range(0, len(combo)):
+    
+        sellers = combo[i]
+        buyer = sellers['buyer']
+        buyerID = buyer.id
+        buyer = buyer.location.split(",")
+        buyerCity = buyer[0]
+        buyerCountry = buyer[1]
+        print(buyerCity, buyerCountry)
+        buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
+        sellers = sellers['blocks']
+        print("TEST" +str(sellers)+"TEST")
+        mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
     
     
 
