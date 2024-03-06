@@ -25,10 +25,15 @@ def runMeLast():
     ActiveCities.activeCities()
 
 runMe1st()
+print("1")
 runMe2nd()
+print("2")
 runMe3rd()
+print("3")
 runMe4th()
+print("4")
 runMeLast()
+print("5")
         
     
     

@@ -11,7 +11,7 @@ def initialize_variable(name, value):
     globals()[name] = value
 
 def buildAdjMatrix():
-    with open('Network_Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file1:
+    with open('Database/Network_Database/neighbours.csv', 'r', newline='', encoding='utf-8') as file1:
         reader = csv.reader(file1)
         next(reader)  # Skip header row
         for row in reader:
@@ -22,7 +22,7 @@ def buildAdjMatrix():
                         city = key2
                         placeholder[city].append(values2)
 
-    with open('Network_Database/AdjMatrix.csv', 'w', newline='', encoding='utf-8') as Adjacency_Matrix:
+    with open('Database/Network_Database/AdjMatrix.csv', 'w', newline='', encoding='utf-8') as Adjacency_Matrix:
             writer = csv.writer(Adjacency_Matrix)
             writer.writerow(['City', 'Connection 1', 'Distance 1', 'Connection 2', 'Distance 2', 'Connection 3', 'Distance 3', 'Connection 4', 'Distance 4', 'Connection 5', 'Distance 5', 'Connection 6', 'Distance 6'])
             for key, values in placeholder.items():
@@ -34,7 +34,7 @@ def buildAdjMatrix():
                             initialize_variable(y, values[0])
 
                      
-    with open('Network_Database/AdjMatrix.csv', 'w', newline='', encoding='utf-8') as Adjacency_Matrix:
+    with open('Database/Network_Database/AdjMatrix.csv', 'w', newline='', encoding='utf-8') as Adjacency_Matrix:
         writer = csv.writer(Adjacency_Matrix)
         writer.writerow(['City', 'Connection 1', 'Distance 1', 'Connection 2', 'Distance 2', 'Connection 3', 'Distance 3', 'Connection 4', 'Distance 4', 'Connection 5', 'Distance 5', 'Connection 6', 'Distance 6'])
 
