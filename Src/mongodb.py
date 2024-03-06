@@ -2,18 +2,20 @@ from Database import API_Handling
 import pymongo
 def mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers):
     list =[]
-    for i in range (0,len(sellers)):
-        currentSeller = sellers[i]
-        sellerData = currentSeller[1]
-        listedSeller = (str(sellerData)).split(" ")
-        sellerID = listedSeller[0]
-        sellerLocation = listedSeller[1]
-        sellerLocList = (str(sellerLocation)).split(",")
-        stad = sellerLocList[0]
-        land = sellerLocList[1]
-        sellerClosest =API_Handling.closestWarehouse(stad, land)
-        list.append([sellerID, stad, land, sellerClosest])
-
+    try:
+        for i in range (0,len(sellers)):
+            currentSeller = sellers[i]
+            sellerData = currentSeller[1]
+            listedSeller = (str(sellerData)).split(" ")
+            sellerID = listedSeller[0]
+            sellerLocation = listedSeller[1]
+            sellerLocList = (str(sellerLocation)).split(",")
+            stad = sellerLocList[0]
+            land = sellerLocList[1]
+            sellerClosest =API_Handling.closestWarehouse(stad, land)
+            list.append([sellerID, stad, land, sellerClosest])
+    except:
+        print('oops')
 
     try:
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
