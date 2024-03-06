@@ -86,7 +86,7 @@ function calcRoute(source, destination){
   directionsRenderer = new google.maps.DirectionsRenderer();
   directionsRenderer.setMap(map);
 
-  var overSea = false;
+  // var overSea = false;
 
   var rendererOptions = {
     preserveViewport: true,
@@ -97,7 +97,7 @@ function calcRoute(source, destination){
   var destinationSplit = destination.split(', ');
 
   if (destinationSplit[1] != null) {
-    overSea = true;
+    // overSea = false;
     if(destinationSplit[2] == null){
       var routes = [{ origin: sourceSplit[0], destination: destinationSplit[0] }, { origin: sourceSplit[0], destination: destinationSplit[1] }];
     }else{
@@ -137,6 +137,9 @@ function calcRoute(source, destination){
     })
   }
 
+// Commented code below is out-phased code from earlier parts of project, before it took different turn
+// Shippingcoords and oversea are for drawing between continents while code below that is for checking distances between places
+
 // shippingCoords = [
 //   { lat: 51.949597, lng: 4.145262 },
 //   { lat: 40.617483, lng: -74.066808 }
@@ -153,41 +156,41 @@ function calcRoute(source, destination){
 //   shippingPath.setMap(map)
 // }
 
-  seller = "Stockholm"
-  buyer = "Luleå"
+  // seller = "Stockholm"
+  // buyer = "Luleå"
 
-  wareHouses = ["Sundsvall", "Sundsvall", "Umeå", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Uppsala"]
+  // wareHouses = ["Sundsvall", "Sundsvall", "Umeå", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Sundsvall", "Uppsala"]
 
-  buyerWH = ""
-  sellerWH = ""
-  let buyerDistance, sellerDistance
+  // buyerWH = ""
+  // sellerWH = ""
+  // let buyerDistance, sellerDistance
 
-  calcDist(seller, wareHouses[0]);
-  calcDist(seller, wareHouses[9]);
+  // calcDist(seller, wareHouses[0]);
+  // calcDist(seller, wareHouses[9]);
 
-  function calcDist(i, y) {
-    var origin = i;
-    var destination = y;
-    var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations: [destination],
-        travelMode: "DRIVING",
-      }, callback);
-  }
+  // function calcDist(i, y) {
+  //   var origin = i;
+  //   var destination = y;
+  //   var service = new google.maps.DistanceMatrixService();
+  //   service.getDistanceMatrix(
+  //     {
+  //       origins: [origin],
+  //       destinations: [destination],
+  //       travelMode: "DRIVING",
+  //     }, callback);
+  // }
 
-  function callback(response, status) {
-    if (status != "OK") {
-      console.log("ERRORRRRRR");
-    } else {
-      if (response.rows[0].elements[0].status == "ZERO_RESULTS") {
-        console.log("Could not be found");
-      } else {
-        console.log(response.rows[0].elements[0].distance.value / 1000 + "km");
-      };
-    }
-  }
+  // function callback(response, status) {
+  //   if (status != "OK") {
+  //     console.log("ERRORRRRRR");
+  //   } else {
+  //     if (response.rows[0].elements[0].status == "ZERO_RESULTS") {
+  //       console.log("Could not be found");
+  //     } else {
+  //       console.log(response.rows[0].elements[0].distance.value / 1000 + "km");
+  //     };
+  //   }
+  // }
 
 }
 function changeInfo(x){
