@@ -331,18 +331,21 @@ def start(skipPrompts):
     
     print(len(combo))
     for i in range(0, len(combo)):
-    
-        sellers = combo[i]
-        buyer = sellers['buyer']
-        buyerID = buyer.id
-        buyer = buyer.location.split(",")
-        buyerCity = buyer[0]
-        buyerCountry = buyer[1]
-        print(buyerCity, buyerCountry)
-        buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
-        sellers = sellers['blocks']
-        print("TEST" +str(sellers)+"TEST")
-        mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
+        try:
+            sellers = combo[i]
+            buyer = sellers['buyer']
+            buyerID = buyer.id
+            buyer = buyer.location.split(",")
+            buyerCity = buyer[0]
+            buyerCountry = buyer[1]
+            print(buyerCity, buyerCountry)
+            buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
+            sellers = sellers['blocks']
+            print("TEST" +str(sellers)+"TEST")
+            mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
+        except:
+            print("seller dissapeared due to indexing error")
+            pass
     
     
 
