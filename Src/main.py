@@ -310,7 +310,6 @@ def start(skipPrompts):
     'Master function'
    
     slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
-    #TODO Serialize matchmaking results and store in appropriate way
 
     sortingMode =3             #modes choose what to sort by 1 is fairness, 2 is score, 3 is average distance
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
