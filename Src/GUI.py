@@ -12,13 +12,32 @@ mydb = myclient["mydatabase"]
 mycol = mydb["customers"]
 city = mydb["city"]
 
+# Loops through mongoDB data and takes out each pair of buyer/seller's respective city
+
 y = []
 for x in mycol.find():
-  y.append(list(x.values()))
-
+  buyersandseller = []
+  tempHolder = []
+  z = x
+  # z = list(x.values())
+  howMany = (len(z)-8) / 4
+  next = 9
+  theBuyer = z[5]
+  while howMany > 0:
+      pairPerDeal = []
+      pairPerDeal.append(theBuyer)
+      pairPerDeal.append(z[next])
+      tempHolder.append(pairPerDeal)
+      next = next + 4
+      howMany = howMany -1
+  # y.append(list(x.values()))
+  buyersandseller.append(tempHolder)
+  print(buyersandseller)
 y2=y
 
-companyNames = ['Company 1','Company 2','Company 3', 'Company 4']
+companyNames = ['Company 1','Company 2','Company 3', 'Company 4', 'Company 5', 'Company 6']
+# print(companyNames[0], companyNames[3])
+# print(companyNames[1:len(companyNames)-1])
 
 z = []
 for x in city.find():
@@ -29,20 +48,30 @@ for x in z:
 z = temp
     
 ####
-buyersandseller = [["berlin","barcelona"],["stockholm","berlin"]]
-allWaypoints = []
 
-for pair in buyersandseller:
-    with open('Network_Database/worldcities.csv', newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['From'] == pair[0]:
-                if row['To'] == pair[1]:
-                    waypoints = row['Path']
-            elif row['To'] == pair[0]:
-                if row['From'] == pair[1]:
-                    waypoints = row['Path']
-    allWaypoints.append(waypoints + ";")
+allWaypoints = []
+waypoints = ""
+import csv
+buyersandseller = [[['Stockholm', 'Oslo'], ['Stockholm', 'Berlin']], [['Barcelona', 'Winterthur'], ['Barcelona', 'Berlin']]]
+for each in buyersandseller:
+    tempWaypoint = []
+    for pair in each:
+        
+        with open('Src/Database/Network_Database/shortest_paths.csv', newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                if row['From'] == pair[0]:
+                    if row['To'] == pair[1]:
+                        waypoints = row['Path']
+                        waypoints = waypoints.replace(" ->", ",")
+                elif row['To'] == pair[0]:
+                    if row['From'] == pair[1]:
+                        waypoints = row['Path']
+                        waypoints = waypoints.replace(" ->", ",")
+            tempWaypoint.append(waypoints)
+    allWaypoints.append(tempWaypoint)
+print(buyersandseller[1][0])
+print(allWaypoints[1][0])
                 
 ####
 
@@ -52,7 +81,7 @@ def index():
 
 @app.route('/result')
 def result():
-    return render_template("result.html", names = companyNames, data = y, neededRoutes = allWaypoints)
+    return render_template("result.html", names = companyNames, data = y, allTheRoutes = allWaypoints, buyerandSellers = buyersandseller)
 
 @app.route('/sortfairness')
 def sortfairness():
