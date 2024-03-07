@@ -6,7 +6,7 @@ import csv
 import random
 #import json
 #from Database import API_Handling
-import envCalc
+from Database import API_Handling
 import yaml
 
 API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
@@ -147,7 +147,7 @@ def formatCombination(combination, buyers):
             CCS2comma = CityCountryString2.find(',')
             City2 = CityCountryString2[:CCS2comma]
             
-            x = envCalc.distanceCalc(City1, City2)
+            x = API_Handling.Route2(City1, City2)
     
             quantity += block[0].Amount
             price += block[0].Price

@@ -1,6 +1,6 @@
-seed: 25
-sellers: 2
-bidders: 2
+seed: 27
+sellers: 1
+bidders: 1
 resource-usage: 1
 distance-limit: 5000
 distance-penalty: 8.17

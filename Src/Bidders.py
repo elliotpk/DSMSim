@@ -45,6 +45,7 @@ class Bidders:
         return False
 
     def bidUpdate(self, inputAuction):
+        "updates Bids"
         self.bidIndex += 1
         satisfiedNeed = 0
         remainingDemand = 0
@@ -78,8 +79,9 @@ class Bidders:
         bids = self.generateBids(validAuctions)
         return bids
     
-    #Generates and checks combinations of auctions for the best combination to fulfill demand
+   
     def auctionCombos(self, auctions, quantity):
+        "Generates and checks combinations of auctions for the best combination to fulfill demand" 
         combos = []
         quantityDifferences = []
         i = 1
@@ -112,7 +114,7 @@ class Bidders:
         return combos[bestIndex]
   
     def distanceCalc(self, location):
-        return API_Handling.route(API_KEY, location[0], self.location[0])
+        return API_Handling.Route2(location[0], self.location[0])
         
     def updateWonItems(self, wonItems):
         self.wonItems += wonItems
