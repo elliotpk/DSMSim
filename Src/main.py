@@ -5,7 +5,6 @@ import random
 import math
 import yaml
 import mongodb
-
 from Database import API_Handling
 import refCalc
 
@@ -64,12 +63,12 @@ def readConfig(skipPrompts):
    
     # Checks to ensure that there is a max and min block, constants defined at the top
        
-#    if conf["min-block"] == None:
- #       conf["min-block"] = MIN_BLOCK
+    if conf["min-block"] == None:
+        conf["min-block"] = MIN_BLOCK
 
 
-  #  if conf["max-block"] == None:
-   #     conf["max-block"] = MAX_BLOCK
+    if conf["max-block"] == None:
+        conf["max-block"] = MAX_BLOCK
    
    
     # Determines supply and demand, based on Whether bidders and Sellers are present or not
@@ -150,20 +149,6 @@ def verifyConfig(conf):
         conf["fairnessPercent"] = 0.5
     if not conf["ecoPercent"]:
         conf["ecoPercent="] = 0.5
-       
-    #suggested "improvement" on basis of amount of lines    
-       
-    #conf.setdefault("seed", random.randrange(0, 10000))
-    #random.seed(conf["seed"])
-    #conf.setdefault("sellers", random.randrange(5, 15))
-    #conf.setdefault("bidders", random.randrange(2, 7))
-    #conf.setdefault("resource-usage", round(random.uniform(0.25, 0.9), 4))
-    #conf.setdefault("radius", random.randint(2, 10))
-    #conf.setdefault("distance-limit", round(random.uniform(conf.get("radius", 2) * 1.5, conf.get("radius", 2) * 3), 2))
-    #conf.setdefault("distance-penalty", round(random.uniform(5, 10), 2))
-    #conf.setdefault("slotsize", 2)
-    #conf.setdefault("end-threshold", 2)        
-
 
 # Generation of sellers, the total supply is divided up into parts (randomly distributed size)
 # Furthermore each seller can have chain their blocks together, randomly generated in range 'min-block' 'max-block' from config
@@ -259,13 +244,11 @@ def initSellers(sellers):
             activeSeller.addBlock(
                 block[1][1]["price"], block[1][0]["quantity"], block[1][2]["discount"]   #stores entire block locally
             )
-            amountOfAuctions += 1              # counts current block as possible Auction
+            amountOfAuctions += 1                                                          # counts current block as possible Auction
            
         #Sets up return result
         sellerList.append(activeSeller)        
     return amountOfAuctions, sellerList
-
-
 
 
 def initBidders(bidders, maxRounds):
@@ -286,20 +269,6 @@ def initBidders(bidders, maxRounds):
     return bidderList
 
 
-# Source with explanation: https://stackoverflow.com/a/50746409
-'''
-def genLocation(radius):
-    "Generate x,y points within circle with set radius with center in 0,0"
-   
-    r = radius * math.sqrt(random.random())
-    theta = random.random() * 2 * math.pi
-    x = round(r * math.cos(theta), 4)
-    y = round(r * math.sin(theta), 4)
-    return [x,y]
-'''
-#TODO Make locations work!
-
-
 def genLocation():
     return refCalc.randLocation()
 
@@ -313,15 +282,7 @@ def overridePenalty(bidders, penalty):
         bidder[1]['distancePenalty'] = penalty
 
 
-def start(skipPrompts):
-    'Master function'
-   
-    slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
-    #TODO Serialize matchmaking results and store in appropriate way
-
-    matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
-    
-    #Make collection function here
+def outputHandler(matchmakingResults):
     
     fairness = matchmakingResults[0].get('fairness', None)                      #TODO prioritizing fairness, eco or score for the output happens refCalc, and not in config or main. pls fix., here would be a good place to put the sorting function
     distance = matchmakingResults[0].get('avgDistance', None)                 
@@ -329,54 +290,55 @@ def start(skipPrompts):
     eco = matchmakingResults[0].get('eco', None)         
     combo = matchmakingResults[0].get('combo', None)
     
-    print(len(combo))
     for i in range(0, len(combo)):
-    
-        sellers = combo[i]
-        buyer = sellers['buyer']
-        buyerID = buyer.id
-        buyer = buyer.location.split(",")
-        buyerCity = buyer[0]
-        buyerCountry = buyer[1]
-        print(buyerCity, buyerCountry)
-        buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
-        sellers = sellers['blocks']
-        print("TEST" +str(sellers)+"TEST")
-        mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
-    
-    
+        try:
+            sellers = combo[i]
+            buyer = sellers['buyer']
+            buyerID = buyer.id
+            buyer = buyer.location.split(",")
+            buyerCity = buyer[0]
+            buyerCountry = buyer[1]
+            buyerClosest =API_Handling.closestWarehouse(buyerCity, buyerCountry)
+            sellers = sellers['blocks']
+            mongodb.mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, sellers)
+        except:
+            print("seller dissapeared due to indexing error")
+            pass
+    return fairness, score, distance
 
-    
-    #print(sellerID, buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, stad, land, sellerClosest)
-    
-    # SellerID, BuyerID, Score, Eco, Fairness, BuyerCity, BuyerCountry, BuyerWarehouse, SellerCity, SellerCountry, SellerWarehouse
+def start(skipPrompts):
+    'Master function'
+   
+    slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
+    #TODO Serialize matchmaking results and store in appropriate way
 
-    # Checklist
-    # Score, Eco, Fairness X
-    # BuyerCity, Country X
-    # SellerID, SellerCity, Country X
+    sortingMode =3             #modes choose what to sort by 1 is fairness, 2 is score, 3 is average distance
+    matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
+    matchmakingResults = refCalc.evaluateCombinations(matchmakingResults, sortingMode)
+    fairness, score, distance = outputHandler(matchmakingResults)
 
-    "Case 1, sorting for  Score" 
-    print(f"Best score {score}")
-    print(f"Fairness value,  While best score: {fairness}")                             #use if sorted by Score in referenceCalculator
-    print(f"Average distance over all transports,  While best Score {distance}")
-    
-    "Case 2, sorting for  Distance"                                                     #use if sorted by distance in referenceCalculator
-    '''
-    print(f"fairness value while shortest average distance: {fairness}")                                       
-    print(f"Best Average distance {distance}")
-    print(f"Best fairness value while shortest average distance: {fairness}")                                      
-    print(f"Score value while shortest average distance  {score}")
-    '''
-    
-    "Case 3, sorting for  Fairness"                                                     #use if sorted by fairness in referenceCalculator
-    '''
-    print(f"Best fairness value: {fairness}")                                       
-    print(f"Average distance with best fairness value {distance}")
-    print(f"Eco Score whle best fairness value  {score}")
-    '''
-    
 
+    if sortingMode ==1:
+        "Case 1, sorting for  Fairness"                                                     #use if sorted by fairness in referenceCalculator
+        print(f"Best fairness value: {fairness}")                                       
+        print(f"Average distance with best fairness value {distance}")
+        print(f"Eco Score whle best fairness value  {score}")
+
+    elif sortingMode == 2:
+        "Case 2, sorting for  Score" 
+        print(f"Best score {score}")
+        print(f"Fairness value,  While best score: {fairness}")                             #use if sorted by Score in referenceCalculator
+        print(f"Average distance over all transports,  While best Score {distance}")
+    
+    elif sortingMode == 3:
+        "Case 3, sorting for  Distance"                                                     #use if sorted by distance in referenceCalculator                                    
+        print(f"Best Average distance {distance}")
+        print(f"Best fairness value while shortest average distance: {fairness}")                                      
+        print(f"Score value while shortest average distance  {score}")
+    else:
+        print("NONEXISTENT MODE")
+    
+    
     if fairness == None:
         print("No valid combinations were found")
     if skipPrompts:

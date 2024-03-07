@@ -15,7 +15,7 @@ def mongo(buyerID, score, eco, fairness, buyerCity, buyerCountry, buyerClosest, 
             sellerClosest =API_Handling.closestWarehouse(stad, land)
             list.append([sellerID, stad, land, sellerClosest])
     except:
-        print('oops')
+        print('Bidder has not won a bid on current seller')
 
     try:
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
