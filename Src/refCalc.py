@@ -29,7 +29,7 @@ def matchMakingCalculation(sellerList, bidderList):
         for rot in listRotator(perm):                               # For every Rotation of every permutation of blocks for sale
             for combination in splitfinder(rot, len(bidderList)):   # For every combination of every rotation of every permutation of blocks for sale
                                                                     # This will collect every way all blocks can be allotted to buyers      
-                if(validateCombination(combination, bidderList)):   #TODO NEVERTRUE, ?
+                if(validateCombination(combination, bidderList)): 
                     validCombinations.append(formatCombination(combination, bidderList))    # if combination adheres to rules set by auction, validate it
                     
                 permComb +=1
@@ -44,7 +44,7 @@ def matchMakingCalculation(sellerList, bidderList):
     if(len(validCombinations) == 0):
         return None
    
-    validCombinations = evaluateCombinations(validCombinations)         # sorts either by Fairness or average distance depending on preference.
+    #validCombinations = evaluateCombinations(validCombinations)         # sorts either by Fairness or average distance depending on preference.
 
     return validCombinations
 
@@ -60,7 +60,7 @@ def getBlocks(sellerList):
     return blocks
 
 
-def evaluateCombinations(combinations):
+def evaluateCombinations(combinations, mode):
     "Function to compute data to sort by such as fairness and avg distance"
    
     output = []
@@ -86,9 +86,17 @@ def evaluateCombinations(combinations):
         output.append({'combo':combo, 'fairness':nom/denom, 'avgDistance':avgDistance, 'avgPrice':avgPrice, 'score' : score , 'eco' : green})
         print(output[-1])
     
-    #sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)        #Sort by fairness
-    #sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=True)    #Sort by avgDistance
-    sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)          #Sort by score
+    if mode ==1:
+        sortedOutput = sorted(output, key=lambda i:i['fairness'], reverse=True)       #Sort by fairness
+    elif mode ==2:
+        sortedOutput = sorted(output, key=lambda i:i['score'], reverse=True)           #Sort by score
+    elif mode == 3:
+        sortedOutput = sorted(output, key=lambda i:i['avgDistance'], reverse=False)    #Sort by avgDistance
+        
+    else:
+        print("the mode you have chosen does not exist")
+        return 0
+        
     
    
     return sortedOutput
@@ -140,19 +148,7 @@ def formatCombination(combination, buyers):
             City2 = CityCountryString2[:CCS2comma]
             
             x = envCalc.distanceCalc(City1, City2)
-            
-            '''
-            with open('Database/Network_Database/shortest_paths.csv', newline='') as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    if row['From'] == City1 and row['To'] == City2:
-                        x= float(row['Distance'])
-            
-            
-                                                                                ####HÄRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR######################
-            '''
-            
-            
+    
             quantity += block[0].Amount
             price += block[0].Price
             distanceSum += x 
