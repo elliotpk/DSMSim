@@ -94,7 +94,7 @@ def insertion_sort(arr):
     return arr   
            
 def countryNet(countryObj):
-    "takes a single country object and establishes a proximity net which is represented in a dictionary of tuples containing target city and distance"
+    "takes a single country object and establishes a proximity net which is represented in a dictionary of tuples containing current city, target city and distance"
 
     cities = countryObj.cities         #our input  
     origins=defaultdict(list)          #our output       
@@ -115,7 +115,7 @@ def countryNet(countryObj):
             x =insertion_sort(sortedx)
         
         
-        "This segment prepares everything for the output dictionary. it establishes the three closest cities egarded for the network"
+        "This segment prepares everything for the output dictionary. it establishes the three closest cities regarded for the network"
         z= []
         zObj= []
         
@@ -124,7 +124,7 @@ def countryNet(countryObj):
             zObj.append([x[h][0], x[h][1]]) 
 
         
-        for d in range(0, 3):
+        for d in range(0, 4):
             try:
                 origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
             except:

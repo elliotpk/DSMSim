@@ -26,5 +26,5 @@ def Nw_Build():
             if (city, country) in city_data:
                 latitude, longitude = city_data[(city, country)]
                 writer.writerow({'City': city, 'Country': country, 'Latitude': latitude, 'Longitude': longitude})
-                
+                 
 #Nw_Build()

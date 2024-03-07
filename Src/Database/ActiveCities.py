@@ -3,7 +3,6 @@ import pandas as pd
 def activeCities():
     smaller_df = pd.read_csv("Database/Network_Database/varuhus.csv")
 
-
     larger_df = pd.read_csv("Database/Network_Database/worldcities.csv")
 
     common_countries = smaller_df['Country'].unique()
