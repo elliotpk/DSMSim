@@ -2,6 +2,9 @@ import random
 import Behaviour
 import math
 from itertools import combinations
+from Database import API_Handling
+
+API_KEY = 'AIzaSyC8ObuqZq-i3Ppwu2SbxPez4K567ZTzQNk'
 
 
 class Bidders:
@@ -19,6 +22,8 @@ class Bidders:
         self.wonItems = 0
         self.currentRound = 0
         self.bidIndex = 0
+        self.eco = 0
+        self.score = 0
 
     def generateBids(self, inputAuction):
         "Generate a bid we should place"
@@ -40,6 +45,7 @@ class Bidders:
         return False
 
     def bidUpdate(self, inputAuction):
+        "updates Bids"
         self.bidIndex += 1
         satisfiedNeed = 0
         remainingDemand = 0
@@ -73,8 +79,9 @@ class Bidders:
         bids = self.generateBids(validAuctions)
         return bids
     
-    #Generates and checks combinations of auctions for the best combination to fulfill demand
+   
     def auctionCombos(self, auctions, quantity):
+        "Generates and checks combinations of auctions for the best combination to fulfill demand" 
         combos = []
         quantityDifferences = []
         i = 1
@@ -105,11 +112,10 @@ class Bidders:
                 bestDifference = quantityDifferences[i]
         
         return combos[bestIndex]
-    
+  
     def distanceCalc(self, location):
-        distance = math.sqrt((location[0]-self.location[0])**2 + (location[1]-self.location[1])**2)
-        return distance
-
+        return API_Handling.Route2(location[0], self.location[0])
+        
     def updateWonItems(self, wonItems):
         self.wonItems += wonItems
     
