@@ -12,6 +12,17 @@
 </head>
 <body onload="changeInfo(0)">
 	<script>
+		function getBS(i){
+			var tempBS = '{{buyerandSellers}}';
+			
+
+			return buyerseller[i]
+		}
+		function getGrid(u){
+			var theGrid = '{{allTheRoutes}}';
+
+			return theGrid[u]
+		}
 		function getInfo(x){
 		var t ='{{data}}';
 		t.replace("]]", '');

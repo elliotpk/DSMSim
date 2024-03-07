@@ -2,56 +2,59 @@ from flask import Flask,url_for,render_template
 import webbrowser
 import pymongo
 import csv
+import json
 
 # Creates Flask application named "app" and pass it the __name__,  which holds the name
 # of the current python module, flask needs it for some work behind the scenes
 app = Flask(__name__) 
     
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["mydatabase"]
-mycol = mydb["customers"]
-city = mydb["city"]
+# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+# mydb = myclient["mydatabase"]
+# mycol = mydb["customers"]
+# city = mydb["city"]
 
 # Loops through mongoDB data and takes out each pair of buyer/seller's respective city
 
-y = []
-for x in mycol.find():
-  buyersandseller = []
-  tempHolder = []
-  z = x
-  # z = list(x.values())
-  howMany = (len(z)-8) / 4
-  next = 9
-  theBuyer = z[5]
-  while howMany > 0:
-      pairPerDeal = []
-      pairPerDeal.append(theBuyer)
-      pairPerDeal.append(z[next])
-      tempHolder.append(pairPerDeal)
-      next = next + 4
-      howMany = howMany -1
-  # y.append(list(x.values()))
-  buyersandseller.append(tempHolder)
-  print(buyersandseller)
-y2=y
+# y = []
+# Row below is used for testing the code without mongodb
+# each = [["id", "buyer", "score", "eco", "fairness", "buyercity", "land", "warehouse1", "seller", "seller1stad", "land", "warehouse2", "seller2", "seller2stad", "land", "warehouse3"], ["id", "buyer", "score", "eco", "fairness", "buyercity2", "land", "warehouse4", "seller", "seller12stad", "land", "warehouse5", "seller2", "seller22stad", "land", "warehouse6"]]
+# for x in mycol.find():
+#   buyersandseller = []
+#   tempHolder = []
+#   z = x
+#   z = list(x.values())
+#   howMany = (len(z)-8) / 4
+#   next = 9
+#   theBuyer = z[5]
+#   while howMany > 0:
+#       pairPerDeal = []
+#       pairPerDeal.append(theBuyer)
+#       pairPerDeal.append(z[next])
+#       pairPerDeal.append(z[7])
+#       pairPerDeal.append(z[next+2])
+#       tempHolder.append(pairPerDeal)
+#       next = next + 4
+#       howMany = howMany -1
+#   y.append(list(x.values()))
+#   buyersandseller.append(tempHolder)
+#   print(buyersandseller)
+# y2=y
 
-companyNames = ['Company 1','Company 2','Company 3', 'Company 4', 'Company 5', 'Company 6']
-# print(companyNames[0], companyNames[3])
-# print(companyNames[1:len(companyNames)-1])
+# companyNames = ['Company 1','Company 2','Company 3', 'Company 4', 'Company 5', 'Company 6']
 
-z = []
-for x in city.find():
-  z.append(list(x.values()))
-temp = []
-for x in z:
-    temp.append(x[1])
-z = temp
+# z = []
+# for x in city.find():
+#   z.append(list(x.values()))
+# temp = []
+# for x in z:
+#     temp.append(x[1])
+# z = temp
     
 ####
 
 allWaypoints = []
 waypoints = ""
-import csv
+import csv, json
 buyersandseller = [[['Stockholm', 'Oslo'], ['Stockholm', 'Berlin']], [['Barcelona', 'Winterthur'], ['Barcelona', 'Berlin']]]
 for each in buyersandseller:
     tempWaypoint = []
@@ -70,14 +73,18 @@ for each in buyersandseller:
                         waypoints = waypoints.replace(" ->", ",")
             tempWaypoint.append(waypoints)
     allWaypoints.append(tempWaypoint)
-print(buyersandseller[1][0])
-print(allWaypoints[1][0])
+allWaypoints = json.dumps(allWaypoints)
+buyersandseller = json.dumps(buyersandseller)
+
                 
 ####
 
 @app.route('/') # Tells python it will work with a web browser (HTTP client)
 def index():
     return render_template('index.html')
+
+companyNames = ""
+y = ""
 
 @app.route('/result')
 def result():
@@ -111,7 +118,7 @@ def sortfairness():
         companyNames2 = temp
         j+=1
 
-    return render_template("sortfairness.html", names = companyNames2, data = y2)
+    return render_template("sortfairness.html", names = companyNames2, data = y2, allTheRoutes = allWaypoints, buyerandSellers = buyersandseller)
 
 @app.route('/config')
 def config():
