@@ -25,11 +25,7 @@ def internationalRouting():
                 y = x[0]
                 y[city1].append([distance, city2])
                 x[0] = y
-            
-    #z = nationalNets['Albania']        # check specific cities for outcomes
-    #v=z[0] 
-    #print(v['Tirana'])        
-    
+              
     return nationalNets              
 
 def allNationalNetworks():
@@ -133,19 +129,12 @@ def countryNet(countryObj):
                 origins[str(z[0])].append([zObj[d+1][0], zObj[d+1][1].name])
             except:
                 pass
-    #print(origins)
     return origins
     
 #x = placeClasses.Country('Sweden')
 #x.cities=[placeClasses.City("Stockholm"), placeClasses.City("Malmö"), placeClasses.City("Gothenburg"),placeClasses.City("Uppsala"), placeClasses.City("Västerås"), placeClasses.City("Örebro"),placeClasses.City("Linköping"), placeClasses.City("Helsingborg"), placeClasses.City("Jönköping") ]
 #cities = [placeClasses.City("Umeå"), placeClasses.City("Kiruna"), placeClasses.City("Malmo"),placeClasses.City("Stockholm")]
 
-
-#z= countryNet(x)
-#print(z)
- 
-e= internationalRouting()  
-print(e)
 
                 
 

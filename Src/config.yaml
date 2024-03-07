@@ -1,11 +1,11 @@
 seed: 27
 sellers: 1
-bidders: 1
+bidders: 2
 resource-usage: 1
 distance-limit: 5000
 distance-penalty: 8.17
 slotsize: 1
-end-threshold: 1
+end-threshold: 3
 min-block: 1
 max-block: 1
 fairnessPercent: 0.7          #fairness percent and ecopercent should sum up to 1

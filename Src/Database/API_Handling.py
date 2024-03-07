@@ -35,14 +35,12 @@ def closestWarehouse(city, Country):
         for row in reader:
             
             if row[1] == Country:
-                currentWarehouse =row[0]
+                currentWarehouse =row[0]            
                 currentCityDistance = Route2(city, currentWarehouse)
                 
                 if currentCityDistance < closestWarehouseDistance:
                     closestWarehouseDistance= currentCityDistance
-                    closestWarehouse= currentWarehouse
-        
-        print(str(closestWarehouseDistance))
+                    closestWarehouse= currentWarehouse 
     return closestWarehouse
 
 
