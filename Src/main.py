@@ -8,6 +8,7 @@ import yaml
 
 import API_Handling
 import refCalc
+import GUI
 
 
 seed = None
@@ -347,6 +348,7 @@ def start(skipPrompts):
     distance = matchmakingResults[0].get('avgDistance', None)                   #TODO Convert to new values
     score = matchmakingResults[0].get('score', None)                   #TODO Convert to new values
     
+<<<<<<< Updated upstream
     print(str(fuling(matchmakingResults[0].get('combo', None), score, fairness)) + " TTT")
     
     print(f"Best fairness value: {fairness}")                                       #use if sorted by distance in referenceCalculator
@@ -354,6 +356,15 @@ def start(skipPrompts):
     print(f"Best score {score}")
     
     
+=======
+    elif sortingMode == 3:
+        "Case 3, sorting for  Distance"                                                     #use if sorted by distance in referenceCalculator                                    
+        print(f"Best Average distance {distance}")
+        print(f"Best fairness value while shortest average distance: {fairness}")                                      
+        print(f"Score value while shortest average distance  {score}")
+    else:
+        print("NONEXISTENT MODE")
+>>>>>>> Stashed changes
 
     if fairness == None:
         print("No valid combinations were found")
@@ -366,10 +377,15 @@ def start(skipPrompts):
     else:
         auctionResults = []                     # always empty
    
+<<<<<<< Updated upstream
     return matchmakingResults, auctionResults               #TODO auctionResults will always be empty?
+=======
+    return matchmakingResults, auctionResults       
+>>>>>>> Stashed changes
 
 
 if __name__ == "__main__":
     start(False)
-   
+    
+GUI.app.run()
    
