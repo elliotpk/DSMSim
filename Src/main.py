@@ -311,7 +311,7 @@ def start(skipPrompts):
    
     slotSize, endThreshold, sellerList, bidderList = readConfig(skipPrompts)
 
-    sortingMode =3             #modes choose what to sort by 1 is fairness, 2 is score, 3 is average distance
+    sortingMode =2             #modes choose what to sort by 1 is fairness, 2 is score, 3 is average distance
     matchmakingResults = refCalc.matchMakingCalculation(sellerList, bidderList)         #Calculation of Valid combinations of buyers and sellers
     matchmakingResults = refCalc.evaluateCombinations(matchmakingResults, sortingMode)
     fairness, score, distance = outputHandler(matchmakingResults)
