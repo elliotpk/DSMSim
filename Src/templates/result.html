@@ -12,34 +12,87 @@
 </head>
 <body onload="changeInfo(0)">
 	<script>
+		function getBuyer(){
+			var t ='{{data}}';
+			// console.log(t);
+			const arr = t.split(",");
+			console.log(arr);
+			let a = String(arr[4]);
+			const arr2 = a.split(']');
+			arr[4] = arr2[0];
+
+			return arr;
+		}
+		function getSellerInfo(){
+			var x = '{{sellersInfo}}';
+			const arr = x.split(",");
+			return arr;
+		}
 		function getBS(i){
 			var tempBS = '{{buyerandSellers}}';
-			
+			const arr2 = seller.split("[[");
+			var x = String(arr2[1]);
+			const ah = x.split("]]");
+			var y = String(ah[0]);
+			const a = y.split(",");
 
-			return buyerseller[i]
+			return a
 		}
 		function getGrid(u){
 			var theGrid = '{{allTheRoutes}}';
+			console.log(theGrid);
+			const arr2 = theGrid.split("[[");
+			var x = String(arr2[1]);
+			const ah = x.split("]]");
+			var y = String(ah[0]);
+			const a = y.split(",");
 
-			return theGrid[u]
+			return a
 		}
-		function getInfo(x){
-		var t ='{{data}}';
-		t.replace("]]", '');
-		const arr = t.split("],");
-		console.log(arr);
-		for (let i = 0; i < arr.length; i++) {
-			let f = arr[i];
-			const arr2 = f.split(",");
-			arr[i] = arr2;
-		}
-		const info = arr[x];
+		function getInfo(){
+		// var t ='{{data}}';
+		var seller = '{{buyerandSellers}}'
+		console.log(seller);
+		// const arr = t.split("],");
+		// console.log(arr);
+		const arr = seller.split(",");
+		const arr2 = seller.split("[");
+		console.log(arr2);
+		var x = String(arr2[1]);
+		const ah = x.split(",");
+		console.log(ah);
+		const arr3 = seller.split("]");
+		var y = String(arr3[0]);
+		const hah = y.split(",");
+		arr[0] = ah[0];
+		arr[5] = hah[5]
+		// console.log(arr);
+		// for (let i = 0; i < arr.length; i++) {
+		// 	let f = arr[i];
+		// 	const arr2 = f.split(",");
+		// 	console.log(arr2);
+		// 	arr[i] = arr2;
+		// }
+		// const test = [];
+		// for (let i = 0; i < arr.length; i++) {
+		// 	let f = arr[i];
+		// 	let a = f[0];
+		// 	let b = f[1];
+		// 	console.log(a);
+		// 	console.log(b);
+		// 	test.push(a);
+		// 	test.push(b);
+		// }
+
+		const info = arr;
+		// console.log(info);
 		return info;
+
 	}
 	</script>
 
 <script async
-src="">
+src=>
 </script>
 <div class="nav">
 	<div id="navText">

@@ -8,12 +8,51 @@ import json
 # of the current python module, flask needs it for some work behind the scenes
 app = Flask(__name__) 
     
-# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-# mydb = myclient["mydatabase"]
-# mycol = mydb["customers"]
-# city = mydb["city"]
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
 
 # Loops through mongoDB data and takes out each pair of buyer/seller's respective city
+
+temp = []
+buyer = []
+sellersInfo = []
+i = 0
+for x in mycol.find():
+    temp.append(list(x.values()))
+
+for x in temp:
+    for y in x:  
+        if(i < 5):
+            buyer.append(y)
+        if(i>5):
+            sellersInfo.append(y)
+        i+=1
+
+temp = []
+temp2 = []
+sellerPlaces = []
+a = [sellersInfo[1], sellersInfo[3]]
+b = [sellersInfo[1], sellersInfo[7]]
+c = [sellersInfo[1], sellersInfo[11]]
+
+temp.append(a)
+temp.append(b)
+temp.append(c)
+
+temp2.append(temp)
+
+sellerPlaces = temp2
+
+toHtml = [sellersInfo[0], sellersInfo[4],sellersInfo[0], sellersInfo[8],sellersInfo[0], sellersInfo[12]]
+
+print(sellersInfo)
+print(sellerPlaces)
+# print(buyer)
+
+
+
+
 
 # y = []
 # Row below is used for testing the code without mongodb
@@ -40,7 +79,7 @@ app = Flask(__name__)
 #   print(buyersandseller)
 # y2=y
 
-# companyNames = ['Company 1','Company 2','Company 3', 'Company 4', 'Company 5', 'Company 6']
+companyNames = ['Company 1','Company 2','Company 3', 'Company 4', 'Company 5', 'Company 6']
 
 # z = []
 # for x in city.find():
@@ -56,7 +95,7 @@ allWaypoints = []
 waypoints = ""
 import csv, json
 buyersandseller = [[['Stockholm', 'Oslo'], ['Stockholm', 'Berlin']], [['Barcelona', 'Winterthur'], ['Barcelona', 'Berlin']]]
-for each in buyersandseller:
+for each in sellerPlaces:
     tempWaypoint = []
     for pair in each:
         
@@ -73,8 +112,9 @@ for each in buyersandseller:
                         waypoints = waypoints.replace(" ->", ",")
             tempWaypoint.append(waypoints)
     allWaypoints.append(tempWaypoint)
-allWaypoints = json.dumps(allWaypoints)
-buyersandseller = json.dumps(buyersandseller)
+# allWaypoints = json.dumps(allWaypoints)
+# buyersandseller = json.dumps(buyersandseller)
+print(allWaypoints)
 
                 
 ####
@@ -83,12 +123,12 @@ buyersandseller = json.dumps(buyersandseller)
 def index():
     return render_template('index.html')
 
-companyNames = ""
+# companyNames = ""
 y = ""
 
 @app.route('/result')
 def result():
-    return render_template("result.html", names = companyNames, data = y, allTheRoutes = allWaypoints, buyerandSellers = buyersandseller)
+    return render_template("result.html", names = companyNames, data = buyer, allTheRoutes = allWaypoints, buyerandSellers = toHtml, sellersInfo = sellersInfo)
 
 @app.route('/sortfairness')
 def sortfairness():
