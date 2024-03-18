@@ -17,26 +17,28 @@ class SimEngine():
         self.counter = 0
 
     def simStart(self):
-        "Start the simulation"
+        "Starts the simulation"
+        
         #Round Start
         while(len(self.finishedAuctions) != self.loopLength):
             self.counter += 1
             if(len(self.auctionSlot) == 0):
                 self.updateAuctionSlot()
                 for buyer in self.buyers:                      # Notify buyers that a new round of auctions is starting
-                    buyer.newRound()
+                    buyer.newRound()                           # Send auction list to buyers and wait for their decision
 
-            # Send auction list to buyers and wait for their decision
+            #Collect  bids and gather them in newBids
             newBids = []
             for buyer in self.buyers:
                 temp = buyer.bidUpdate(self.auctionSlot)
                 if (len(temp) == 0):                        # No bids were submitted
                     continue
-                newBids.append(temp)
+                newBids.append(temp)    
             if(len(newBids) == 0):                          # If we got no bids at all we can skip trying to sort through the list and jump straight to next bidding
                 self.updateStatus([])
                 continue
-
+        
+            #Excludes empty bids and allots top bids
             finished = []
             for auction in self.auctionSlot:           
                 bids = []
@@ -57,6 +59,7 @@ class SimEngine():
                 else:
                     finished.append(random.choice(top))                                                         # random.choice selects a random auction from the list
 
+            #Designates winner of auction
             for bid in finished:
                 for auction in self.auctionSlot:
                     if(bid['id'] == auction['id']):
@@ -69,8 +72,12 @@ class SimEngine():
         fairness = self.fairnessCalc()
         return self.finishedAuctions
 
-    # Starts new auctions, typically ran when the current slot is empty
+
+
+    
     def updateAuctionSlot(self):
+        'Starts new auctions, typically ran when the current slot is empty'
+        
         for i in range(self.slot_size):
             if(len(self.auctions) == 0):
                 break
@@ -78,13 +85,19 @@ class SimEngine():
             i = self.auctions.index(item)
             self.auctionSlot.append(self.auctions.pop(i))
 
+
+
     def updateStatus(self, auctions):
+        'Updates the status of the auctions'
+        
         auctionIDs = [d.get('id') for d in auctions]                                                        # Find all the auction IDs present in the list "auctions"
         iter = (item for item in self.auctionSlot if auctionIDs.count(item['id']) == 0)                     # Find all the auction objects in auctionStatus which were NOT updated with a new bid
+        
         while(True):
             item = next(iter, None)
             if(item == None):                                                                               # End the while loop when iterator has nothing more left
                 break
+            
             for auction in self.auctionStatus:
                 if(auction['id'] == item['id']):
                     if(auction['val'] == 0):                                                                # If the max round duration is exceeded we end the auction
@@ -97,9 +110,11 @@ class SimEngine():
                         auction['val'] -= 1
                         break
 
-    # Ends an auction, moves it into a new list
+
+
     def endAuction(self, auction):
         "Called to end the specific auction"
+        
         for bidder in self.buyers:
             if bidder.id == auction["user"]:
                 bidder.updateWonItems(auction["quantity"])
@@ -108,16 +123,21 @@ class SimEngine():
         print("User: " + auction['user'] + " has won auction:" + str(auction['id']) + " for " + str(auction["quantity"]) + " units for " + str(auction["top_bid"]))
 
 
+
     def addBuyers(self, Buyers):
         "Create and join all the buyers to all auction rooms"
+        
         for room in self.auctions:
             for buyer in Buyers:
                 if(not link.addUser(room['id'], buyer.id)):
                     print("Error adding user: " + buyer.id + " to roomID + " + room + ", aborting")
                     return False
     
+    
+    
     def createAuctionList(self, seller):
         "Creates a list which contains the necessary information about the auctions"
+        
         temp = []
         topBid = 0
         for seller in self.sellers:
@@ -126,18 +146,26 @@ class SimEngine():
                 temp.append({'id' : seller.auctionId[i], 'location' : seller.location ,'quantity' : seller.quantity[i], 'user':'N/A' , 'top_bid' : 0})    # Contains all information needed for auctions
         return temp
     
+    
+    
     def createAuctionStatus(self, auctionList):
         "Creates a list with auction ID and how many loops since latest bid"
+        
         result = []
         for auction in auctionList:
             result.append({'id':auction['id'], 'val' : self.end_threshold})                  # If threshold value goes below 0 we end the auction
         return result
     
+    
+    
     def fairnessCalc(self):
+        'Calculates fairness of transactions'
+        
         avgPrices = []
-        for buyer in self.buyers:                                           # Calculate the average price per unit each buyer got to buy
-            temp = 0                                                        # Only pays attention to buyers which have bought something
-            i = 0
+        for buyer in self.buyers:           # Calculate the average price per unit each buyer got to buy
+            temp, i = (0,0)                 # Only pays attention to buyers which have bought something
+            
+            #Summing individual auction results since Jain Fairness index is a product of sums.
             for auction in self.finishedAuctions:
                 if(buyer.id == auction['user']):
                     temp += auction['top_bid']/auction['quantity']
@@ -146,6 +174,8 @@ class SimEngine():
                 avgPrices.append(temp/i)
             else:
                 continue
+        
+        #Calculation of Jain Fairness index 
         nom = sum(avgPrices)**2
         denom = sum([x**2 for x in avgPrices]) * len(avgPrices)
         fairness = nom/denom
